@@ -1,0 +1,47 @@
+<div class="container-fluid">
+  <!-- Breadcrumbs-->
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <h4>NOTIFICATIONS</h4>
+    </li>
+  </ol>
+  <div class="formBox">
+    <div class="container">
+      
+      <!-- <div class="card" *ngFor="let item of anouncementList">
+        <div class="card-body">
+          <h5 class="card-title">{{item.title}}</h5>
+          <p class="card-text">{{item.description}}</p>
+          <p class="card-text"><small class="text-muted">{{item.date}}</small></p>
+        </div>
+        <img src="{{item.image_url}}" class="card-img-top" alt="...">
+      </div>
+    </div> -->
+   <div *ngIf='notificationList.length > 0'>
+    <div class="card mb-3" *ngFor="let item of notificationList">
+      <div class="row no-gutters">
+        
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">Notification</h5>
+            <p class="card-text">{{item.notification}}</p>
+            <p class="card-text"><small class="text-muted"></small></p>
+          </div>
+        </div>
+      </div>
+    </div></div>
+
+    <div *ngIf='notificationList.length === 0'>
+      <div class="card mb-3">
+        <div class="row no-gutters">
+          
+          <div class="col-md-8">
+            <div class="card-body">
+              <b class="text-danger"> No Data Available </b>
+            </div>
+          </div>
+        </div>
+      </div></div>
+
+  </div>
+</div>

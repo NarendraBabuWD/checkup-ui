@@ -1,0 +1,39 @@
+<div class="container pt-5">
+	<div class="col-md-4 mx-auto">
+		<div class="card rounded-0">
+			<div class="text-center">
+				<img class="logo-icon" src="assets/images/CheckupAsia.png">
+				<p class="pt-2 pb-2 font-weight-bold">Health Care for you, <br/>by you</p>
+			</div>
+			<div class="card-body">
+				<form [formGroup]="loginForm" (ngSubmit)="login()">
+					<div class="form-group">
+						<label *ngIf="emailLabel" for="email">Email address:</label>
+						<input (focus)="emailLabel = true" (focusout)="emailLabel = false" type="email" class="form-control" id="email"
+						 name="email" formControlName="email" required placeholder="Email">
+						<div *ngIf="f.email.dirty && f.email.invalid" class="alert alert-danger form-group">
+							<div *ngIf="f.email.errors.required">Email is required</div>
+							<div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label *ngIf="passLabel" for="pwd">Password:</label>
+						<input (focus)="passLabel = true" (focusout)="passLabel = false" type="password" class="form-control" id="pwd"
+						 name="password" formControlName="password" required placeholder="Password">
+						<div *ngIf="f.password.dirty && f.password.invalid" class="alert alert-danger form-group">
+							<div *ngIf="f.password.errors.required">Password is required</div>
+						</div>
+					</div>
+					<!-- <a href="#">Forgot Password</a> -->
+					<div class="row card-body justify-content-center pt-4">
+						<button type="submit" class="btn btn-custom-83559D" [disabled]="!loginForm.valid">Login</button>
+					</div>
+				</form>
+			</div>
+			<div class="row card-body justify-content-center pt-5 pb-3">
+				<a class="signupLink" (click)="signup()">SignUp Here</a>
+			</div>
+
+		</div>
+	</div>
+</div>

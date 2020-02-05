@@ -1,0 +1,48 @@
+<div class="container-fluid">
+    <h2 class="text-center">QUATERLY REPORT</h2>
+    <div class="card-box" *ngIf='quartlyData.length > 0'>
+        <div class="table-responsive">
+            <form [formGroup]="quartlyReportForm" (ngSubmit)="onSubmit()">
+                <table class="table">
+                    <thead>
+                        <tr class="text-center">
+                            <th>Vital</th>
+                            <th>Initial</th>
+                            <th>Target</th>
+                            <th>Achieved</th>
+                            <th *ngIf="auth.isDoctor();">Trget New</th>
+                            <th *ngIf="auth.isSubscriber();">Performance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-template ngFor let-fgb [ngForOf]="form_group_ceate">
+                            <tr [formGroupName]="fgb">
+                                <td>{{initialReportConfigData[fgb]}} <span class="text-right">:</span></td>
+                                <td><input type="number" [ngClass]="{'non_editable': isEditable(fgb)}" [readonly]="isEditable(fgb)" formControlName="initial"
+                                        class="form-control" /></td>
+                                <td><input type="number" [ngClass]="{'non_editable': isViewOnly}" formControlName="target"
+                                        class="form-control" /></td>
+                                <td><input type="number" [ngClass]="{'non_editable': isEditable(fgb)}" [readonly]="isEditable(fgb)" formControlName="achieved"
+                                        class="form-control" /></td>
+                                <td  *ngIf="auth.isDoctor();"><input type="number" formControlName="target_new"
+                                        class="form-control" /></td>
+                                <td *ngIf="auth.isSubscriber();" class="text-center"> {{finalPerformanceValue(fgb)+'%'}}
+                                       <span style="display: block">{{performanceText(fgb)}}</span> </td>
+                            </tr>
+                        </ng-template>
+                    </tbody>
+                </table>
+                <div class="row card-body font-weight-bold" *ngIf='isViewOnly'>
+                    <div style="color:red" class="col-sm-10">CVD risk percentage (10 years risk %)  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </div> 
+                    <div class="col-sm-2 text-center"> {{ten_year_ascvd}} </div>
+                </div>
+                <div class="row card-body justify-content-center pt-4 text-center" *ngIf='!isViewOnly'>
+                    <button type="submit" class="btn btn-custom-83559D">{{isEdit ? 'Update':'Create'}}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div *ngIf='quartlyData.length === 0'>
+        <b> No Data Available for user id: {{user_id}} </b>
+    </div>
+</div>

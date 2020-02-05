@@ -1,0 +1,158 @@
+{
+    "categories": {
+    "body_measurement": {
+        "title": "BODY MEASUREMENT",
+        "input_fields": ["body_weight","min_body_weight","max_body_weight","median_body_weight","mode_body_weight"],
+        "icon": "assets/images/2-03.png",
+        "display_filter_layout": 
+            {
+                "day": {
+                "modified_filter_layout" : "day",
+                "input_fields": ["body_weight","bmi","fat","muscle"]
+                    },
+                "week": {
+                    "modified_filter_layout" : "month",
+                    "input_fields": ["body_weight","min_body_weight","max_body_weight","median_body_weight","mode_body_weight", "bmi","fat", "muscle"]
+                },
+                "month": {
+                    "modified_filter_layout" : "year",
+                    "input_fields": ["body_weight","min_body_weight","max_body_weight","median_body_weight","mode_body_weight", "bmi","fat", "muscle"]
+
+                }
+
+            }
+    },
+    "bp": {
+        "title": "BLOOD PRESSURE",
+        "input_fields": ["sys", "dia", "min_sys","max_sys","median_sys","mode_sys", "min_dia","max_dia","median_dia","mode_dia"],
+        "icon": "assets/images/2-01.png",
+        "display_filter_layout": 
+            {
+                "day": {
+                "modified_filter_layout" : "day",
+                "input_fields": ["sys", "dia"]
+                    },
+                "week": {
+                    "modified_filter_layout" : "month",
+                    "input_fields": ["sys", "dia", "min_sys","max_sys","median_sys","mode_sys", "min_dia","max_dia","median_dia","mode_dia"]
+                },
+                "month": {
+                    "modified_filter_layout" : "year",
+                    "input_fields": ["sys", "dia", "min_sys","max_sys","median_sys","mode_sys", "min_dia","max_dia","median_dia","mode_dia"]
+
+                }
+
+            }
+    },
+    "heart_rate": {
+        "title": "HEART RATE",
+        "input_fields": ["heart_rate","min_heart_rate","max_heart_rate","median_heart_rate","mode_heart_rate"],
+        "icon": "assets/images/2-02.png",
+        "display_filter_layout": {
+            "day": {
+            "modified_filter_layout" : "day",
+            "input_fields": ["heart_rate"]
+                },
+            "week": {
+                "modified_filter_layout" : "month",
+                "input_fields": ["heart_rate","min_heart_rate","max_heart_rate","median_heart_rate","mode_heart_rate"]
+            },
+            "month": {
+                "modified_filter_layout" : "year",
+                "input_fields": ["heart_rate","min_heart_rate","max_heart_rate","median_heart_rate","mode_heart_rate"]
+
+            }
+        }
+    },
+    "sleep_pattern": {
+        "title": "SLEEP PATTERN",
+        "input_fields": ["sleep_minutes","min_sleep_minutes","max_sleep_minutes","median_sleep_minutes","mode_sleep_minutes"],
+        "icon": "assets/images/2-05.png",
+        "display_filter_layout": {
+            "day": {
+            "modified_filter_layout" : "day",
+            "input_fields": ["sleep_minutes"]
+                },
+            "week": {
+                "modified_filter_layout" : "month",
+                "input_fields": ["sleep_minutes","min_sleep_minutes","max_sleep_minutes","median_sleep_minutes","mode_sleep_minutes"]
+            },
+            "month": {
+                "modified_filter_layout" : "year",
+                "input_fields": ["sleep_minutes","min_sleep_minutes","max_sleep_minutes","median_sleep_minutes","mode_sleep_minutes"]
+
+            }
+        }
+    },
+    "activity": {
+        "title": "ACTIVITY",
+        "input_fields": ["steps", "calories_burt", "min_steps","max_steps","median_steps","mode_steps", "min_calories_burt","max_calories_burt","median_calories_burt","mode_calories_burt"],
+        "icon": "assets/images/2-04.png",
+        "display_filter_layout": {
+            "day": {
+            "modified_filter_layout" : "day",
+            "input_fields": ["steps", "calories_burt"]
+                },
+            "week": {
+                "modified_filter_layout" : "month",
+                "input_fields": ["steps", "avg_steps", "min_steps","max_steps","median_steps","mode_steps"]
+            },
+            "month": {
+                "modified_filter_layout" : "year",
+                "input_fields": ["steps", "avg_steps", "min_steps","max_steps","median_steps","mode_steps"]
+
+            }
+        }
+    },
+    "spo2": {
+        "title": "SPO2",
+        "input_fields": ["spo2"],
+        "icon": "assets/images/2-06.png",
+        "display_filter_layout": {
+            "day": {
+            "modified_filter_layout" : "day",
+            "input_fields": ["spo2"]
+                },
+            "week": {
+                "modified_filter_layout" : "month",
+                "input_fields": ["spo2","min_spo2","max_spo2","mode_spo2","median_spo2"]
+            },
+            "month": {
+                "modified_filter_layout" : "year",
+                "input_fields": ["spo2","min_spo2","max_spo2","mode_spo2","median_spo2"]
+
+            }
+        }
+    }
+    },
+
+    "healthChartMapping":  {
+        "bp": {
+          "sys": "Systolic",
+          "dia": "Diastolic"
+        },
+        "body_measurement": {
+          "body_weight": "Body Weight",
+          "bmi": "BMI",
+          "fat": "Fat",
+          "muscle": "MUSCLE"
+        },
+        "heart_rate": {
+          "heart_rate": "HEART RATE"
+        },
+        "sleep_pattern": {
+            "sleep_minutes": "Sleep Hours"
+        },
+        "activity": {
+          "steps": "Steps",
+          "calories_burt": "Calories Burt"
+        }
+      },
+
+      "devices": {
+        "iChoiceDevice_BPM_02": ["sys", "dia"],
+        "SmartBodyanalyzer_01": ["body_weight","bmi","fat","muscle"],
+        "SmartBand_03": ["heart_rate", "sleep_minutes", "sleep_hours", "steps", "calories_burt"]
+      }
+}
+

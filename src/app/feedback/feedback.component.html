@@ -1,0 +1,223 @@
+<div class="container-fluid">
+  <!-- Breadcrumbs-->
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <h4>Feedback</h4>
+    </li>
+  </ol>
+  <div class="formBox card" *ngIf="subFeedbackForm">
+    <div class="card-body">
+        <form  class="form-horizontal" [formGroup]="subFeedback"
+        (ngSubmit)="subFeedbackSubmit(subFeedback)" >
+        
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Date</label>
+          <div class="col-sm-4 row">
+            <input type="numeber" class="form-control" formControlName="subDate"  placeholder="{{todayDate}}" readonly/>
+           
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Name</label>
+          <div class="col-sm-4 row">
+            <input type="numeber" class="form-control" formControlName="subName"  placeholder="{{nameValue}}" readonly/>
+           
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Email</label>
+          <div class="col-sm-4 row">
+            <input type="numeber" class="form-control" formControlName="subEmail"  placeholder="{{emailValue}}" readonly/>
+           
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Contact</label>
+          <div class="col-sm-4 row">
+            <input type="numeber" class="form-control" formControlName="subContact"  placeholder="Contact" />
+           
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Subject</label>
+          <div class="col-sm-4 row">
+                    <select class="form-control" formControlName="subSubject">
+                        <option selected>Select</option>
+                        <option value="Application">Application</option>
+                        <option value="Device">Device</option>
+                        <option value="Others">Others</option>
+                    </select> 
+                          
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Message</label>
+          <div class="col-sm-4 row">
+            <textarea type="numeber" class="form-control" formControlName="subMessage"  placeholder="Message..." ></textarea>
+           
+          </div>
+        </div>
+        
+      
+        <div class="card-footer">
+          <div class="row justify-content-center">
+            <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+            <button type="reset" class="btn btn-danger ml-3 btn-sm">Reset</button>
+         </div>
+        </div>
+      </form>
+</div>
+  </div>
+
+
+<!-- DOCTOR FEEDBACK -->
+  <div class="formBox card" *ngIf="docFeedbackForm">
+    <div class="card-body">
+        <form  class="form-horizontal" [formGroup]="docFeedback"
+        (ngSubmit)="docFeedbackSubmit(docFeedback)" >
+        
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Date</label>
+          <div class="col-sm-4 row">
+            <input type="numeber" class="form-control" formControlName="docDate" placeholder="{{todayDate}}" readonly />
+           
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Name</label>
+          <div class="col-sm-4 row">
+            <input type="numeber" class="form-control" formControlName="docName"  placeholder="{{nameValue}}" readonly/>
+           
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Email</label>
+          <div class="col-sm-4 row">
+            <input type="numeber" class="form-control" formControlName="docEmail"  placeholder="{{emailValue}}" readonly/>
+           
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Contact</label>
+          <div class="col-sm-4 row">
+            <input type="numeber" class="form-control" formControlName="docContact"  placeholder="Contact" />
+           
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Subject</label>
+          <div class="col-sm-4 row">
+                    <select class="form-control" formControlName="docSubject">
+                      <option selected>Select</option>
+                      <option value="Application">Application</option>
+                      <option value="Device">Device</option>
+                      <option value="Others">Others</option>
+                      
+                    </select> 
+                          
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Message</label>
+          <div class="col-sm-4 row">
+            <textarea type="numeber" class="form-control" formControlName="docMessage"  placeholder="Message..." ></textarea>
+           
+          </div>
+        </div>
+        
+      
+        <div class="card-footer">
+          <div class="row justify-content-center">
+            <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+            <button type="reset" class="btn btn-danger ml-3 btn-sm">Reset</button>
+         </div>
+        </div>
+      </form>
+</div>
+  </div>
+  
+
+  <!-- CORPORATE FEEDBACK -->
+
+  
+  <div class="formBox card" *ngIf="corpFeedbackForm">
+    <div class="card-body">
+        <form  class="form-horizontal" [formGroup]="corpFeedback"
+        (ngSubmit)="corpFeedbackSubmit(corpFeedback)" >
+        
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Date</label>
+          <div class="col-sm-4 row">
+            <input type="numeber" class="form-control" formControlName="corpDate" placeholder="{{todayDate}}" readonly />
+           
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Name</label>
+          <div class="col-sm-4 row">
+            <input type="numeber" class="form-control" formControlName="corpName"  placeholder="{{nameValue}}" readonly/>
+           
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Email</label>
+          <div class="col-sm-4 row">
+            <input type="numeber" class="form-control" formControlName="corpEmail"  placeholder="{{emailValue}}" readonly/>
+           
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Contact</label>
+          <div class="col-sm-4 row">
+            <input type="numeber" class="form-control" formControlName="corpContact"  placeholder="Contact" />
+           
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Subject</label>
+          <div class="col-sm-4 row">
+                    <select class="form-control" formControlName="corpSubject">
+                      <option selected>Select</option>
+                      <option value="Application">Application</option>
+                      <option value="Device">Device</option>
+                      <option value="Others">Others</option>
+                      
+                    </select> 
+                          
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Message</label>
+          <div class="col-sm-4 row">
+            <textarea type="numeber" class="form-control" formControlName="corpMessage"  placeholder="Message..." ></textarea>
+           
+          </div>
+        </div>
+        
+      
+        <div class="card-footer">
+          <div class="row justify-content-center">
+            <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+            <button type="reset" class="btn btn-danger ml-3 btn-sm">Reset</button>
+         </div>
+        </div>
+      </form>
+</div>
+  </div>
+
+</div>

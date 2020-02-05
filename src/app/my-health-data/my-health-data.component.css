@@ -1,0 +1,80 @@
+.date-range{
+    font-size: 16px;
+    height: 30px;
+    line-height: 30px;
+    margin: 16px;
+    text-align: center;
+}
+.date-range .fa-arrow-left, .date-range .fa-arrow-right{
+    margin-left: 16px;
+    margin-right: 16px;
+    cursor: pointer;
+}
+.icon-hidden{
+    visibility: hidden;
+}
+.bpDailyListTable{
+    width: calc(100% - 32px);
+    margin: 16px;
+}
+.block-title{
+    margin-bottom: .5rem;
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.2;
+    color: inherit;
+}
+.empty-msg{
+    text-align: center;
+}
+.health-data-category-name{
+    border-bottom: 2px solid #0000;
+}
+.health-data-category-value{
+    margin-top: 4px;
+}
+.health-category{
+    cursor: pointer;
+}
+.table.body-measurement, .table.sleep_pattern, .table.activity{
+    max-width: 450px;
+}
+
+
+.main {
+    width: 50%;
+    margin: 50px auto;
+}
+
+.form-group .form-control {
+    padding: 0.5em 1em;
+}
+
+.form-group .form-control-icon {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+}
+.daily-datepicker, .daterange-datepicker{
+    position: relative;
+    display: inline-grid;
+}
+.calender-icon{
+    right: 0;
+}
+
+.input-datepicker{
+    display: inline-grid;
+}
+.daterange-datepicker > .input-datepicker{
+    width: 240px;
+}
+.bg-perpule {
+    background-color: #6b7e9c !important;
+}

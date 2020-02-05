@@ -1,0 +1,21 @@
+.btnLabel{
+padding: 0;
+border: none;
+background: none;
+cursor: pointer;
+}
+.form-control {
+    display: block;
+    width: auto;
+}
+
+.pd-lr-0{
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+}
+
+.btn-custom {
+    color: #fff;
+    background-color: #863695;
+    border-color: #801894;
+}

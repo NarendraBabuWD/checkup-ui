@@ -1,0 +1,130 @@
+<div class="container-fluid">
+  <!-- Breadcrumbs-->
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <h4>MY SUBSCRIPTION/ACCOUNT</h4>
+    </li>
+  </ol>
+  <div class="formBox">
+
+<div class="container mx-auto p-5">
+  <div class="card">
+  
+  <div class="card-body">
+  <div class="row">
+  <span class='col-md-8'>
+  
+  <img class="img-responsive col-sm-3" src="assets/images/CheckupAsia.png">
+  
+  </span>
+  <span class='col-md-4'>
+  <h4>INVOICE</h4>
+  <p>Checkup Asia Sdn Bhd</p>
+  <p>The Bouleward Offices, Block C, 31-5</p>
+  <p>Mid Valley City, Lingakaran, Syed Puthra</p>
+  <p>59200 Kuala Lumpur, Malaysia</p>
+  </span>
+  </div>
+  </div>
+  
+  <div class="card-body">
+  <div class="row">
+  <span class='col-md-8'>
+  <h4>Billing Information</h4>
+  <p>Name<span> : </span> {{first_name}} {{last_name}}</p>
+  <p>Address<span> : </span>{{address}}</p>
+  <p>{{address2}} {{postcode}}</p>
+  <p>{{state}} {{country}}</p>
+  </span>
+  <span class='col-md-4'>
+  <h4></h4><br>
+  <p>Invoice<span> : </span>{{invoice}}</p>
+  <p>Account No<span> : </span>{{account_no}}</p>
+  <p>Billing Date<span> : </span>{{billingDate}}</p>
+  </span>
+  </div>
+  </div>
+  
+  <div class="card-body">
+  <div class="row">
+  <span class='col-md-8'>
+  <h4>Description</h4>
+  <p>Subscription type<span> : </span>{{subscription_type}}</p>
+  <p>Subscription duration<span> : </span>{{subscription_duration}}</p>
+  <p>Subscription period<span> : </span>23/09/2019 till 22/09/2020</p>
+  </span>
+  <span class='col-md-4'>
+  <h4>Amount</h4>
+  <p>{{amountVal}}</p>
+  </span>
+  </div>
+  <h4>Assigned Dr</h4>
+  <p>{{doctorName}}</p>
+  <p>{{clinicName}}</p>
+  <p>{{clinicAddress}}</p>
+  <!-- <p>putra, 59200 kualalumpur, Malaysia</p> -->
+  </div>
+  
+  <div class="card-body">
+  <div class="row">
+  <span class='col-md-10' >
+  <div class="float-right">
+  <p>Total(RM):</p>
+  <p>Tax(RM):</p>
+  <p>Grand Total(RM):</p>
+  </div>
+  </span>
+  <span class='col-md-2'>
+  <p>{{amountVal}}</p>
+  <p>{{tax}}</p>
+  <p>{{total}}</p>
+  </span>
+  </div>
+  </div>
+  
+  <div class="card-footer">
+  <div class="row-fluid">
+  <span class="col-sm-8">
+  <button type="button" class="btn btn-outline-danger" (click)="goToHome()">CANCEL ORDER</button>
+  </span>
+  <span class="col-sm-4">
+  <div class="float-right">
+  <button type="button" class="btn btn-outline-info" (click)="goToSubscription()">CHANGE ORDER</button>&nbsp;
+  <button type="button" class="btn btn-outline-success" (click)="childModal.show()">SUBMIT</button>
+  </div>
+  </span>
+  </div>
+  </div>
+  
+  </div>
+  </div>
+  </div>
+  </div>
+
+
+  <div class="modal fade" bsModal #childModal="bs-modal" tabindex="-1" role="dialog" aria-labelledby="dialog-nested-name2">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 id="dialog-nested-name2" class="modal-title pull-left">Subscription Agreement</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="childModal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form >
+        <div class="modal-body">
+         <p>All information required in this agreement shall be automatically populated by the system</p>
+
+         <p>The information found in this subscription form as has filled in by the subscriber</p>
+        
+        </div>
+       
+        <div class="modal-footer">
+        <button type="submit"  class="btn btn-primary" (click)="addBillingInfo()">Submit</button>
+        <button type="button" class="btn btn-danger" (click)="childModal.hide()">Cancel</button>
+
+</div></form>
+      </div>
+    </div>
+  </div>
+  

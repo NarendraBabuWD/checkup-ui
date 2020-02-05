@@ -1,0 +1,20 @@
+/*.Reschedule {
+    background-color: #5A6268;
+}
+
+.Requested {
+    background-color: #218838;
+}
+
+.New {
+    background-color: #138496;
+}
+
+.Cancel {
+    background-color: #C82333;
+}*/
+
+
+.modal {
+    z-index: 999 !important;
+ }

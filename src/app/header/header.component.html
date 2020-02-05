@@ -1,0 +1,50 @@
+
+<nav class="navbar navbar-expand navbar-dark bg-dark static-top navbar-custom static-top" *ngIf="auth.isLoggednIn()">
+<a class="navbar-brand mr-1" routerLink="/home">CHECKUP ASIA</a>
+<button type="button" id="sidebarToggle" class="btn btn-link btn-sm text-white order-1 order-sm-0" (click) = "sidebarToggle();">
+ <i class="fa fa-fw fa-bars"></i>
+</button>
+<!-- Navbar Search -->
+<ul class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+ <!-- if any search options please keep here -->
+</ul>
+<!-- Navbar -->
+<ul class="navbar-nav ml-auto ml-md-0">
+ <li class="nav-item dropdown no-arrow">
+   <a class="dropdown nav-link dropbtn" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+     aria-expanded="false">
+     
+     <img src="assets/images/admin.png" alt="Profile image" class="avatar avatar-rounded">
+   <span>{{this.username}}</span></a>
+
+   <a title="Logout" class="dropdown nav-link dropbtn" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+   aria-expanded="false" (click)="auth.logout()">
+   
+   <i class="fa fa-power-off fa-2x"></i>
+
+ </a>
+
+   <!-- <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+     <div class="dropdown-item noti-title">
+       <h5 class="text-overflow"><small>{{this.username}}</small></h5>
+     </div>
+     <div class="dropdown-divider"></div>
+     <a class="dropdown-item" *ngIf="auth.isLoggednIn()" (click)="auth.logout()">Logout</a>
+   </div> -->
+ </li>
+</ul> 
+<div class="dropdown-content">
+   <a >{{this.username}}</a>
+ <a (click)="auth.logout()">Logout</a>
+ 
+</div>
+
+
+</nav>
+
+
+
+
+
+
+

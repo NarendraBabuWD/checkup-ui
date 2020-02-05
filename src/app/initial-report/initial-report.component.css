@@ -1,0 +1,21 @@
+.form-control {
+    outline: none;
+	  border-width: 0 0 2px;
+	  border-color: #555;
+	  display: block;
+    width: 100%;
+    padding: 6px 12px;
+    border-radius: 4px;
+    background: transparent;
+    text-align: center;
+  }
+  .text-right{
+    float: right;
+    padding-right: 32px;
+  }
+  /*  */
+.non_editable{
+  border: 0px;
+  text-align: center;
+  background-color: #ffffff;
+}

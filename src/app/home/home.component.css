@@ -1,0 +1,30 @@
+
+.bg-perpule {
+    background-color: #6b7e9c !important;
+}
+.bg-lightBlue {
+    background-color: #5482d7 !important;
+}
+.bg-blue {
+    background-color: #533ea9 !important;
+}
+.bg-green {
+    background-color: #92d050 !important;
+}
+.bg-lightGreen {
+    background-color: #a4d681 !important;
+}
+a{
+    text-decoration: none;
+}
+.btn-custom {
+    color: #fff;
+    background-color: #863695;
+    border-color: #801894;
+}
+
+.medical-summry-head{
+    /* font-size: px; */
+    color: #fff;
+    font-weight: bold;
+}

@@ -1,0 +1,423 @@
+<div class="container-fluid">
+  <!-- Breadcrumbs-->
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <h4>MEDICAL SUMMARY</h4>
+    </li>
+    <!-- <li class="breadcrumb-item active">Overview</li> -->
+  </ol>
+  <div class="formBox">
+    <div class="container" *ngIf='!userHasProfile'>
+      <form [formGroup]="subscriberMedicalSummaryForm" (ngSubmit)="onFormSubmit()">
+        <!-- <pre>{{subscriberMedicalSummaryForm.value | json}}</pre>
+        <pre>{{finalJsonInput | json}}</pre> -->
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Created on:</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" readonly formControlName="createdOn" placeholder="Enter Created On" />
+            <div *ngIf="submitted && f.createdOn.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.createdOn.errors.required">
+                Created On is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="name" class="col-sm-2 col-form-label">Name:</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" formControlName="name" placeholder="Enter First Name" />
+            <div *ngIf="submitted && f.name.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.name.errors.required">
+                Name is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group row" *ngIf="auth.isSubscriber()">
+          <label for="mrn" class="col-sm-2 col-form-label">MRN:</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" formControlName="mrn" placeholder="Enter MRN" />
+            <!-- <div *ngIf="submitted && f.mrn.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.mrn.errors.required">
+                MRN is required
+              </div>
+            </div> -->
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="dob" class="col-sm-2 col-form-label">Date of Birth:</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" formControlName="dob" placeholder="Enter Date of Birth" />
+            <div *ngIf="submitted && f.dob.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.dob.errors.required">
+                DOB is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="age" class="col-sm-2 col-form-label">Age:</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" formControlName="age" placeholder="Enter Age" />
+            <div *ngIf="submitted && f.age.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.age.errors.required">
+                Age is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="idNo" class="col-sm-2 col-form-label">ID NO:</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" formControlName="idNo" placeholder="Enter ID No" />
+            <div *ngIf="submitted && f.idNo.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.idNo.errors.required">
+                ID NO is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="gender" class="col-sm-2 col-form-label">Gender:</label>
+          <div class="col-sm-8">
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" id="male" value="Male" formControlName="gender" class="custom-control-input">
+              <label class="custom-control-label" for="male">Male</label>
+              <div *ngIf="submitted && f.gender.errors" class="alert alert-danger form-group">
+                <div *ngIf="f.gender.errors.required">
+                  Gender is required
+                </div>
+              </div>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" id="female" value="Female" formControlName="gender" class="custom-control-input">
+              <label class="custom-control-label" for="female">Female</label>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group row habits">
+          <p class="formContent col-sm-12">
+            Conditions or habits changed over the past 3 months?
+          </p>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="" class="col-sm-8 col-form-label">Significant Medical History:</label>
+          <div class="col-sm-4 row">
+            <div class="col-sm-6">
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="smhYes" value="Yes" formControlName="smh" class="custom-control-input" (click)="isSMHSelected ='Yes'">
+                <label class="custom-control-label" for="smhYes">Yes</label>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="smhNo" value="No" formControlName="smh" class="custom-control-input" (click)="isSMHSelected ='No'">
+                <label class="custom-control-label" for="smhNo">No</label>
+              </div>
+            </div>
+            <div *ngIf="submitted && f.smh.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.smh.errors.required">
+                Significant Medical History is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="container" *ngIf="isSMHSelected ==='Yes'">
+          <div class="form-group row" *ngFor="let smh of f.smh_list.controls; let i = index">
+            <div class="custom-control custom-checkbox col-sm-4 col-xs-6" formArrayName="smh_list">
+              <input type="checkbox" [formControlName]="i" id="{{smh_list[i].name}}" class="custom-control-input">
+              <label class="custom-control-label" for="{{smh_list[i].name}}">
+                {{smh_list[i].name}}
+              </label>
+            </div>
+            <div class="col-sm-8 col-xs-6" *ngIf="smh_list[i].isYear">
+              <div class="form-group row year-row">
+                <label>Since</label>
+                <select class="form-control year-control" name="{{smh_list[i].value}}_year" formControlName="{{smh_list[i].value}}_year">
+                  <option [ngValue]="null">Select a Year</option>
+                  <option *ngFor="let year of yearList" [value]="year">
+                    {{ year }}
+                  </option>
+                </select>
+              </div>
+              <!-- {{subscriberMedicalSummaryForm.value.smh_list[i] | json}} -->
+              <div *ngIf="f[smh_list[i].value+'_year'].errors" class="alert alert-danger form-group error-div">
+                <div *ngIf="f[smh_list[i].value+'_year'].errors.required">
+                  {{smh_list[i].name}} Year is required
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="f.smh_list.errors">At least one Significant Medical History must be selected</div>
+        </div>
+
+        <div class="clearfix"></div>
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 hr-line">
+          <hr class="line" />
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="" class="col-sm-8 col-form-label">Past Surgical History:</label>
+          <div class="col-sm-4 row">
+            <div class="col-sm-6">
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="pshYes" value="Yes" formControlName="psh" class="custom-control-input" (click)="isPSHSelected ='Yes'">
+                <label class="custom-control-label" for="pshYes">Yes</label>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="pshNo" value="No" formControlName="psh" class="custom-control-input" (click)="isPSHSelected ='No'">
+                <label class="custom-control-label" for="pshNo">No</label>
+              </div>
+            </div>
+            <div *ngIf="submitted && f.psh.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.psh.errors.required">
+                Past Surgical History is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="container" *ngIf="isPSHSelected ==='Yes'">
+          <div class="form-group row" *ngFor="let smh of f.psh_list.controls; let i = index">
+            <div class="custom-control custom-checkbox col-sm-4 col-xs-6" formArrayName="psh_list">
+              <input type="checkbox" [formControlName]="i" id="{{psh_list[i].name}}" class="custom-control-input">
+              <label class="custom-control-label" for="{{psh_list[i].name}}">
+                {{psh_list[i].name}}
+              </label>
+            </div>
+            <div class="col-sm-8 col-xs-6" *ngIf="psh_list[i].isYear">
+              <div class="form-group row year-row">
+                <label>Since</label>
+                <select class="form-control year-control" name="{{psh_list[i].value}}_year" formControlName="{{psh_list[i].value}}_year">
+                  <option [ngValue]="null">Select a Year</option>
+                  <option *ngFor="let year of yearList" [value]="year">
+                    {{ year }}
+                  </option>
+                </select>
+              </div>
+              <div *ngIf="f[psh_list[i].value+'_year'].errors" class="alert alert-danger form-group error-div">
+                <div *ngIf="f[psh_list[i].value+'_year'].errors.required">
+                  {{psh_list[i].name}} Year is required
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="heartSurgery" formControlName="heartSurgery"
+                (click)='heartSurgeryClick();'>
+              <label class="custom-control-label" for="heartSurgery">Heart Surgery</label>
+            </div>
+          </div>
+          <div class="container" *ngIf="heartSurgerySelected">
+            <div class="form-group row" *ngFor="let heart of f.heartSurgery_list.controls; let i = index">
+              <div class="custom-control custom-checkbox col-sm-4 col-xs-6" formArrayName="heartSurgery_list">
+                <input type="checkbox" [formControlName]="i" id="{{heartSurgery_list[i].name}}" class="custom-control-input">
+                <label class="custom-control-label" for="{{heartSurgery_list[i].name}}">
+                  {{heartSurgery_list[i].name}}
+                </label>
+              </div>
+              <div class="col-sm-8 col-xs-6" *ngIf="heartSurgery_list[i].isYear">
+                <div class="form-group row year-row">
+                  <label>Since</label>
+                  <select class="form-control year-control" name="{{heartSurgery_list[i].value}}_year" formControlName="{{heartSurgery_list[i].value}}_year">
+                    <option [ngValue]="null">Select a Year</option>
+                    <option *ngFor="let year of yearList" [value]="year">
+                      {{ year }}
+                    </option>
+                  </select>
+                </div>
+                <div *ngIf="f[heartSurgery_list[i].value+'_year'].errors" class="alert alert-danger form-group error-div">
+                  <div *ngIf="f[heartSurgery_list[i].value+'_year'].errors.required">
+                    {{heartSurgery_list[i].name}} Year is required
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="f.heartSurgery_list.errors">At least one Heart Surgery must be selected</div>
+          </div>
+          <div class="form-group row">
+            <div class="custom-control custom-checkbox col-sm-4 col-xs-6">
+              <input type="checkbox" class="custom-control-input" id="otherSpecify" formControlName="otherSpecify" />
+              <label class="custom-control-label" for="otherSpecify">Other</label>
+            </div>
+            <div  class="col-sm-8 col-xs-6">
+              <div class="form-group row year-row">
+                <label>Since</label>
+                <select class="form-control year-control" name="since_year" formControlName="since_year">
+                  <option [ngValue]="null">Select a Year</option>
+                  <option *ngFor="let year of yearList" [value]="year">
+                    {{ year }}
+                  </option>
+                </select>
+              </div>
+              <div *ngIf="f.since_year.errors" class="alert alert-danger form-group error-div">
+                <div *ngIf="f.since_year.errors.required">
+                  Other Year is required
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="form-group row">
+              <label for="name" class="col-sm-2 col-form-label">Specify here</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" formControlName="otherSpecifyVal" placeholder="Specify here" />
+                <div *ngIf="f.otherSpecifyVal.errors" class="alert alert-danger form-group error-div">
+                    <div *ngIf="f.otherSpecifyVal.errors.required">
+                      Other is required
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- <div *ngIf="!heartSurgerySelected && f.psh_list.errors">At least one Past Surgical History must be selected</div> -->
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 hr-line">
+          <hr class="line" />
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="" class="col-sm-8 col-form-label">Durg Aliergies:</label>
+          <div class="col-sm-4 row">
+            <div class="col-sm-6">
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="durgAliergiesYes" value="Yes" formControlName="durgAliergies" class="custom-control-input"
+                  (click)="isDurgAliergiesSelected ='Yes'">
+                <label class="custom-control-label" for="durgAliergiesYes">Yes</label>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="durgAliergiesNo" value="No" formControlName="durgAliergies" class="custom-control-input"
+                  (click)="isDurgAliergiesSelected ='No'">
+                <label class="custom-control-label" for="durgAliergiesNo">No</label>
+              </div>
+            </div>
+            <div *ngIf="submitted && f.durgAliergies.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.durgAliergies.errors.required">
+                Durg Aliergies is required
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="container" *ngIf="isDurgAliergiesSelected ==='Yes'">
+          <div class="form-group row" *ngFor="let drug of f.durgAliergies_list.controls; let i = index">
+            <div class="custom-control custom-checkbox col-sm-4 col-xs-6" formArrayName="durgAliergies_list">
+              <input type="checkbox" [formControlName]="i" id="{{durgAliergies_list[i].name}}" class="custom-control-input">
+              <label class="custom-control-label" for="{{durgAliergies_list[i].name}}">
+                {{durgAliergies_list[i].name}}
+              </label>
+            </div>
+
+            <div class="col-sm-8 col-xs-6" *ngIf="durgAliergies_list[i].isYear">
+              <div class="form-group row year-row">
+                <label>Since</label>
+                <select class="form-control year-control" name="{{durgAliergies_list[i].value}}_year" formControlName="{{durgAliergies_list[i].value}}_year">
+                  <option [ngValue]="null">Select a Year</option>
+                  <option *ngFor="let year of yearList" [value]="year">
+                    {{ year }}
+                  </option>
+                </select>
+              </div>
+              <div *ngIf="f[durgAliergies_list[i].value+'_year'].errors" class="alert alert-danger form-group error-div">
+                <div *ngIf="f[durgAliergies_list[i].value+'_year'].errors.required">
+                  {{durgAliergies_list[i].name}} Year is required
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Selected: <strong>{{ subscriberMedicalSummaryForm.value.durgAliergies_list | json }} </strong> -->
+          <div *ngIf="f.durgAliergies_list.errors">At least one Durg Aliergies must be selected</div>
+        </div>
+
+
+        <div class="clearfix"></div>
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 hr-line">
+          <hr class="line" />
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="" class="col-sm-8 col-form-label">Current Medication:</label>
+          <div class="col-sm-4 row">
+            <div class="col-sm-6">
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="currentMedicationYes" value="Yes" formControlName="currentMedication" class="custom-control-input"
+                  (click)="isCurrentMedicaionSelected ='Yes'">
+                <label class="custom-control-label" for="currentMedicationYes">Yes</label>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="currentMedicationNo" value="No" formControlName="currentMedication" class="custom-control-input"
+                  (click)="isCurrentMedicaionSelected ='No'">
+                <label class="custom-control-label" for="currentMedicationNo">No</label>
+
+              </div>
+            </div>
+            <div *ngIf="submitted && f.currentMedication.errors" class="float-right alert alert-danger form-group">
+              <div *ngIf="f.currentMedication.errors.required">
+                Current Medication is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="container" *ngIf="isCurrentMedicaionSelected ==='Yes'">
+          <div class="form-group row" *ngFor="let drug of f.currentMedication_list.controls; let i = index">
+            <div class="custom-control custom-checkbox col-sm-4 col-xs-6" formArrayName="currentMedication_list">
+              <input type="checkbox" [formControlName]="i" id="{{currentMedication_list[i].name}}" class="custom-control-input">
+              <label class="custom-control-label" for="{{currentMedication_list[i].name}}">
+                {{currentMedication_list[i].name}}
+              </label>
+            </div>
+
+            <div class="col-sm-8 col-xs-6" *ngIf="currentMedication_list[i].isYear">
+              <div class="form-group row year-row">
+                <label>Since</label>
+                <select class="form-control year-control" name="{{currentMedication_list[i].value}}_year"
+                  formControlName="{{currentMedication_list[i].value}}_year">
+                  <option [ngValue]="null">Select a Year</option>
+                  <option *ngFor="let year of yearList" [value]="year">
+                    {{ year }}
+                  </option>
+                </select>
+              </div>
+              <div *ngIf="f[currentMedication_list[i].value+'_year'].errors" class="alert alert-danger form-group error-div">
+                <div *ngIf="f[currentMedication_list[i].value+'_year'].errors.required">
+                  {{currentMedication_list[i].name}} Year is required
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="f.currentMedication_list.errors">At least one Current Medication must be selected</div>
+        </div>
+         <!-- <pre>{{subscriberMedicalSummaryForm.value | json}}</pre> -->
+        <div class="form-group" *ngIf="!isViewOnly">
+          <div class="row card-body justify-content-center">
+            <button *ngIf="!isEdit" type="submit" class="btn btn-primary" [disabled]="!subscriberMedicalSummaryForm.valid">Create</button>
+            <button *ngIf="isEdit" type="submit" class="btn btn-primary" [disabled]="!subscriberMedicalSummaryForm.dirty || !subscriberMedicalSummaryForm.valid">Update</button>
+          </div>
+          <!-- [disabled]="!subscriberMedicalSummaryForm.valid" -->
+        </div>
+      </form>
+    </div>
+    <div class="container" *ngIf='userHasProfile'>
+      Your Profile not at created. Please contact your Doctor.
+    </div>
+  </div>
+</div>

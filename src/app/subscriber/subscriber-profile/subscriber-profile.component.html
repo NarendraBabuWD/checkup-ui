@@ -1,0 +1,370 @@
+<div class="container-fluid">
+  <!-- Breadcrumbs-->
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <h4>Account Details</h4>
+    </li>
+  </ol>
+  <div class="formBox">
+    <div class="container">
+      <form [formGroup]="subscriberProfileForm" (ngSubmit)="onSubmit()">
+        <!-- {{subscriberProfileForm.value | json}} -->
+        <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="user_id" class="col-sm-2 col-form-label">ID </label>
+          <div class="col-sm-4 row">
+            <input type="numeber" class="form-control" formControlName="user_id" maxlength="15" placeholder="User_Id" disabled />
+            <div *ngIf="submitted && f.user_id.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.user_id.errors.required">
+                User_Id is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="first_name" class="col-sm-2 col-form-label">First Name</label>
+          <div class="col-sm-4 row">
+            <input type="text" class="form-control" formControlName="first_name" placeholder="First Name" />
+            <div *ngIf="submitted && f.first_name.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.first_name.errors.required">
+                First Name is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="last_name" class="col-sm-2 col-form-label">Last Name</label>
+          <div class="col-sm-4 row">
+            <input type="text" class="form-control" formControlName="last_name" placeholder="Last Name" />
+            <div *ngIf="submitted && f.last_name.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.last_name.errors.required">
+                Last Name is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="email_user_id" class="col-sm-2 col-form-label">Email </label>
+          <div class="col-sm-4 row">
+            <input type="email" class="form-control" formControlName="email_user_id" placeholder="Email" />
+            <div *ngIf="submitted && f.email_user_id.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.email_user_id.errors.required">
+                Email is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="date of birth" class="col-sm-2 col-form-label">Date of Birth</label>
+          <div class="col-sm-4 row">
+            <input type="text" class="form-control" formControlName="dob" placeholder="Date of Birth" />
+            <div *ngIf="submitted && f.dob.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.dob.errors.required">
+                DOB is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="gender" class="col-sm-2 col-form-label">Sex</label>
+          <div class="col-sm-4">
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" id="male" value="Male" formControlName="gender" class="custom-control-input">
+              <label class="custom-control-label" for="male">Male</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" id="female" value="Female" formControlName="gender" class="custom-control-input">
+              <label class="custom-control-label" for="female">Female</label>
+            </div>
+            <div *ngIf="submitted && f.gender.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.gender.errors.required">
+                Gender is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="national_id" class="col-sm-2 col-form-label">Nationality </label>
+          <div class="col-sm-4">
+            <select class="form-control data-control" name="national_id" formControlName="national_id">
+              <option [ngValue]="null">Select Nationality</option>
+              <option *ngFor="let data of nationalityList" [value]="data">
+                {{ data }}
+              </option>
+            </select>
+            <div *ngIf="submitted && f.national_id.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.national_id.errors.required">
+                Nationality is required
+              </div>
+            </div>
+          </div>
+        </div> -->
+        <div class="form-group row">
+          <label for="national_id" class="col-sm-2 col-form-label">Nationality</label>
+          <div class="col-sm-4 row">
+            <input type="text" class="form-control" formControlName="national_id" placeholder="Nationality" />
+            <div *ngIf="submitted && f.national_id.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.national_id.errors.required">
+                Nationality is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="address" class="col-sm-2 col-form-label">Address</label>
+          <div class="col-sm-4 row">
+            <input type="text" class="form-control" formControlName="address" placeholder="Address" />
+            <div *ngIf="submitted && f.address.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.address.errors.required">
+                Address is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="address_2" class="col-sm-2 col-form-label">Address2 </label>
+          <div class="col-sm-4 row">
+            <input type="text" class="form-control" formControlName="address_2" placeholder="Address2" />
+            <div *ngIf="submitted && f.address_2.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.address_2.errors.required">
+                Address2 is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="postcode" class="col-sm-2 col-form-label">Pincode </label>
+          <div class="col-sm-4 row">
+            <input type="text" class="form-control" formControlName="postcode" placeholder="Pincode" required pattern="^[0-9]{6}$"
+              title="Enter Valid Pin Code">
+            <div *ngIf="submitted && f.postcode.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.postcode.errors.required">
+                Pincode is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="state" class="col-sm-2 col-form-label">State </label>
+          <div class="col-sm-4">
+            <select class="form-control data-control" name="state" formControlName="state">
+              <option [ngValue]="null">Select Country</option>
+              <option *ngFor="let data of stateList" [value]="data">
+                {{ data }}
+              </option>
+            </select>
+            <div class="select-dropdown dropdown-menu dropdown-primary"></div>
+            <div *ngIf="submitted && f.state.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.state.errors.required">
+                State is required
+              </div>
+            </div>
+          </div>
+        </div> -->
+        <div class="form-group row">
+          <label for="state" class="col-sm-2 col-form-label">State</label>
+          <div class="col-sm-4 row">
+            <input type="text" class="form-control" formControlName="state" placeholder="State" />
+            <div *ngIf="submitted && f.state.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.state.errors.required">
+                State is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="country" class="col-sm-2 col-form-label">Country </label>
+          <div class="col-sm-4">
+            <select class="form-control data-control" name="country" formControlName="country">
+              <option [ngValue]="null">Select Country</option>
+              <option *ngFor="let data of countryList" [value]="data">
+                {{ data }}
+              </option>
+            </select>
+            <div class="select-dropdown dropdown-menu dropdown-primary"></div>
+            <div *ngIf="submitted && f.country.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.country.errors.required">
+                Country is required
+              </div>
+            </div>
+          </div>
+        </div> -->
+        <div class="form-group row">
+          <label for="country" class="col-sm-2 col-form-label">Country</label>
+          <div class="col-sm-4 row">
+            <input type="text" class="form-control" formControlName="country" placeholder="Country" />
+            <div *ngIf="submitted && f.country.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.country.errors.required">
+                Country is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="mobile_no" class="col-sm-2 col-form-label">Mobile_No </label>
+          <span class="input-group-text" id="inputGroupPrepend2">+60</span>
+          <div class="col-sm-3 row">
+            
+            <input type="text" class="form-control" formControlName="mobile_no" placeholder="Mobile_No" />
+            <div *ngIf="submitted && f.mobile_no.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.mobile_no.errors.required">
+                Mobile_No No is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="phone_no" class="col-sm-2 col-form-label">Phone_No </label>
+          <div class="col-sm-4 row">
+            <input id="tel" type="tel" class="form-control" formControlName="phone_no" placeholder="Phone_No" maxlength="13">
+            <div *ngIf="submitted && f.phone_no.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.phone_no.errors.required">
+                Phone_No is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="fax_no" class="col-sm-2 col-form-label">Fax_No </label>
+          <div class="col-sm-4 row">
+            <input type="text" class="form-control" formControlName="fax_no" placeholder="Fax_No" maxlength="18" />
+            <div *ngIf="submitted && f.fax_no.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.fax_no.errors.required">
+                Fax No is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="mrn" class="col-sm-2 col-form-label">MRN </label>
+          <div class="col-sm-4 row">
+            <input type="text" class="form-control" formControlName="mrn" placeholder="mrn" />
+            <div *ngIf="submitted && f.mrn.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.mrn.errors.required">
+                MRN is required
+              </div>
+            </div>
+          </div>
+        </div> -->
+        <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="height" class="col-sm-2 col-form-label">Height </label>
+          <div class="col-sm-4 row">
+            <input type="number" class="form-control" formControlName="height" placeholder="Height" />
+            <div *ngIf="submitted && f.height.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.height.errors.required">
+                Height is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="race" class="col-sm-2 col-form-label">Race </label>
+          <div class="col-sm-4">
+            <select class="form-control data-control" name="race" formControlName="race">
+              <option [ngValue]="null">Select Race</option>
+              <option *ngFor="let data of raceList" [value]="data">
+                {{ data }}
+              </option>
+            </select>
+            <div class="select-dropdown dropdown-menu dropdown-primary"></div>
+            <div *ngIf="submitted && f.race.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.race.errors.required">
+                Race is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="treatement_for_high_blood_pressure" class="col-sm-2 col-form-label">Ttreatement for High Blood
+            Pressure </label>
+          <div class="col-sm-4">
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" id="bp_yes" value="Yes" formControlName="treatement_for_high_blood_pressure" class="custom-control-input">
+              <label class="custom-control-label" for="bp_yes">Yes</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" id="bp_no" value="No" formControlName="treatement_for_high_blood_pressure" class="custom-control-input">
+              <label class="custom-control-label" for="bp_no">No</label>
+            </div>
+            <div *ngIf="submitted && f.treatement_for_high_blood_pressure.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.treatement_for_high_blood_pressure.errors.required">
+                Ttreatement for High Blood Pressure is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="diabetes" class="col-sm-2 col-form-label">Diabetes </label>
+          <div class="col-sm-4">
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" id="diabetes_yes" value="Yes" formControlName="diabetes" class="custom-control-input">
+              <label class="custom-control-label" for="diabetes_yes">Yes</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" id="diabetes_no" value="No" formControlName="diabetes" class="custom-control-input">
+              <label class="custom-control-label" for="diabetes_no">No</label>
+            </div>
+            <div *ngIf="submitted && f.diabetes.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.diabetes.errors.required">
+                Diabities is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="smoker" class="col-sm-2 col-form-label">Smoker </label>
+          <div class="col-sm-4">
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" value="Yes" formControlName="smoker" class="custom-control-input">
+              <input type="radio" id="smoker_yes" value="Yes" formControlName="smoker" class="custom-control-input">
+              <label class="custom-control-label" for="smoker_yes">Yes</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" id="smoker_no" value="No" formControlName="smoker" class="custom-control-input">
+              <label class="custom-control-label" for="smoker_no">No</label>
+            </div>
+            <div *ngIf="submitted && f.smoker.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.smoker.errors.required">
+                Smoker is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="doctor_id" class="col-sm-2 col-form-label">Doctor_Id </label>
+          <div class="col-sm-4 row">
+            <input type="number" class="form-control" formControlName="doctor_id" placeholder="doctor_id" disabled />
+            <div *ngIf="submitted && f.doctor_id.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.doctor_id.errors.required">
+                Doctor_Id is required
+              </div>
+            </div>
+          </div>
+        </div> -->
+        <div class="form-group">
+          <div class="row card-body justify-content-center">
+            <button type="submit" class="btn btn-custom-83559D">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

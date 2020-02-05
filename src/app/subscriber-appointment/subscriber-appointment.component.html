@@ -1,0 +1,146 @@
+<div class="container-fluid">
+  <ol class="breadcrumb"><li class="breadcrumb-item"> 
+    <h4>Appointment</h4>
+  </li></ol>
+  <div class="row">
+         <div class="col-md-4">
+<button type="button" (click)="openModal()" class="ml-3 btn btn-primary btn-sm"><i class="fa fa-plus"></i> New Request</button>
+
+         </div>
+         
+         <div class="col-md-6">
+
+          </div>
+  </div>
+  <table    class="table table-bordered" id="example">
+    <thead>
+      <tr>
+        <th>Slots</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item2 of appList" (click)="onRowSelect(item2)">
+                  
+          <td >{{item2.date | date:'d-M-y'}} {{item2.time}}</td>
+          <td >{{item2.status}}</td>
+         </tr>
+      
+      </tbody></table></div>
+
+
+
+<div class="modal" id="myModal" [style.display]="showModal ? 'block' : 'none'" style="background: rgba(0, 0, 0, 0.5);">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-nested-name2" class="modal-title pull-left">Appointment Schedule</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+     <form class="form-horizontal" [formGroup]="subAppNew"
+      (ngSubmit)="onSubmit(subAppNew)">
+      <div class="modal-body">
+       
+          <div class="form-group row">
+              <label class="col-sm-4 col-form-label">Select Date</label>
+              <div class="col-sm-6">
+              
+                  <!-- <select name="dateTime" id="dateTime" class="form-control" formControlName="dateTime" required>
+                    <option selected>Select </option>
+
+
+                    <option *ngFor="let item of dataList" [ngValue]="item">{{item.appointement_date | date:'d-M-y'}} {{item.appointement_time}}</option>
+                    </select> -->
+                    <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" formControlName="dateTime" >
+                      <option selected>Select</option>
+                      <option *ngFor="let item of dataList" [ngValue]="item">{{item.appointement_date | date:'d-M-y'}} {{item.appointement_time}}</option>
+
+                    </select>
+    <span ><i class="fa fa-spin fa=spinner"></i></span>
+              </div>
+            </div>
+            <!-- <div class="form-group row">
+              <label class="col-sm-4 col-form-label">Select Time</label>
+              <div class="col-sm-6">
+                <input placeholder="Select Time" formControlName="time"
+                class="form-control" atp-time-picker />
+
+              </div>
+            </div> -->
+        
+    
+            </div>
+      <div class="modal-footer">
+      <button type="submit"  class="btn btn-primary btn-sm" >Submit</button>
+      <button type="button" class="btn btn-danger btn-sm" (click)="closeModal()">Cancel</button>
+
+</div></form> 
+    </div>
+  </div>
+</div>
+ 
+
+
+
+<div class="modal" id="apptDetails" [style.display]="apptDetails ? 'block' : 'none'" style="background: rgba(0, 0, 0, 0.5);">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-nested-name2" class="modal-title pull-left">Appointment Details</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="apptDetailsCloseModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+   
+      <div class="modal-body">
+       
+          <div class="form-group row">
+              <label class="col-sm-4 col-form-label">Date</label>
+              <div class="col-sm-6">
+                   {{date | date:'d-M-y'}}
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-4 col-form-label">time</label>
+              <div class="col-sm-6">
+                   {{time}}
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-4 col-form-label">Doctor</label>
+              <div class="col-sm-6">
+                   {{doctor}}
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-4 col-form-label">For Quarter</label>
+              <div class="col-sm-6">
+                   {{for}}
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-4 col-form-label">Clinic Address</label>
+              <div class="col-sm-6">
+                   {{address}}
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-4 col-form-label">Status</label>
+              <div class="col-sm-6">
+                   {{status}}
+              </div>
+            </div>
+        
+    
+            </div>
+      <div class="modal-footer">
+      <button type="submit" class="btn btn-primary btn-sm" (click)="reschedule()">Reschedule</button>
+      <button type="button" class="btn btn-danger btn-sm" (click)="cancelStatus()">Cancel</button>
+
+</div>
+    </div>
+  </div>
+</div>
+ 

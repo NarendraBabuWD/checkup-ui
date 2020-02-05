@@ -1,0 +1,25 @@
+.alert{
+    margin-top: 5px;
+}
+.logo-icon{
+    width: 100px;
+    height: 100px;
+}
+.text-center{
+    text-align: center;
+}
+.card-header{
+    background-color: #ffffff;
+}
+.signupLink{
+    color: #83559D;
+    font-weight: 600;
+    cursor: pointer;
+}
+.card{
+    border-radius: 5px !important;
+}
+
+.btn.disabled:hover, .btn:disabled:hover {
+    color: #fff !important;
+}

@@ -1,0 +1,32 @@
+<div class="container">
+  <h3>Request Patients</h3><br>
+
+  <form  class="form-horizontal" [formGroup]="claimRequest"
+  (ngSubmit)="onSubmit(claimRequest)" >
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">Patient</label>
+    <div class="col-sm-4 row">
+    <select class="form-control form-control-lg" formControlName="patient">
+      <option>Select</option>
+      <option *ngFor="let item of filterPatientList" value="{{item.patient}}">{{item.value}}</option>
+    </select>
+  </div>
+</div>
+ 
+
+  <br>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" value="">
+      I understand that i make sure to treat my patients before procedding to claim
+    </label>
+  </div>
+  <div class="row">
+    <div class="p-2 bd-highlight"><a routerLink="/claim-submission"> <button class="genbtn">Cancel Request</button></a>
+    </div>
+    <div class="p-2 bd-highlight">  <button type="submit" class="genbtn">Request Patients</button>
+    </div>
+    </div></form>
+  </div>
+
+   

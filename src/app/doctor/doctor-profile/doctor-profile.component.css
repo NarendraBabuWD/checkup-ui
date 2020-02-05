@@ -1,0 +1,28 @@
+.form-control {
+    outline: none;
+    border-width: 0 0 2px;
+    border-color: #EAEAEA;
+    display: block;
+    width: 100%;
+    padding: 6px 12px;
+    border-radius: 4px;
+    background: transparent;
+}
+.formBox {
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.24), 0 0 2px rgba(0, 0, 0, 0.12);
+    padding: 10px;
+    margin: 25px 0px;
+}
+.data-control{
+    width: 100%;
+    padding: 0px 0px !important;
+    height: 25px;
+}
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    width: 100%;
+}
+  

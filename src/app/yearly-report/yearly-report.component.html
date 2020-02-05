@@ -1,0 +1,65 @@
+<div class="container-fluid">
+  <h2 class="text-center">YEARLY REPORT</h2>
+  <div class="card-box" *ngIf='finalArr.length > 0'>
+      <div class="table-responsive">
+              <!-- <table class="table">
+                  <thead>
+                      <tr class="text-center">
+                          <th>Vital Name</th>
+                          <th>Quater 1</th>
+                          <th>Quater 2</th>
+                          <th>Quater 3</th>
+                          <th >Quater 4</th>
+                          <th >Performance</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                     
+                    </tbody>
+              </table> -->
+              
+              <table class="table">
+                <col>
+                <colgroup span="2"> </colgroup>
+                <colgroup span="2"></colgroup>
+                <tr>
+                  <td rowspan="2"><b>Vital Name</b></td>
+                  <th colspan="2" scope="colgroup">Quarter 1</th>
+                  <th colspan="2" scope="colgroup">Quarter 2</th>
+                  <th colspan="2" scope="colgroup">Quarter 3</th>
+                  <th colspan="2" scope="colgroup">Quarter 4</th>
+
+                </tr>
+                <tr>
+                  <th scope="col" colspan="2">Jan-Mar</th>
+                  <th scope="col" colspan="2">Apr-Jun</th>
+                  <th scope="col" colspan="2">Jul-Sep</th>
+                  <th scope="col" colspan="2">Oct-Dec</th>
+                </tr>
+                <tr *ngFor="let item of finalArr">
+                  <th scope="row">{{item.vital}}</th>
+                  <td>{{item.quarter1 ? (item.quarter1 != null ? item.quarter1 : '0.0') : '-'}}</td>
+                  <td>{{item.quarter1 ? (item.quarter1 != null ? (item.quarter1 > 0 ? 'Target Reached' : 'Target Outside' ): '0.0') : '-'}}</td>
+                  <td>{{item.quarter2 ? (item.quarter2 != null ? item.quarter2 : '0.0') : '-'}}</td>
+                  <td>{{item.quarter2 ? (item.quarter2 != null ? (item.quarter2 > 0 ? 'Target Reached' : 'Target Outside' ): '0.0') : '-'}}</td>
+                  <td>{{item.quarter3 ? (item.quarter3 != null ? item.quarter3 : '0.0') : '-'}}</td>
+                  <td>{{item.quarter3 ? (item.quarter3 != null ? (item.quarter3 > 0 ? 'Target Reached' : 'Target Outside' ): '0.0') : '-'}}</td>
+                  <td>{{item.quarter4 ? (item.quarter4 != null ? item.quarter4 : '0.0') : '-'}}</td>
+                  <td>{{item.quarter4 ? (item.quarter4 != null ? (item.quarte4 > 0 ? 'Target Reached' : 'Target Outside' ): '0.0') : '-'}}</td>
+                </tr>
+                <!-- <tr>
+                  <th scope="row">Board Games</th>
+                  <td>10,000</td>
+                  <td>5,000</td>
+                  <td>12,000</td>
+                  <td>9,000</td>
+                </tr> -->
+              </table>
+              
+          
+      </div>
+  </div>
+  <div *ngIf='finalArr.length === 0'>
+      <b> No Data Available for user id: {{user_id}} </b>
+  </div>
+</div>

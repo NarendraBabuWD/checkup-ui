@@ -1,0 +1,93 @@
+
+  <div class="cbody"> 
+    <div class="container-fluid">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="#">CLAIM HISTORY</a>
+      </li>
+    </ol>
+  
+   
+    </div>
+    <br>
+    
+    <form class="form-horizontal" [formGroup]="historyView"
+          (ngSubmit)="onSubmit(historyView)">
+        
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Date From</label>
+            <div class="col-sm-10">
+                <input type="text"
+                placeholder="Select From Date"
+                class="form-control" formControlName="fromDate"
+                bsDatepicker
+                [bsConfig]="{ adaptivePosition: true }">
+  
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Date To</label>
+            <div class="col-sm-10">
+                <input type="text"
+                placeholder="Select To Date"
+                class="form-control" formControlName="toDate" 
+                bsDatepicker
+                [bsConfig]="{ adaptivePosition: true }">
+  
+            </div>
+          </div>
+      
+    <br>
+    <div class="row">
+      <div class="d-flex bd-highlight mb-3 mx-auto">
+        <div class=" bd-highlight"> <button class="genbtn">Generate</button></div>
+        <div class=" bd-highlight"> <button class="genbtn">Cancel</button></div>
+      </div>
+    </div>
+    </form>
+  
+    
+    <table class="table" *ngIf="listViewUi">
+      <thead>
+        <tr >
+          
+          <th *ngFor="let item1 of TableHeadings">{{item1}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item2 of dataViewList">
+         
+          <td >{{item2.subscriber}}</td>
+          <td >{{item2.mrn}}</td>
+          <td >{{item2.date | date:'y-M-d'}}</td>
+          <td >{{item2.purpos}}</td>
+          <td >{{item2.charge}}</td>
+          <td >{{item2.paid}}</td>
+          <td >{{item2.released}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          <td>Total</td>
+          <td>{{total}}</td>
+          <td>{{totalPaid}}</td>
+          <td></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          <td><button class="btn btn-claim" (click)="print()" type="submit">Print</button></td>
+          <td><button class="btn btn-claim" (click)="cancel()" type="submit">Cancel</button></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  
+    
+ 

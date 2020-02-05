@@ -1,0 +1,48 @@
+<!-- Sidebar -->
+<ul  [ngClass]="{'sidebar navbar-nav' : true, 'toggled' : isSidebarExpanded}">
+  <li class="nav-item active">
+    <a class="nav-link" (click)="sidebarDashboard()">
+      <i class="fas fa-fw fa-tachometer-alt"></i>
+      <span> Dashboard </span>
+    </a>
+  </li>
+  <li class="nav-item dropdown">
+    <a class="nav-link" routerLink="/subscriber/profile" *ngIf="auth.isSubscriber() || auth.isCorporate()">
+      <i class="fa fa-user fa-left"></i><span> Account/ Profile </span>
+    </a>
+    <a class="nav-link" routerLink="/doctor/profile" *ngIf="auth.isDoctor()">
+      <i class="fa fa-user fa-left"></i><span> Account/ Profile </span>
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" routerLink="/notifications" *ngIf="auth.isSubscriber() || auth.isCorporate()">
+      <i class="fa fa-fw fa-chart-area"></i>
+      <span> Notification </span>
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" routerLink="/privacy-policy" *ngIf="auth.isSubscriber() || auth.isCorporate()">
+      <i class="fa fa-lock fa-left"></i><span> Privacy Policy </span>
+    </a>
+    <a class="nav-link" routerLink="/privacy-policy" *ngIf="auth.isDoctor()">
+      <i class="fa fa-lock fa-left"></i><span> Privacy Policy </span>
+    </a>
+  </li>
+  <!-- <li class="nav-item">
+    <a class="nav-link" routerLink="/settings">
+      <i class="fa fa-cog fa-left"></i><span> Setting </span>
+    </a>
+  </li> -->
+  <li class="nav-item">
+    <a class="nav-link" routerLink="/help-support">
+      <i class="fa fa-question-circle fa-left"></i><span> Help & Support </span>
+    </a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link" routerLink="/invite-subscriber" *ngIf="auth.isDoctor()">
+      <i class="fa fa-user-circle fa-left"></i><span> Invite Subscriber </span>
+    </a>
+  </li>
+
+</ul>

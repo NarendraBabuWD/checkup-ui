@@ -1,0 +1,289 @@
+<div class="container-fluid">
+  <!-- Breadcrumbs-->
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <h4>Empanelment Form</h4>
+    </li>
+  </ol>
+  <div class="formBox">
+    <div class="container">
+      <form class="form-horizontal"
+                  (submit)="submitEmpanelment()">
+        
+        <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="first_name" class="col-sm-2 col-form-label">First Name:</label>
+          <div class="col-sm-4 row">
+            <input type="text" name="first_name" [(ngModel)]="form.first_name" class="form-control" placeholder="First Name" />
+            <!-- <div *ngIf="submitted && f.first_name.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.first_name.errors.required">
+                First Name is required
+              </div>
+            </div> -->
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="name" class="col-sm-2 col-form-label">Last Name:</label>
+          <div class="col-sm-4 row">
+            <input type="text" name="last_name" [(ngModel)]="form.last_name" class="form-control" placeholder="Last Name" />
+            <!-- <div *ngIf="submitted && f.last_name.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.last_name.errors.required">
+                Last Name is required
+              </div>
+            </div> -->
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="nationality" class="col-sm-2 col-form-label">Nationality</label>
+          <div class="col-sm-4 row">
+            <input type="text" class="form-control" name="national_id" [(ngModel)]="form.national_id" placeholder="Nationality" />
+            <!-- <div *ngIf="submitted && f.national_id.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.national_id.errors.required">
+                Nationality
+              </div>
+            </div> -->
+          </div>
+        </div>
+        
+        <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="dob" class="col-sm-2 col-form-label">Date of Birth:</label>
+          <div class="col-sm-4 row">
+            <input type="text" class="form-control" name="dob" [(ngModel)]="form.dob" placeholder="Date of Birth" />
+            <!-- <div *ngIf="submitted && f.dob.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.dob.errors.required">
+                DOB is required
+              </div>
+            </div> -->
+          </div>
+        </div>
+
+        <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="gender" class="col-sm-2 col-form-label">Gender:</label>
+          <div class="col-sm-4 row">
+            <input type="text" class="form-control" name="gender" [(ngModel)]="form.gender" placeholder="Gender" />
+            <!-- <div *ngIf="submitted && f.dob.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.dob.errors.required">
+                DOB is required
+              </div>
+            </div> -->
+          </div>
+        </div>
+        
+        <div class="clearfix"></div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">MMA No:</label>
+          <div class="col-sm-4 row">
+            <input type="numeber" class="form-control" name="mma" [(ngModel)]="form.mma" maxlength="15" placeholder="MMA No"/>
+            <!-- <div *ngIf="submitted && f.user_id.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.user_id.errors.required">
+                User_Id is required
+              </div>
+            </div> -->
+          </div>
+        </div>
+
+        <div class="clearfix"></div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">APC No:</label>
+          <div class="col-sm-4 row">
+            <input type="numeber" class="form-control" name="apc" [(ngModel)]="form.apc" maxlength="15" placeholder="APC No"/>
+            <!-- <div *ngIf="submitted && f.user_id.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.user_id.errors.required">
+                User_Id is required
+              </div>
+            </div> -->
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="name" class="col-sm-2 col-form-label">Clinic Type:</label>
+          <div class="col-sm-4 row">
+              <select name="clinic_type" id="clinic_type" class="form-control" name="clinic_type" [(ngModel)]="form.clinic_type" required>
+                 
+                  <option *ngFor="let item of filterClinicList" [value]="item">{{item.value}}</option>
+                  </select>
+            <!-- <input type="text" class="form-control" [(ngModel)]="form.clinic_type" placeholder="Clinic Type" /> -->
+            <!-- <div *ngIf="submitted && f.clinic_type.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.clinic_type.errors.required">
+                Clinic Type is required
+              </div>
+            </div> -->
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="name" class="col-sm-2 col-form-label">Specialization:</label>
+          <div class="col-sm-4 row">
+            <input type="text" class="form-control" name="specialization" [(ngModel)]="form.specialization" placeholder="Specialization" />
+            <!-- <div *ngIf="submitted && f.specialization.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.specialization.errors.required">
+                Specialization is required
+              </div>
+            </div> -->
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="name" class="col-sm-2 col-form-label">Name of Clinic/Hospital:</label>
+          <div class="col-sm-4 row">
+            <input type="text" class="form-control" name="clinic" [(ngModel)]="form.clinic" placeholder="Name of  Clinic / Hospital" />
+            <!-- <div *ngIf="submitted && f.hospital.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.hospital.errors.required">
+                Hospital is required
+              </div>
+            </div> -->
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="name" class="col-sm-2 col-form-label">Hospital License No:</label>
+          <div class="col-sm-4 row">
+            <input type="text" class="form-control" name="hospital_license_no" [(ngModel)]="form.hospital_license_no" placeholder="Clinic / Hospital License No" />
+            <!-- <div *ngIf="submitted && f.hospital.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.hospital.errors.required">
+                Hospital is required
+              </div>
+            </div> -->
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="year_of_registration" class="col-sm-2 col-form-label">Year of Registration:</label>
+          <div class="col-sm-4 row">
+            <input type="text" class="form-control" name="year_of_registration" [(ngModel)]="form.year_of_registration" placeholder="Hospital Registration year" />
+            <!-- <div *ngIf="submitted && f.year_of_registration.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.year_of_registration.errors.required">
+                Year of Registration is required
+              </div>
+            </div> -->
+          </div>
+        </div>
+        
+        <div class="form-group row">
+          <label for="name" class="col-sm-2 col-form-label">Address Of Clinic:</label>
+          <div class="col-sm-4 row">
+            <input type="text" class="form-control" name="address_of_clinic_1" [(ngModel)]="form.address_of_clinic_1" placeholder="Address Of Clinic 1" />
+            <!-- <div *ngIf="submitted && f.address_of_clinic_1.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.address_of_clinic_1.errors.required">
+                Address Of Clinic is required
+              </div>
+            </div> -->
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="name" class="col-sm-2 col-form-label">Address:</label>
+          <div class="col-sm-4 row">
+            <input type="text" class="form-control" name="address_of_clinic_2" [(ngModel)]="form.address_of_clinic_2" placeholder="Address2" />
+            <!-- <div *ngIf="submitted && f.address_2.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.address_2.errors.required">
+                Address2 is required
+              </div>
+            </div> -->
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Postal code:</label>
+          <div class="col-sm-4 row">
+            <input type="tel" class="form-control" name="postcode" [(ngModel)]="form.postcode" placeholder="Postcode" required pattern="^[0-9]{6}$"
+              title="Enter Valid Pin Code">
+            <!-- <div *ngIf="submitted && f.postcode.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.postcode.errors.required">
+                Pincode is required
+              </div>
+            </div> -->
+          </div>
+        </div>
+        
+        <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="state" class="col-sm-2 col-form-label">State:</label>
+          <div class="col-sm-4 row">
+            <input type="text" class="form-control" name="state" [(ngModel)]="form.state" placeholder="State" />
+            <!-- <div *ngIf="submitted && f.state.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.state.errors.required">
+                State is required
+              </div>
+            </div> -->
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="country" class="col-sm-2 col-form-label">Country:</label>
+          <div class="col-sm-4 row">
+            <input type="text" class="form-control" name="country" [(ngModel)]="form.country" placeholder="Country" />
+            <!-- <div *ngIf="submitted && f.country.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.country.errors.required">
+                Country is required
+              </div>
+            </div> -->
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="mobile_no" class="col-sm-2 col-form-label">Phone No:</label>
+          <div class="col-sm-4 row">
+            <input type="tel" class="form-control" name="phone_no" [(ngModel)]="form.phone_no" placeholder="Phone No" maxlength="15" />
+            <!-- <div *ngIf="submitted && f.mobile_no.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.mobile_no.errors.required">
+                Mobile_No No is required
+              </div>
+            </div> -->
+          </div>
+        </div>
+       
+        <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="mobile_no" class="col-sm-2 col-form-label">Mobile No:</label>
+          <div class="col-sm-4 row">
+            <input type="tel" class="form-control" name="mobile_no" [(ngModel)]="form.mobile_no" placeholder="Mobile No" maxlength="15" />
+            <!-- <div *ngIf="submitted && f.mobile_no.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.mobile_no.errors.required">
+                Mobile_No No is required
+              </div>
+            </div> -->
+          </div>
+        </div>
+        
+        <div class="clearfix"></div>
+        <div class="form-group row">
+          <label for="email_id" class="col-sm-2 col-form-label">Email Id:</label>
+          <div class="col-sm-4 row">
+            <input type="email" class="form-control" name="email" [(ngModel)]="form.email" placeholder="Email ID" />
+            <!-- <div *ngIf="submitted && f.mobile_no.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.mobile_no.errors.required">
+                Mobile_No No is required
+              </div>
+            </div> -->
+          </div>
+        </div>
+
+        <div class="row">
+          <span class='col-md-6'>CV's</span>
+          <span><label ><input #resumeRef name="resume" type="file" (change)="( form.resume = resumeRef.files)" ></label></span> 
+       
+        </div>
+        <div class="row">
+          <span class='col-md-6'>Academic and Medical Qualification</span>
+          <span><label ><input #academicRef name="academic" type="file" (change)="( form.academic = academicRef.files)" ></label></span>
+        </div>
+        <div class="row">
+          <span class='col-md-6'>Current Annual Practicing Certificate</span>
+          <span><label ><input #practicingCertificateRef name="practicingCertificate" (change)="( form.practicingCertificate = practicingCertificateRef.files)" type="file" (change)="( form.academic = academicRef.files)"></label></span>
+        </div>
+        <div class="row">
+          <span class='col-md-6'>Current Idemnity Insurance</span>
+          <span><label ><input #insuranceRef name="insurance" (change)="( form.insurance = insuranceRef.files)" type="file"></label></span>
+        </div>
+        <div class="form-group">
+          <div class="row card-body justify-content-center">
+            <button type="submit" class="btn btn-custom-83559D">Submit</button>
+          </div>
+        </div>
+      </form>
+    
+    </div>
+  </div>
+</div>

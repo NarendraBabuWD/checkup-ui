@@ -1,0 +1,75 @@
+<div class="container-fluid">
+    <form  [formGroup]="progressReportForm" (ngSubmit)="onSubmit()">  
+    <div class="form-group row">
+      <label for="" class="col-sm-2 col-form-label">Name :</label>
+      <div class="col-sm-4 row">
+        <input type="text" class="form-control" formControlName="name">
+      </div>
+    </div>
+    <div class="form-group row" [ngClass]="{'div-hide': auth.isDoctor() }">
+      <label for="" class="col-sm-2 col-form-label">MRN :</label>
+      <div class="col-sm-4 row">
+        <input type="text" class="form-control" formControlName="mrn">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="" class="col-sm-2 col-form-label">Date of Birth :</label>
+      <div class="col-sm-4 row">
+        <input type="text" class="form-control" formControlName="dob">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="" class="col-sm-2 col-form-label">ID No :</label>
+      <div class="col-sm-4 row">
+        <input type="text" class="form-control" formControlName="id_no">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="" class="col-sm-2 col-form-label">Age :</label>
+      <div class="col-sm-4 row">
+        <input type="text" class="form-control" formControlName="age">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="" class="col-sm-2 col-form-label">Gender :</label>
+      <div class="col-sm-4 row">
+        <input type="text" class="form-control" formControlName="gender">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="" class="col-sm-2 col-form-label">Entry Date :</label>
+      <div class="col-sm-4 row">
+        <input type="text" class="form-control" formControlName="entry_date">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="" class="col-sm-2 col-form-label">Enter By :</label>
+      <div class="col-sm-4 row">
+        <input type="text" class="form-control" formControlName="entry_by">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="" class="col-sm-2 col-form-label">Risk of Coronary Artery Disease Score :</label>
+      <div class="col-sm-4 row">
+        <input type="text" class="form-control" formControlName="risk_coronary_artery_disease_score">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="" class="col-sm-2 col-form-label">Free Notes :</label>
+      <div class="col-sm-4 row">
+        <!-- <input type="text" class="form-control" formControlName="free_notes"> -->
+        <textarea class="form-control free_notes" rows="4" formControlName="free_notes"></textarea>
+      </div>
+    </div>
+    <div class="form-group" *ngIf="!isViewOnly">
+      <div class="row card-body justify-content-center">
+        <button type="submit" class="btn btn-custom-83559D">{{isEdit ? 'Update':'Create'}}</button>
+      </div>
+      <!-- [disabled]="!subscriberMedicalSummaryForm.valid" -->
+    </div>
+    </form>
+    <!-- <div class="container" *ngIf='userHasProfile'>
+      Your Profile not at created. Please contact your Doctor.
+  </div> -->
+</div>
+

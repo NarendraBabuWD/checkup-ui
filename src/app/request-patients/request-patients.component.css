@@ -1,0 +1,12 @@
+.genbtn {
+  background-color: #7a0046;
+  border: 0px solid transparent;
+  color: white;
+  padding: 7px 70px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px;
+  cursor: pointer;
+}

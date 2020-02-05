@@ -1,0 +1,10 @@
+<app-header *ngIf="auth.isLoggednIn()" (sidebarToggleHandler)="sidebarToggle($event)"></app-header>
+<div id="wrapper">
+    <app-sidebar *ngIf="auth.isLoggednIn()" [isSidebarExpanded]="isSidebarExpanded"></app-sidebar>
+    <!-- Page Content Start-->
+    <div id="content">
+        <app-spinner></app-spinner>
+        <router-outlet></router-outlet>
+    </div>
+    <!-- Page Content End-->
+</div>

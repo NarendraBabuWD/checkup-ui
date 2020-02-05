@@ -1,0 +1,1007 @@
+<div class="health-data-categories row">
+  <div
+    class="col-xs-12 col-md-6 col-lg-6 col-xl-4 col-xl-4 col-sm-6 mb-4"
+    *ngFor="let categoryItem of healthDataService.healthDataCategories"
+    (click)="categoryChangeHandler(categoryItem.category)"
+  >
+    <div class="card text-white o-hidden h-100 health-category" [ngClass]="categoryItemClass(categoryItem.category)" >
+      <div class="card-body align-items-center d-flex justify-content-center">
+        <div class="mr-5">
+          <span
+            class="health-data-category-name text-white text-uppercase m-b-20"
+            >{{ categoryItem.title }}</span
+          >
+          <div class="health-data-category-value">
+            {{ categoryItem.displayValue }}
+          </div>
+        </div>
+        <div class="card-body-icon">
+          <img [src]="categoryItem.icon" class="float-right" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row" *ngIf="auth.isCorporate()">
+<div class="col-xs-12 col-md-6 col-lg-6 col-xl-4 col-sm-6 mb-4">
+  <div class="card text-white bg-blue o-hidden h-100">
+      <div class="card-body align-items-center d-flex justify-content-center">
+          <div class="mr-6">
+              <a routerLink="/subscriber/profile"
+                  class="btn dasbaord-name text-white text-uppercase m-b-20" >
+                 MY SUBSCRIPTION / ACCOUNT</a>
+          </div>
+          
+
+          <!-- <div class="card-body-icon">
+              <img src="assets/images/feedback1.png" class="float-right" />
+          </div> -->
+      </div>
+  </div>
+</div>
+<div class="col-xs-12 col-md-6 col-lg-6 col-xl-4 col-sm-6 mb-4">
+  <div class="card text-white bg-lightGreen o-hidden h-100">
+      <div class="card-body align-items-center d-flex justify-content-center">
+          <div class="mr-6">
+              <a routerLink="/feedback"
+                  class="btn dasbaord-name text-white text-uppercase m-b-20" >
+                 FEEDBACK</a>
+          </div>
+          
+
+          <!-- <div class="card-body-icon">
+              <img src="assets/images/2-02.png" class="float-right" />
+          </div> -->
+      </div>
+  </div>
+</div>
+<div class="col-xs-12 col-md-6 col-lg-6 col-xl-4 col-sm-6 mb-4">
+  <div class="card text-white bg-perpule o-hidden h-100">
+      <div class="card-body align-items-center d-flex justify-content-center">
+          <div class="mr-6">
+              <a routerLink="/healthInfoBits"
+                  class="btn dasbaord-name text-white text-uppercase m-b-20" >
+                  HEALTH INFO BITS</a>
+          </div>
+          
+
+          <!-- <div class="card-body-icon">
+              <img src="assets/images/2-02.png" class="float-right" />
+          </div> -->
+      </div>
+  </div>
+</div>
+</div>
+
+<!-- <div class="row">
+  <div class="col-xs-12 col-md-6 col-lg-6 col-xl-4 col-sm-6 ml-3 mb-4 card bg-blue">
+    <div class="card-body">
+        <p class="text-white text-uppercase m-b-20"></p>
+       
+        <div class="text-white text-uppercase m-b-20">
+            <a routerLink="/feedback" class="text-white text-uppercase m-b-20"
+                >
+                FEEDBACK
+            </a>
+        </div>
+    </div>
+</div>
+</div> -->
+<div [ngSwitch]="selectedCategory">
+  <ng-container *ngSwitchCase="'bp'">
+    <ng-container *ngTemplateOutlet="bpBlock
+    "></ng-container>
+  </ng-container>
+  <ng-container *ngSwitchCase="'body_measurement'">
+    <ng-container *ngTemplateOutlet="bodyMesurementBlock"></ng-container>
+  </ng-container>
+  <ng-container *ngSwitchCase="'heart_rate'">
+    <ng-container *ngTemplateOutlet="heartRateBlock"></ng-container>
+  </ng-container>
+  <ng-container *ngSwitchCase="'sleep_pattern'">
+    <ng-container *ngTemplateOutlet="sleepPatternBlock"></ng-container>
+  </ng-container>
+  <ng-container *ngSwitchCase="'activity'">
+    <ng-container *ngTemplateOutlet="activityBlock"></ng-container>
+  </ng-container>
+  <ng-container *ngSwitchCase="'spo2'">
+    <ng-container *ngTemplateOutlet="spo2Block"></ng-container>
+  </ng-container>
+</div>
+
+<ng-template #bpBlock>
+  <h4 class="block-title">BLOOD PRESSURE</h4>
+  <app-filter
+    (filterResultChange)="filterResultChangeHandler($event)"
+    [visibleLayoutOptions]="getDisplayLayouts()"
+  ></app-filter>
+  <div class="date-range">
+    <div *ngIf = "selectedLayoutOption === 'day'" class="form-group daily-datepicker">
+     <span class="fa fa-calendar form-control-icon calender-icon"></span>
+      <input type="text"
+           placeholder="select date"
+           class="form-control input-datepicker"
+           bsDatepicker
+           #dp="bsDatepicker"
+           [maxDate] = "today"
+           [(ngModel)] = "startDate"
+           (bsValueChange)="dailyDateChangeHandler($event)"
+           [bsConfig]="{ adaptivePosition: true }" />
+    </div>
+    <div *ngIf = "selectedLayoutOption !== 'day'" class="form-group daterange-datepicker">
+      <span class="fa fa-calendar form-control-icon calender-icon"></span>
+      <input type="text"
+           placeholder="select date"
+           class="form-control input-datepicker"
+           bsDaterangepicker
+           #dp="bsDaterangepicker"
+           [maxDate] = "today"
+           [(ngModel)] = "dateRange"
+           (bsValueChange)="$event ? changeDateRangeHandler($event) : null"
+           [bsConfig]="{ adaptivePosition: true }" />
+    </div>
+    
+  </div>
+  <ng-container *ngTemplateOutlet="bpContentView"></ng-container>
+</ng-template>
+
+<ng-template #bpContentView>
+  <div [ngSwitch]="selectedToggleOption">
+    <ng-container *ngSwitchCase="'list'">
+      <ng-container *ngTemplateOutlet="bpContentListView"></ng-container>
+    </ng-container>
+    <ng-container *ngSwitchCase="'chart'">
+      <ng-container *ngTemplateOutlet="bpContentChartView"></ng-container>
+    </ng-container>
+  </div>
+</ng-template>
+
+<ng-template #bpContentListView>
+  <div
+    *ngIf="healthDataService.healthData.length === 0; else bpContentListTable"
+  >
+    <div class="empty-msg">No data available</div>
+  </div>
+  <ng-template #bpContentListTable>
+    <div [ngSwitch]="selectedLayoutOption">
+      <ng-container *ngSwitchCase="'day'">
+        <ng-container
+          *ngTemplateOutlet="bpContentDailyListTable"
+        ></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="'week'">
+        <ng-container
+          *ngTemplateOutlet="bpContentOtherListTable"
+        ></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="'month'">
+        <ng-container
+          *ngTemplateOutlet="bpContentOtherListTable"
+        ></ng-container>
+      </ng-container>
+    </div>
+  </ng-template>
+</ng-template>
+<ng-template #bpContentDailyListTable>
+  <table class="table table-striped bpDailyListTable" infiniteScroll [infiniteScrollDistance]="1"  (scrolled)="onScroll()" [scrollWindow]= "true" [infiniteScrollDisabled] = "!healthDataService.hasMoreHealthData">
+    <thead>
+      <th scope="col">Time</th>
+      <th scope="col">Systolic BP mmHg</th>
+      <th scope="col">Diastolic BP mmHg</th>
+      <th scope="col">BP Category</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let healthData of healthDataService.healthData">
+        <td>{{ healthData.date | slice: 11:19 }}</td>
+        <td>{{ healthData.sys }}</td>
+        <td>{{ healthData.dia }}</td>
+        <td>
+          {{ findBpCategory(healthData.sys, healthData.dia) }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</ng-template>
+<ng-template #bpContentOtherListTable>
+  <table
+    class="table table-striped bpOtherListTable"
+    *ngFor="let healthData of healthDataService.healthData"
+  >
+    <thead>
+      <th scope="col">Type</th>
+      <th scope="col">Systolic BP mmHg</th>
+      <th scope="col">Diastolic BP mmHg</th>
+      <!-- <th scope="col">BP Category</th> -->
+    </thead>
+    <tbody>
+      <tr>
+        <td>Average</td>
+        <td>{{ healthData.sys | number:'1.0-0' }}</td>
+        <td>{{ healthData.dia | number:'1.0-0' }}</td>
+        <!-- <td>
+          {{ findBpCategory(healthData.sys, healthData.dia) }}
+        </td> -->
+      </tr>
+      <tr>
+        <td>Minimum</td>
+        <td>{{ healthData.min_sys | number:'1.0-0' }}</td>
+        <td>{{ healthData.min_dia | number:'1.0-0'}}</td>
+        <!-- <td>
+          {{ findBpCategory(healthData.min_sys, healthData.min_dia) }}
+        </td> -->
+      </tr>
+      <tr>
+        <td>Maximum</td>
+        <td>{{ healthData.max_sys | number:'1.0-0' }}</td>
+        <td>{{ healthData.max_dia | number:'1.0-0' }}</td>
+        <!-- <td>
+          {{ findBpCategory(healthData.max_sys, healthData.max_dia) }}
+        </td> -->
+      </tr>
+      <tr>
+        <td>Median</td>
+        <td>{{ healthData.median_sys | number:'1.0-0' }}</td>
+        <td>{{ healthData.median_dia | number:'1.0-0'}}</td>
+        <!-- <td>
+          {{ findBpCategory(healthData.median_sys, healthData.median_dia) }}
+        </td> -->
+      </tr>
+      <tr>
+        <td>Mode</td>
+        <td>{{ healthData.mode_sys | number:'1.0-0' }}</td>
+        <td>{{ healthData.mode_dia | number:'1.0-0'}}</td>
+        <!-- <td>
+          {{ findBpCategory(healthData.mode_sys, healthData.mode_dia) }}
+        </td> -->
+      </tr>
+    </tbody>
+  </table>
+</ng-template>
+
+<ng-template #bpContentChartView>
+  <div *ngIf="healthDataService.healthData.length === 0; else bpChartView">
+    <div class="empty-msg">No data available</div>
+  </div>
+  <ng-template #bpChartView>
+    <chart-multi-line
+      [selectedFilterOption]="selectedLayoutOption"
+       
+    ></chart-multi-line>
+  </ng-template>
+</ng-template>
+
+
+
+
+
+
+<ng-template #spo2Block>
+  <h4 class="block-title">SPO2</h4>
+  <app-filter
+    (filterResultChange)="filterResultChangeHandler($event)"
+    [visibleLayoutOptions]="getDisplayLayouts()"
+  ></app-filter>
+  <div class="date-range">
+    <div *ngIf = "selectedLayoutOption === 'day'" class="form-group daily-datepicker">
+     <span class="fa fa-calendar form-control-icon calender-icon"></span>
+      <input type="text"
+           placeholder="select date"
+           class="form-control input-datepicker"
+           bsDatepicker
+           #dp="bsDatepicker"
+           [maxDate] = "today"
+           [(ngModel)] = "startDate"
+           (bsValueChange)="dailyDateChangeHandler($event)"
+           [bsConfig]="{ adaptivePosition: true }" />
+    </div>
+    <div *ngIf = "selectedLayoutOption !== 'day'" class="form-group daterange-datepicker">
+      <span class="fa fa-calendar form-control-icon calender-icon"></span>
+      <input type="text"
+           placeholder="select date"
+           class="form-control input-datepicker"
+           bsDaterangepicker
+           #dp="bsDaterangepicker"
+           [maxDate] = "today"
+           [(ngModel)] = "dateRange"
+           (bsValueChange)="$event ? changeDateRangeHandler($event) : null"
+           [bsConfig]="{ adaptivePosition: true }" />
+    </div>
+    
+  </div>
+  <ng-container *ngTemplateOutlet="spo2ContentView"></ng-container>
+</ng-template>
+
+
+
+
+<ng-template #spo2ContentView>
+  <div
+    *ngIf="healthDataService.healthData.length === 0; else spo2ContentListTable"
+  >
+    <div class="empty-msg">No data available</div>
+  </div>
+  <ng-template #spo2ContentListTable>
+    <div [ngSwitch]="selectedLayoutOption">
+      <ng-container *ngSwitchCase="'day'">
+        <ng-container
+          *ngTemplateOutlet="spo2ContentDailyListTable"
+        ></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="'week'">
+        <ng-container
+          *ngTemplateOutlet="spo2ContentOtherListTable"
+        ></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="'month'">
+        <ng-container
+          *ngTemplateOutlet="spo2ContentOtherListTable"
+        ></ng-container>
+      </ng-container>
+    </div>
+  </ng-template>
+</ng-template>
+<ng-template #spo2ContentDailyListTable>
+  <table class="table table-striped spo2DailyListTable" infiniteScroll [infiniteScrollDistance]="1"  (scrolled)="onScroll()" [scrollWindow]= "true" [infiniteScrollDisabled] = "!healthDataService.hasMoreHealthData">
+    <thead>
+      <th scope="col">Time</th>
+      <th scope="col">Result</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let healthData of healthDataService.healthData">
+        <td>{{ healthData.date | slice: 11:19 }}</td>
+        <td>{{ healthData.spo2 }}</td>
+        
+        <td>
+          {{ findBpCategory(healthData.sys, healthData.dia) }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</ng-template>
+<ng-template #spo2ContentOtherListTable>
+  <table
+    class="table table-striped spo2OtherListTable"
+    *ngFor="let healthData of healthDataService.healthData"
+  >
+    <thead>
+      <th scope="col">Type</th>
+      <th scope="col">Result</th>
+      
+     
+    </thead>
+    <tbody>
+      <tr>
+        <td>Average</td>
+        <td>{{ healthData.spo2 | number:'1.0-0' }} %</td>
+
+      </tr>
+      <tr>
+        <td>Minimum</td>
+        <td>{{ healthData.min_spo2 | number:'1.0-0' }} %</td>
+        
+      </tr>
+      <tr>
+        <td>Maximum</td>
+        <td>{{ healthData.max_spo2 | number:'1.0-0' }} %</td>
+        
+      </tr>
+      <tr>
+        <td>Median</td>
+        <td>{{ healthData.median_spo2 | number:'1.0-0' }} %</td>
+       
+      </tr>
+      <tr>
+        <td>Mode</td>
+        <td>{{ healthData.mode_spo2 | number:'1.0-0' }} %</td>
+        
+      </tr>
+    </tbody>
+  </table>
+</ng-template>
+
+<ng-template #spo2ContentChartView>
+  <div *ngIf="healthDataService.healthData.length === 0; else bpChartView">
+    <div class="empty-msg">No data available</div>
+  </div>
+  <ng-template #spo2ChartView>
+    <chart-multi-line
+      [selectedFilterOption]="selectedLayoutOption"
+       
+    ></chart-multi-line>
+  </ng-template>
+</ng-template>
+
+
+
+<ng-template #bodyMesurementBlock>
+  <h4 class="block-title">BODY MEASUREMENT</h4>
+  <app-filter
+    (filterResultChange)="filterResultChangeHandler($event)"
+    [visibleLayoutOptions]="getDisplayLayouts()"
+  ></app-filter>
+
+      <div class="date-range">
+    <div *ngIf = "selectedLayoutOption === 'day'" class="form-group daily-datepicker">
+     <span class="fa fa-calendar form-control-icon calender-icon"></span>
+      <input type="text"
+           placeholder="select date"
+           class="form-control input-datepicker"
+           bsDatepicker
+           #dp="bsDatepicker"
+           [maxDate] = "today"
+           [(ngModel)] = "startDate"
+           (bsValueChange)="dailyDateChangeHandler($event)"
+           [bsConfig]="{ adaptivePosition: true }" />
+    </div>
+    <div *ngIf = "selectedLayoutOption !== 'day'" class="form-group daterange-datepicker">
+      <span class="fa fa-calendar form-control-icon calender-icon"></span>
+      <input type="text"
+           placeholder="select date"
+           class="form-control input-datepicker"
+           bsDaterangepicker
+           #dp="bsDaterangepicker"
+           [maxDate] = "today"
+           [(ngModel)] = "dateRange"
+           (bsValueChange)="$event ? changeDateRangeHandler($event) : null"
+           [bsConfig]="{ adaptivePosition: true }" />
+    </div>
+    
+  </div>
+  <ng-container *ngTemplateOutlet="bodyMesurementContentView"></ng-container>
+</ng-template>
+<ng-template #bodyMesurementContentView>
+  <div [ngSwitch]="selectedToggleOption">
+    <ng-container *ngSwitchCase="'list'">
+      <ng-container
+        *ngTemplateOutlet="bodyMesurementContentListView"
+      ></ng-container>
+    </ng-container>
+    <ng-container *ngSwitchCase="'chart'">
+      <ng-container
+        *ngTemplateOutlet="bodyMesurementContentChartView"
+      ></ng-container>
+    </ng-container>
+  </div>
+</ng-template>
+
+<ng-template #bodyMesurementContentListView>
+  <div
+    *ngIf="
+      healthDataService.healthData.length === 0;
+      else bodyMesurementContentListTable
+    "
+  >
+    <div class="empty-msg">No data available</div>
+  </div>
+  <ng-template #bodyMesurementContentListTable>
+    <div [ngSwitch]="selectedLayoutOption">
+      <ng-container *ngSwitchCase="'day'">
+        <ng-container
+          *ngTemplateOutlet="bodyMesurementContentDailyListTable"
+        ></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="'week'">
+        <ng-container
+          *ngTemplateOutlet="bodyMesurementContentOthersListTable"
+        ></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="'month'">
+        <ng-container
+          *ngTemplateOutlet="bodyMesurementContentOthersListTable"
+        ></ng-container>
+      </ng-container>
+    </div>
+  </ng-template>
+</ng-template>
+
+<ng-template #bodyMesurementContentDailyListTable>
+  <table class="table table-striped body-measurement"
+  infiniteScroll [infiniteScrollDistance]="1"  (scrolled)="onScroll()" [scrollWindow]= "true" [infiniteScrollDisabled] = "!healthDataService.hasMoreHealthData"
+  >
+    <thead>
+      <th scope="col">Time</th>
+      <th scope="col">Body weight(kg)</th>
+      <th scope="col">BMI</th>
+      <th scope="col">Fat %</th>
+      <th scope="col">Muscle</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let healthData of healthDataService.healthData">
+        <td>{{ healthData.date | slice: 11:19 }}</td>
+        <td>{{ healthData.body_weight }}</td>
+        <td>{{ healthData.bmi }}</td>
+        <td>{{ healthData.fat }}</td>
+        <td>{{ healthData.muscle }}</td>
+      </tr>
+    </tbody>
+  </table>
+</ng-template>
+<ng-template #bodyMesurementContentOthersListTable>
+  <table
+    class="table table-striped bpOtherListTable"
+    *ngFor="let healthData of healthDataService.healthData">
+    <thead>
+      <th scope="col">Type</th>
+      <th scope="col">Body weight(kg)</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Average</td>
+        <td>{{ healthData.body_weight }}</td>
+      </tr>
+      <tr>
+        <td>Minimum</td>
+        <td>{{ healthData.min_body_weight }}</td>
+      </tr>
+      <tr>
+        <td>Maximum</td>
+        <td>{{ healthData.max_body_weight  }}</td>
+      </tr>
+      <tr>
+        <td>Median</td>
+        <td>{{ healthData.median_body_weight }}</td>
+      </tr>
+      <tr>
+        <td>Mode</td>
+        <td>{{ healthData.mode_body_weight  }}</td>
+      </tr>
+    </tbody>
+  </table>
+</ng-template>
+
+<ng-template #bodyMesurementContentChartView>
+  <div
+    *ngIf="
+      healthDataService.healthData.length === 0;
+      else bodyMesurementChartView
+    "
+  >
+    <div class="empty-msg">No data available</div>
+  </div>
+  <ng-template #bodyMesurementChartView>
+    <chart-multi-line
+      [selectedFilterOption]="selectedLayoutOption"
+       
+    ></chart-multi-line>
+  </ng-template>
+</ng-template>
+
+<ng-template #heartRateBlock>
+  <h4 class="block-title">HEART RATE</h4>
+  <app-filter
+    (filterResultChange)="filterResultChangeHandler($event)"
+    [visibleLayoutOptions]="getDisplayLayouts()"
+  ></app-filter>
+ 
+      <div class="date-range">
+    <div *ngIf = "selectedLayoutOption === 'day'" class="form-group daily-datepicker">
+     <span class="fa fa-calendar form-control-icon calender-icon"></span>
+      <input type="text"
+           placeholder="select date"
+           class="form-control input-datepicker"
+           bsDatepicker
+           #dp="bsDatepicker"
+           [maxDate] = "today"
+           [(ngModel)] = "startDate"
+           (bsValueChange)="dailyDateChangeHandler($event)"
+           [bsConfig]="{ adaptivePosition: true }" />
+    </div>
+    <div *ngIf = "selectedLayoutOption !== 'day'" class="form-group daterange-datepicker">
+      <span class="fa fa-calendar form-control-icon calender-icon"></span>
+      <input type="text"
+           placeholder="select date"
+           class="form-control input-datepicker"
+           bsDaterangepicker
+           #dp="bsDaterangepicker"
+           [maxDate] = "today"
+           [(ngModel)] = "dateRange"
+           (bsValueChange)="$event ? changeDateRangeHandler($event) : null"
+           [bsConfig]="{ adaptivePosition: true }" />
+    </div>
+    
+  </div>
+  <ng-container *ngTemplateOutlet="heartRateContentView"></ng-container>
+</ng-template>
+<ng-template #heartRateContentView>
+  <div [ngSwitch]="selectedToggleOption">
+    <ng-container *ngSwitchCase="'list'">
+      <ng-container *ngTemplateOutlet="heartRateContentListView"></ng-container>
+    </ng-container>
+    <ng-container *ngSwitchCase="'chart'">
+      <ng-container
+        *ngTemplateOutlet="heartRateContentChartView"
+      ></ng-container>
+    </ng-container>
+  </div>
+</ng-template>
+
+<ng-template #heartRateContentListView>
+  <div
+    *ngIf="
+      healthDataService.healthData.length === 0;
+      else heartRateContentListTable
+    "
+  >
+    <div class="empty-msg">No data available</div>
+  </div>
+  <ng-template #heartRateContentListTable>
+    <div [ngSwitch]="selectedLayoutOption">
+      <ng-container *ngSwitchCase="'day'">
+        <ng-container
+          *ngTemplateOutlet="heartRateContentDailyListTable"
+        ></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="'week'">
+        <ng-container
+          *ngTemplateOutlet="heartRateContentOthersListTable"
+        ></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="'month'">
+        <ng-container
+          *ngTemplateOutlet="heartRateContentOthersListTable"
+        ></ng-container>
+      </ng-container>
+    </div>
+  </ng-template>
+  <ng-template #heartRateContentDailyListTable>
+    <table class="table table-striped body-measurement" infiniteScroll [infiniteScrollDistance]="1"  (scrolled)="onScroll()" [scrollWindow]= "true" [infiniteScrollDisabled] = "!healthDataService.hasMoreHealthData">
+      <thead>
+        <th scope="col">Time</th>
+        <th scope="col">Heart rate(bpm)</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let healthData of healthDataService.healthData">
+          <td>{{ healthData.date | slice: 11:19 }}</td>
+          <td>{{ healthData.heart_rate | number:'1.0-0'}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-template>
+  <ng-template #heartRateContentOthersListTable>
+    <table
+      class="table table-striped bpOtherListTable"
+      *ngFor="let healthData of healthDataService.healthData"
+    >
+      <thead>
+        <th scope="col">Type</th>
+        <th scope="col">Heart rate(bpm)</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Average</td>
+          <td>{{ healthData.heart_rate | number:'1.0-0' }}</td>
+        </tr>
+        <tr>
+          <td>Minimum</td>
+          <td>{{ healthData.min_heart_rate | number:'1.0-0' }}</td>
+        </tr>
+        <tr>
+          <td>Maximum</td>
+          <td>{{ healthData.max_heart_rate | number:'1.0-0' }}</td>
+        </tr>
+        <tr>
+          <td>Median</td>
+          <td>{{ healthData.median_heart_rate | number:'1.0-0' }}</td>
+        </tr>
+        <tr>
+          <td>Mode</td>
+          <td>{{ healthData.mode_heart_rate | number:'1.0-0' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-template>
+</ng-template>
+<ng-template #heartRateContentChartView>
+  <div
+    *ngIf="healthDataService.healthData.length === 0; else heartRateChartView"
+  >
+    <div class="empty-msg">No data available</div>
+  </div>
+  <ng-template #heartRateChartView>
+    <chart-multi-line [selectedFilterOption]="selectedLayoutOption"  >
+    </chart-multi-line>
+  </ng-template>
+</ng-template>
+
+  <ng-template #sleepPatternBlock>
+    <h4 class="block-title">SLEEP PATTERN</h4>
+    <app-filter
+      (filterResultChange)="filterResultChangeHandler($event)"
+      [visibleLayoutOptions]="getDisplayLayouts()"
+    ></app-filter>
+    
+  <div class="date-range">
+    <div *ngIf = "selectedLayoutOption === 'day'" class="form-group daily-datepicker">
+     <span class="fa fa-calendar form-control-icon calender-icon"></span>
+      <input type="text"
+           placeholder="select date"
+           class="form-control input-datepicker"
+           bsDatepicker
+           #dp="bsDatepicker"
+           [maxDate] = "today"
+           [(ngModel)] = "startDate"
+           (bsValueChange)="dailyDateChangeHandler($event)"
+           [bsConfig]="{ adaptivePosition: true }" />
+    </div>
+    <div *ngIf = "selectedLayoutOption !== 'day'" class="form-group daterange-datepicker">
+      <span class="fa fa-calendar form-control-icon calender-icon"></span>
+      <input type="text"
+           placeholder="select date"
+           class="form-control input-datepicker"
+           bsDaterangepicker
+           #dp="bsDaterangepicker"
+           [maxDate] = "today"
+           [(ngModel)] = "dateRange"
+           (bsValueChange)="$event ? changeDateRangeHandler($event) : null"
+           [bsConfig]="{ adaptivePosition: true }" />
+    </div>
+    
+  </div>
+    <ng-container *ngTemplateOutlet="sleepPatternContentView"></ng-container>
+  </ng-template>
+  <ng-template #sleepPatternContentView>
+    <div [ngSwitch]="selectedToggleOption">
+      <ng-container *ngSwitchCase="'list'">
+        <ng-container
+          *ngTemplateOutlet="sleepPatternContentListView"
+        ></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="'chart'">
+        <ng-container
+          *ngTemplateOutlet="sleepPatternContentChartView"
+        ></ng-container>
+      </ng-container>
+    </div>
+  </ng-template>
+
+  <ng-template #sleepPatternContentListView>
+    <div *ngIf="healthDataService.healthData.length > 0; else sleepPatternErrorMsg">
+      <div [ngSwitch]="selectedLayoutOption">
+        <ng-container *ngSwitchCase="'day'">
+          <ng-container
+            *ngTemplateOutlet="sleepPatternContentDailyListTable"
+          ></ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="'week'">
+          <ng-container
+            *ngTemplateOutlet="sleepPatternContentOthersListTable"
+          ></ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="'month'">
+          <ng-container
+            *ngTemplateOutlet="sleepPatternContentOthersListTable"
+          ></ng-container>
+        </ng-container>
+      </div>
+    </div>
+          <ng-template #sleepPatternErrorMsg>
+                <div class="empty-msg">No data available</div>
+          </ng-template>
+  </ng-template>
+  <ng-template #sleepPatternContentDailyListTable>
+    <table class="table table-striped sleep_pattern">
+      <tbody>
+        <tr>
+          <td>Sleep Patten(hrs)</td>
+          <td>
+            {{ (healthDataService.healthData[0].sleep_hours ?
+                healthDataService.healthData[0].sleep_hours
+              : 0) | number:'1.0-0'
+            }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-template>
+  <ng-template #sleepPatternContentOthersListTable>
+    <table
+      class="table table-striped sleep_pattern"
+      *ngFor="let healthData of healthDataService.healthData"
+    >
+      <thead>
+        <th scope="col">Type</th>
+        <th scope="col">Sleep Patten(hrs)</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Average</td>
+          <td>
+            {{
+              (healthData.sleep_hours
+                ? healthData.sleep_hours 
+                : 0) | number:'1.0-0'
+            }}
+          </td>
+        </tr>
+        <tr>
+          <td>Minimum</td>
+          <td>
+            {{
+              (healthData.min_sleep_hours
+                ? healthData.sleep_hours 
+                : 0) | number:'1.0-0'
+            }}
+          </td>
+        </tr>
+        <tr>
+          <td>Maximum</td>
+          <td>
+            {{
+              (healthData.max_sleep_hours
+                ? healthData.sleep_hours 
+                : 0) | number:'1.0-0'
+            }}
+          </td>
+        </tr>
+        <tr>
+          <td>Median</td>
+          <td>
+            {{
+              (healthData.median_sleep_hours
+                ? healthData.sleep_hours 
+                : 0) | number:'1.0-0'
+            }}
+          </td>
+        </tr>
+        <tr>
+          <td>Mode</td>
+          <td>
+            {{
+              (healthData.mode_sleep_hours
+                ? healthData.sleep_hours 
+                : 0) | number:'1.0-0'
+            }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-template>
+
+
+<ng-template #sleepPatternContentChartView>
+  <div
+  *ngIf="healthDataService.healthData && healthDataService.healthData.length > 0
+      ? true
+      : false;
+    else sleepPatternChartErrorMg
+  ">
+    <chart-multi-line
+      [selectedFilterOption]="selectedLayoutOption"
+       
+    ></chart-multi-line>
+  </div>
+  <ng-template #sleepPatternChartErrorMg>
+        <div class="empty-msg">No data available</div>
+  </ng-template>
+</ng-template>
+<ng-template #activityBlock>
+  <h4 class="block-title">ACTIVITY</h4>
+  <app-filter
+    (filterResultChange)="filterResultChangeHandler($event)"
+    [visibleLayoutOptions]="getDisplayLayouts()"
+  ></app-filter>
+  
+  <div class="date-range">
+    <div *ngIf = "selectedLayoutOption === 'day'" class="form-group daily-datepicker">
+     <span class="fa fa-calendar form-control-icon calender-icon"></span>
+      <input type="text"
+           placeholder="select date"
+           class="form-control input-datepicker"
+           bsDatepicker
+           #dp="bsDatepicker"
+           [maxDate] = "today"
+           [(ngModel)] = "startDate"
+           (bsValueChange)="dailyDateChangeHandler($event)"
+           [bsConfig]="{ adaptivePosition: true }" />
+    </div>
+    <div *ngIf = "selectedLayoutOption !== 'day'" class="form-group daterange-datepicker">
+      <span class="fa fa-calendar form-control-icon calender-icon"></span>
+      <input type="text"
+           placeholder="select date"
+           class="form-control input-datepicker"
+           bsDaterangepicker
+           #dp="bsDaterangepicker"
+           [maxDate] = "today"
+           [(ngModel)] = "dateRange"
+           (bsValueChange)="$event ? changeDateRangeHandler($event) : null"
+           [bsConfig]="{ adaptivePosition: true }" />
+    </div>
+    
+  </div>
+  <ng-container *ngTemplateOutlet="activityContentView"></ng-container>
+</ng-template>
+<ng-template #activityContentView>
+  <div [ngSwitch]="selectedToggleOption">
+    <ng-container *ngSwitchCase="'list'">
+      <ng-container *ngTemplateOutlet="activityContentListView"></ng-container>
+    </ng-container>
+    <ng-container *ngSwitchCase="'chart'">
+      <ng-container *ngTemplateOutlet="activityContentChartView"></ng-container>
+    </ng-container>
+  </div>
+</ng-template>
+
+<ng-template #activityContentListView>
+  <div *ngIf="healthDataService.healthData.length > 0 ; else activityErrorMg">
+    <div [ngSwitch]="selectedLayoutOption">
+            <ng-container *ngSwitchCase="'day'">
+              <ng-container
+                *ngTemplateOutlet="activityDailyListTable"
+              ></ng-container>
+            </ng-container>
+            <ng-container *ngSwitchCase="'week'">
+              <ng-container
+                *ngTemplateOutlet="activityOthersListTable"
+              ></ng-container>
+            </ng-container>
+            <ng-container *ngSwitchCase="'month'">
+              <ng-container
+                *ngTemplateOutlet="activityOthersListTable"
+              ></ng-container>
+            </ng-container>
+          </div>
+  </div>
+  <ng-template #activityDailyListTable>
+        <table class="table table-striped activity">
+                <tbody>
+                  <tr>
+                    <td>Steps</td>
+                    <td>{{ (healthDataService.healthData[0].steps ? healthDataService.healthData[0].steps: 0) | number:'1.0-0'}}</td>
+                  </tr>
+                  <tr>
+                    <td>Calories burnt(kcal)</td>
+                    <td>{{(healthDataService.healthData[0].calories_burt ? healthDataService.healthData[0].calories_burt: 0) | number:'1.0-0'}}</td>
+                  </tr>
+                </tbody>
+              </table>
+      </ng-template>
+
+      <ng-template #activityOthersListTable>
+            <table
+              class="table table-striped activity"
+              *ngFor="let healthData of healthDataService.healthData"
+            >
+              <thead>
+                <th scope="col">Type</th>
+                <th scope="col">Steps</th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Average</td>
+                  <td>{{(healthData.steps ? healthData.steps : 0) | number:'1.0-0'}}</td>
+                </tr>
+                <tr>
+                  <td>Minimum</td>
+                  <td>{{(healthData.min_steps ? healthData.min_steps: 0) | number:'1.0-0'}}</td>
+                </tr>
+                <tr>
+                  <td>Maximum</td>
+                  <td>{{(healthData.max_steps ? healthData.max_steps: 0) | number:'1.0-0'}}</td>
+                </tr>
+                <tr>
+                  <td>Median</td>
+                  <td>{{(healthData.median_steps ? healthData.median_steps: 0) | number:'1.0-0'}}</td>
+                </tr>
+                <tr>
+                  <td>Mode</td>
+                  <td>{{(healthData.mode_steps ? healthData.mode_steps: 0) | number:'1.0-0'}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </ng-template>
+  <ng-template #activityErrorMg>
+    <div class="empty-msg">No data available</div>
+  </ng-template>
+</ng-template>
+
+<ng-template #activityContentChartView>
+  <div *ngIf="healthDataService.healthData.length > 0 ; else activityChartErrorMg">
+    <chart-multi-line
+      [selectedFilterOption]="selectedLayoutOption"
+       
+    ></chart-multi-line>
+  </div>
+    <ng-template #activityChartErrorMg>
+          <div class="empty-msg">No data available</div>
+    </ng-template>
+</ng-template>

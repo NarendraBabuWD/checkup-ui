@@ -1,0 +1,20 @@
+<div class= 'filter'>
+  <div class = 'display-layout-category'>
+    <span class='display-layout-label'>Display layout</span>
+    <span class='display-layout-options'>
+        <span  *ngFor = 'let option of layoutOptions'>
+
+          <label [ngClass]="{'radio-inline layout-option': true, 'selected': option.value === selectedLayoutOption}" >
+              <input type="radio" name="DisplayLayout" value = {{option.value}} (change)="this.displaylayoutChangeHandler($event)" [checked]="selectedLayoutOption === option.value">{{option.displayName}}
+            </label>
+        </span>
+    </span>
+  </div>
+  <div class = 'display-toggle-category'>
+      <span class='display-toggle-label'>Display toggle</span>
+          <label class="radio-inline display-toggle-option" *ngFor= 'let option of toggleOptions'>
+              <input type="radio" name="Displaytoggle" value = {{option.value}} (change)="this.displaytoggleChangeHandler($event)" [checked]="selectedToggleOption === option.value">{{option.label}}
+            </label>
+  </div>
+</div>
+

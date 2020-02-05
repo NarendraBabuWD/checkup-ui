@@ -1,0 +1,40 @@
+.filter{
+    padding: 16px;
+}
+.display-layout-label, .display-toggle-label{
+    display: inline-block;
+    width: 150px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 20px;
+    font-weight: 400;
+    margin-right: 40px;
+}
+.layout-option .radio-inline{
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    font-size: 16px;
+}
+.layout-option input[type="radio"]{
+    display: none;
+}
+.layout-option{
+    display: inline-block;
+    border: 1px solid #FFEB3B;
+    width: 100px!important;
+    text-align: center;
+    margin-right: 16px;
+    background: none;
+}
+.layout-option.selected{
+    background: #FFEB3B;
+}
+.radio-inline.display-toggle-option{
+    font-size: 16px;
+    margin: 0;
+    margin-right: 40px;
+}
+.radio-inline input[type="radio"]{
+    margin-right: 5px;
+}

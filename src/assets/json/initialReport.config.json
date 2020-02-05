@@ -1,0 +1,20 @@
+{
+    "body_weight": "Body Weight",
+    "fat": "Body Fat",
+    "heart_rate": "Heart Rate",
+    "sys": "Systolic",
+    "dia": "Diastolic",
+    "bmi": "Body Mass Index (BMI)",
+    "bmr": "Basal Metabolic Rate (BMR)",
+    "visceral_fat": "Visceral Fat",
+    "moisture":"Body Water",
+    "muscle": "Muscle Mass",
+    "bodyage": "Metabolic Age",
+    "steps": "Average Steps taken",
+    "HBA1C": "Sugar - HBA1C *",
+    "HDL_Cholesterol": "HDL Cholesterol *",
+    "LDL_Cholesterol": "LDL Cholesterol *",
+    "Total_Cholesterol": "Total Cholesterol *",
+    "WHR": "Waist Hip Ratio",
+    "Triglycerides": "Triglycerides"
+    }

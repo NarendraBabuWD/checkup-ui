@@ -1,0 +1,452 @@
+/* You can add global styles to this file, and also import other style files */
+@charset "UTF-8";
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+/* @import “../node_modules/ngx-toastr/toastr.css”; */
+
+
+html {
+  position: relative;
+  min-height: 100%; 
+  }
+
+body {
+  font-size: 0.9rem;
+  font-family: 'Poppins', sans-serif;
+  background: #ffffff;
+  background-image: none;
+  /* padding-bottom: 50px;  */
+}
+.bg-color-whilte{
+    background: #ffffff !important;
+    background-image: none;
+}
+
+.body-bg-color-theme{
+  background-image: linear-gradient(to right, #863695,#DED0E6,#801894) !important;
+}
+.text-white {
+  color: #fff !important;
+}
+
+#wrapper {
+  display: flex;
+  align-items: stretch;
+}
+.btn-custom-83559D{
+  padding: 5px 60px !important;
+  background-color: #83559D !important;
+  color: #fff !important;
+  border-color: #83559D !important;
+}
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+
+#wrapper #content {
+  width: 100%;
+  padding-top: 1rem;
+  padding: 20px;
+  transition: all 0.3s;
+}
+
+.nav-user img{
+  height: 30px;
+  width: 30px;
+}
+
+.card-box{
+  padding: 10px;
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: .25rem;
+  margin: 10px 0px;
+}
+.card-box1{
+  padding: 10px;
+  border: 1px solid rgba(0,0,0,.125);
+  margin: 10px 0px;
+}
+.card-body {
+  padding: 10px;
+}
+.text-size{
+  font-size: 60px;
+}
+.text-size1{
+  font-size: 35px;
+}
+.card-mar{
+  margin-bottom: 18px;
+}
+.bg-primary {
+  background-color: #0f9df7 !important; }
+
+.bg-success {
+  background-color: #1bb99a !important; }
+
+.bg-info {
+  background-color: #3db9dc !important; }
+
+.bg-warning {
+  background-color: #EDBA45 !important; }
+
+.bg-orange {
+  background-color: #F1863E !important; }
+
+.bg-skyBlue {
+  background-color: #64A8A7 !important; }
+
+
+
+.bg-darkBlue {
+  background-color: #7384A0 !important; }
+ 
+ .bg-blue {
+  background-color: #5A45AC !important; }
+ 
+ .bg-green {
+  background-color: #97D156 !important; }
+ 
+ .bg-lightGreen {
+  background-color: #A7D886 !important; }
+ 
+
+.bg-default {
+  background-color: #64b0f2 !important; }
+
+.card-body .dasbaord-name{
+  font-size: 0.9em;
+}
+.card-body-icon img{
+  height: 50px;
+}
+.card img{
+  height: 45px;
+}
+
+
+.breadcrumb {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  list-style: none;
+  background-color: #e9ecef;
+  border-radius: 0.25rem;
+}
+
+.breadcrumb-item + .breadcrumb-item {
+  padding-left: 0.5rem;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  display: inline-block;
+  padding-right: 0.5rem;
+  color: #6c757d;
+  content: "/";
+}
+
+.breadcrumb-item + .breadcrumb-item:hover::before {
+  text-decoration: underline;
+}
+
+.breadcrumb-item + .breadcrumb-item:hover::before {
+  text-decoration: none;
+}
+
+.breadcrumb-item.active {
+  color: #6c757d;
+}
+@media (min-width: 768px) {
+  .card-body .dasbaord-name{
+    font-size: 1.25rem;
+  }
+  .card-body-icon img{
+    /* width: 70px !important; */
+    height: 70px;
+  }
+  
+}
+
+/*---- Granphs CSS Start -----*/
+svg {
+  font-family: 'Poppins', sans-serif;
+}
+.chart-line {
+  stroke-width: 3;
+  fill: none;
+}
+
+.axis path {
+  stroke: black;
+}
+
+.text {
+  font-size: 12px;
+}
+
+.title-text {
+  font-size: 12px;
+}
+#multi-line-chart{
+    text-align: center;
+}
+/*---- Granphs CSS End -----*/
+/*  ================  D3 Tip Css Start============= */
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  position: absolute;
+  pointer-events: none;
+}
+
+/* Northward tooltips */
+.d3-tip.n:after {
+  content: "\25BC";
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+  text-align: center;
+}
+
+/* Eastward tooltips */
+.d3-tip.e:after {
+  content: "\25C0";
+  margin: -4px 0 0 0;
+  top: 50%;
+  left: -8px;
+}
+
+/* Southward tooltips */
+.d3-tip.s:after {
+  content: "\25B2";
+  margin: 0 0 1px 0;
+  top: -8px;
+  left: 0;
+  text-align: center;
+}
+
+/* Westward tooltips */
+.d3-tip.w:after {
+  content: "\25B6";
+  margin: -4px 0 0 -1px;
+  top: 50%;
+  left: 100%;
+}
+/*================  D3 Tip Css end============= */
+
+
+
+.table th{
+  border-top: none !important;
+}
+
+/* Toastr Custom Css Start*/
+
+/* .toast-success {
+  background-color: #51A351 !important;
+}
+.toast-error {
+  background-color: #BD362F !important;
+}
+.toast-info {
+  background-color: #2F96B4 !important;
+}
+.toast-warning {
+  background-color: #F89406 !important;
+} */
+
+/* Toastr Custom Css End*/
+
+/* ============  Modal Dialog css =================== */
+/* .modal.show .modal-dialog{
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+}  */
+
+/* Spinner Css Start */
+.tootlbar-icon {
+    padding: 0 14px;
+  }
+  
+  .tootlbar-spacer {
+    flex: 1 1 auto;
+  }
+  
+  /* Absolute Center Spinner */
+  .loading {
+    position: fixed;
+    z-index: 999;
+    height: 2em;
+    width: 2em;
+    overflow: show;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }
+  
+  /* Transparent Overlay */
+  .loading:before {
+    content: '';
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.3);
+  }
+  
+  /* :not(:required) hides these rules from IE9 and below */
+  .loading:not(:required) {
+    /* hide "loading..." text */
+    font: 0/0 a;
+    color: transparent;
+    text-shadow: none;
+    background-color: transparent;
+    border: 0;
+  }
+  
+  .loading:not(:required):after {
+    content: '';
+    display: block;
+    font-size: 10px;
+    width: 1em;
+    height: 1em;
+    margin-top: -0.5em;
+    -webkit-animation: timer-loader 1500ms infinite linear;
+    -moz-animation: timer-loader 1500ms infinite linear;
+    -ms-animation: timer-loader 1500ms infinite linear;
+    -o-animation: timer-loader 1500ms infinite linear;
+    animation: timer-loader 1500ms infinite linear;
+    border-radius: 0.5em;
+    /* -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+    box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0; */
+  }
+  
+  /* Animation */
+  
+    /* Absolute Center Spinner */
+  .timer-loader  {
+    position: fixed;
+    z-index: 999;
+    width: 48px;
+    height: 48px;
+    overflow: show;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }
+
+@-moz-keyframes timer-loader {
+  0% {
+    -moz-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes timer-loader {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes timer-loader {
+  0% {
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+/* :not(:required) hides this rule from IE9 and below */
+.timer-loader:not(:required) {
+  border: 6px solid #8e24aa;
+  -moz-border-radius: 24px;
+  -webkit-border-radius: 24px;
+  border-radius: 24px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  display: inline-block;
+  text-indent: -9999px;
+}
+.timer-loader:not(:required)::before {
+  -moz-animation: timer-loader 1250ms infinite linear;
+  -webkit-animation: timer-loader 1250ms infinite linear;
+  animation: timer-loader 1250ms infinite linear;
+  -moz-transform-origin: 3px 3px;
+  -ms-transform-origin: 3px 3px;
+  -webkit-transform-origin: 3px 3px;
+  transform-origin: 3px 3px;
+  background: #8e24aa;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  content: '';
+  display: block;
+  position: absolute;
+  width: 6px;
+  height: 19.2px;
+  left: 15px;
+  top: 15px;
+}
+.timer-loader:not(:required)::after {
+  -moz-animation: timer-loader 15000ms infinite linear;
+  -webkit-animation: timer-loader 15000ms infinite linear;
+  animation: timer-loader 15000ms infinite linear;
+  -moz-transform-origin: 3px 3px;
+  -ms-transform-origin: 3px 3px;
+  -webkit-transform-origin: 3px 3px;
+  transform-origin: 3px 3px;
+  background: #8e24aa;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  content: '';
+  display: block;
+  position: absolute;
+  width: 6px;
+  height: 16px;
+  left: 15px;
+  top: 15px;
+}
+/* Spinner css End */
+
+

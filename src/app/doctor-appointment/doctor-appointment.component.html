@@ -1,0 +1,78 @@
+<div class="container-fluid">
+    <ol class="breadcrumb"><li class="breadcrumb-item"> 
+      <h4>Appointment</h4>
+    </li></ol>
+    <div class="row">
+           <div class="col-md-4">
+<span>Doctor Id: {{doctorId}}</span>
+<button type="button" (click)="openModal()" class="ml-3 btn btn-primary btn-sm"><i class="fa fa-plus"></i></button>
+
+           </div>
+           
+           <div class="col-md-6">
+
+            </div>
+    </div>
+    <table    class="table table-bordered" id="example">
+      <thead>
+        <tr>
+          <th>patient Info</th>
+          <th>Slots</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item2 of dataList" class="{{item2.appointement_status}}">
+            <td > {{item2.firstname}} {{item2.lastname}} ({{item2.user_id == null ? '-' : item2.user_id}})</td>            
+            <td >{{item2.appointement_date | date:'d-M-y'}} {{item2.appointement_time}}</td>
+            <td >{{item2.appointement_status == "Requested" ? 'Confirmed' : item2.appointement_status }}</td>
+           </tr>
+        
+        </tbody></table></div>
+  
+
+
+  <div class="modal" id="myModal" [style.display]="showModal ? 'block' : 'none'" style="background: rgba(0, 0, 0, 0.5);">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 id="dialog-nested-name2" class="modal-title pull-left">Appointment</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form class="form-horizontal" [formGroup]="doctorApp"
+        (ngSubmit)="onSubmit(doctorApp)">
+        <div class="modal-body">
+         
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Select Date</label>
+                <div class="col-sm-6">
+                    <input type="text"
+                    placeholder="Select Date"
+                    class="form-control" formControlName="date"
+                    bsDatepicker
+                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }">
+      
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Select Time</label>
+                <div class="col-sm-6">
+                  <input placeholder="Select Time" formControlName="time"
+                  class="form-control" atp-time-picker />
+
+                </div>
+              </div>
+          
+      
+              </div>
+        <div class="modal-footer">
+        <button type="submit"  class="btn btn-primary btn-sm" >Submit</button>
+        <button type="button" class="btn btn-danger btn-sm" (click)="closeModal()">Cancel</button>
+
+</div></form>
+      </div>
+    </div>
+  </div>
+   

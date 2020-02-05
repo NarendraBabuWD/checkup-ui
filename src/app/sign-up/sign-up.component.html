@@ -1,0 +1,86 @@
+<div class="container pt-5">
+    <div class="col-md-4 mx-auto">
+        <div class="card rounded-0">
+            <div class="text-center">
+                <img class="logo-icon" src="assets/images/CheckupAsia.png">
+                <p class="pt-2 pb-2 font-weight-bold">Health Care for you, <br/>by you</p>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="signupForm" (ngSubmit)="signup()">
+                    <div class="form-group">
+                        <label *ngIf='categoryLabel' for="category_name">Category Type:</label>
+                        <select class="form-control" name="category_name" formControlName="category_name" (focus)="categoryLabel = true"
+                            (focusout)="categoryLabel = false" required>
+                            <option [ngValue]="null">Select a Category</option>
+                            <option *ngFor="let category of categoryList" [ngValue]="category.value">
+                                {{ category.name }}
+                            </option>
+                        </select>
+                        <div *ngIf="f.category_name.dirty && f.category_name.invalid" class="alert alert-danger form-group">
+                            <div *ngIf="f.category_name.errors.required">Select any one Category. </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label *ngIf="fnameLabel">First Name</label>
+                        <input (focus)="fnameLabel = true" (focusout)="fnameLabel = false" type="text" formControlName="firstname"
+                            class="form-control" placeholder="First Name" />
+                        <div *ngIf="f.firstname.dirty && f.firstname.invalid" class="alert alert-danger form-group">
+                            <div *ngIf="f.firstname.errors.required">First Name is required</div>
+                            <div *ngIf="f.firstname.errors.minlength">First Name must be at least 4 characters long.</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label *ngIf="lnameLabel">Last Name</label>
+                        <input (focus)="lnameLabel = true" (focusout)="lnameLabel = false" type="text" formControlName="lastname"
+                            class="form-control" placeholder="Last Name" />
+                        <div *ngIf="f.lastname.dirty && f.lastname.invalid" class="alert alert-danger form-group">
+                            <div *ngIf="f.lastname.errors.required">Last Name is required</div>
+                            <div *ngIf="f.lastname.errors.minlength">Last Name is must be at least 4 characters long.</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label *ngIf="emailLabel">Email</label>
+                        <input (focus)="emailLabel = true" (focusout)="emailLabel = false" type="text" formControlName="email"
+                            class="form-control" placeholder="Email" />
+                        <div *ngIf="f.email.dirty && f.email.invalid" class="alert alert-danger form-group">
+                            <div *ngIf="f.email.errors.required">Email is required</div>
+                            <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label *ngIf="passLabel">Password</label>
+                        <input (focus)="passLabel = true" (focusout)="passLabel = false" type="password"
+                            formControlName="password" class="form-control" placeholder="Enter Password" />
+                        <div *ngIf="f.password.dirty && f.password.invalid" class="alert alert-danger form-group">
+                            <div *ngIf="f.password.errors.required">Password is required</div>
+                            <div *ngIf="f.password.errors.minlength">Password must be at least 8 characters</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label *ngIf="cpassLabel" for="pwd">Confirm Password</label>
+                        <input (focus)="cpassLabel = true" (focusout)="cpassLabel = false" placeholder=" Reenter Password"
+                            type="password" formControlName="confirmPassword" class="form-control" />
+                        <div *ngIf="f.confirmPassword.dirty && f.confirmPassword.invalid" class="alert alert-danger form-group">
+                            <div *ngIf="f.confirmPassword.errors.required">Confirm Password is required</div>
+                            <div *ngIf="f.confirmPassword.errors.mustMatch">Passwords must match</div>
+                        </div>
+                    </div>
+                    <!-- <a href="#">Forgot Password</a> -->
+                    <!-- <div class="form-group card-body justify-content-center">
+                        <button type="submit" class="btn btn-custom-83559D float-right" [disabled]="!signupForm.valid">Register</button>
+                    </div> -->
+                    <div class="row card-body justify-content-center pt-3">
+                        <button type="submit" class="btn btn-custom-83559D" [disabled]="!signupForm.valid"> Sign Up</button>
+                    </div>
+                </form>
+            </div>
+            <div class="row card-body justify-content-center pt-5 pb-3">
+                <a class="signupLink" (click)="login()">Login</a>
+            </div>
+        </div>
+    </div>
+</div>
