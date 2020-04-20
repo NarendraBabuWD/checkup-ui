@@ -24,7 +24,7 @@
     },
     "bp": {
         "title": "BLOOD PRESSURE",
-        "input_fields": ["sys", "dia", "min_sys","max_sys","median_sys","mode_sys", "min_dia","max_dia","median_dia","mode_dia"],
+        "input_fields": ["bp", "sys", "dia", "min_sys","max_sys","median_sys","mode_sys", "min_dia","max_dia","median_dia","mode_dia"],
         "icon": "assets/images/2-01.png",
         "display_filter_layout": 
             {
@@ -66,7 +66,7 @@
     },
     "sleep_pattern": {
         "title": "SLEEP PATTERN",
-        "input_fields": ["sleep_minutes","min_sleep_minutes","max_sleep_minutes","median_sleep_minutes","mode_sleep_minutes"],
+        "input_fields": ["sleep_pattern", "sleep_minutes","min_sleep_minutes","max_sleep_minutes","median_sleep_minutes","mode_sleep_minutes"],
         "icon": "assets/images/2-05.png",
         "display_filter_layout": {
             "day": {

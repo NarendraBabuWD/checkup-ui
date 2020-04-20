@@ -1,0 +1,368 @@
+<div class="container-fluid">
+  <!-- Breadcrumbs-->
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <h4>MEDICAL SUMMARY</h4>
+    </li>
+  </ol>
+  <div class="formBox">
+
+<div class="container mx-auto p-5">
+  <div class="card">
+  
+  <div class="card-body">
+  <div class="row">
+  <span class='col-md-8'>
+  
+  <img class="img-responsive col-sm-3" height="100" src="assets/images/icon12.png">
+  
+  </span>
+  <span class='col-md-4'>
+    <p>Created On<span> : </span>{{created}}</p>
+    <p>Name<span> : </span> {{first_name}} {{last_name}} </p>
+    <p>MRN<span> : </span>{{mrn}}</p>
+    <p>Date of Birth<span> : </span>{{dob}}</p>
+    <p>Age<span> : </span>{{age}}</p>
+    <p>ID No<span> : </span>{{id}}</p>
+    <p>Gender<span> : </span>{{gender}}</p>
+  </span>
+  </div>
+  </div>
+<hr />
+  <div class="card-body">
+  <div class="row">
+    <div class="col-md-8">
+      <h4>Significant Medical History</h4>
+
+    <table class="table table-borderless">
+      <thead>
+       
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of smhList">
+          <th scope="row"></th>
+          <td>{{item.name}}</td>
+          <td></td>
+          <td>Since {{item.since}}</td>
+        </tr>
+       
+      </tbody>
+      <tbody>
+        <tr >
+          <th scope="row"></th>
+          <td>{{selectedSignificant}}</td>
+          <td></td>
+          <td> {{selectedSignificantSince}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-2"><button type="button" class="btn btn-info" (click)="openSigModal()">Add</button></div>
+  </div>
+  </div>
+  <hr />
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-8">
+        <h4>Past Surical History</h4>
+  
+      <table class="table table-borderless">
+        <thead>
+         
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of pshList">
+            <th scope="row"></th>
+            <td>{{item.name}}</td>
+            <td></td>
+            <td>Since {{item.since}}</td>
+          </tr>
+          <tr >
+            <th scope="row"></th>
+            <td>{{selectedPast}}</td>
+            <td></td>
+            <td> {{selectedPastSince}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-2"><button type="button" class="btn btn-info" (click)="openPastModal()">Add</button></div>
+
+    </div>
+    </div>
+  
+    <hr />
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-8">
+        <h4>Current Medication</h4>
+  
+      <table class="table table-borderless">
+        <thead>
+         
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of cmList">
+            <th scope="row"></th>
+            <td>{{item.name}}</td>
+            <td></td>
+            <td>Since {{item.since}}</td>
+          </tr>
+          <tr >
+            <th scope="row"></th>
+            <td>{{selectedCA}}</td>
+            <td></td>
+            <td> {{selectedCASince}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-2"><button type="button" class="btn btn-info" (click)="openCMModal()">Add</button></div>
+
+    </div>
+    </div>
+  
+    <hr />
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-8">
+          <h4>Drug Allergies</h4>
+    
+        <table class="table table-borderless">
+          <thead>
+           
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of daList">
+              <th scope="row"></th>
+              <td>{{item.name}}</td>
+              <td></td>
+              <td>Since {{item.since}}</td>
+            </tr>
+            <tr >
+              <th scope="row"></th>
+              <td>{{selectedDA}}</td>
+              <td></td>
+              <td> {{selectedDASince}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-2"><button type="button" class="btn btn-info" (click)="openDAModal()">Add</button></div>
+
+      </div>
+      </div>
+      <div class="card-footer text-center">
+        <button type="button" class="btn btn-custom" (click)="mainSubmit()">Submit</button>
+      </div>
+  </div>
+  </div>
+  </div>
+  </div>
+
+
+  
+  <div class="backdrop" [ngStyle]="{'display':sigdisplay}"></div>
+     
+  <div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':sigdisplay}">
+   
+   <div class="modal-dialog" role="document">
+   
+     <div class="modal-content">
+
+       <div class="modal-header">
+        <h5 class="modal-title">Significant Medical History</h5>
+        <button type="button" class="close" (click)="onCloseSigHandled()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+       <form [formGroup]="medicalSummarySigInputForm">
+       <div class="modal-body">
+          
+        <div class="form-group row">
+          <label for="Select" class="col-sm-2 col-form-label">Select</label>
+          <div class="col-sm-6">
+            <!-- <input type="text" class="form-control" id="select" formControlName="selectedVal"> -->
+            <select class="form-control" id="select" formControlName="selectedSigVal">
+              <option value=""  [selected]>Select</option>
+              <option *ngFor="let itemp of significantList" value="{{itemp.id}}">{{itemp.desc}}</option>  
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="since" class="col-sm-2 col-form-label">Since</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="since" formControlName="since">
+          </div>
+        </div>     
+   
+       </div>
+   
+       <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)='sigOnSubmit()'>Add</button>
+         <button type="button" class="btn btn-danger" (click)="onCloseSigHandled()" >Cancel</button>
+   
+       </div>
+      </form>
+     </div><!-- /.modal-content -->
+   
+   </div><!-- /.modal-dialog -->
+   
+  </div><!-- /.modal !-->
+
+
+
+  
+  
+  <div class="backdrop" [ngStyle]="{'display':pastdisplay}"></div>
+     
+  <div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':pastdisplay}">
+   
+   <div class="modal-dialog" role="document">
+   
+     <div class="modal-content">
+
+       <div class="modal-header">
+        <h5 class="modal-title">Past Surical History</h5>
+        <button type="button" class="close" (click)="onClosePastHandled()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+       <form [formGroup]="medicalSummaryPastInputForm">
+       <div class="modal-body">
+          
+        <div class="form-group row">
+          <label for="Select" class="col-sm-2 col-form-label">Select</label>
+          <div class="col-sm-6">
+            <!-- <input type="text" class="form-control" id="select" formControlName="selectedVal"> -->
+            <select class="form-control" id="select" formControlName="selectedVal">
+              <option value=""  [selected]>Select</option>
+              <option *ngFor="let itemp of pastSurgicalList" value="{{itemp.id}}">{{itemp.desc}}</option>  
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="since" class="col-sm-2 col-form-label">Since</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="since" formControlName="since">
+          </div>
+        </div>     
+   
+       </div>
+   
+       <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)='pastOnSubmit()'>Add</button>
+         <button type="button" class="btn btn-danger" (click)="onClosePastHandled()" >Cancel</button>
+   
+       </div>
+      </form>
+     </div><!-- /.modal-content -->
+   
+   </div><!-- /.modal-dialog -->
+   
+  </div><!-- /.modal !-->
+
+
+
+  
+  <div class="backdrop" [ngStyle]="{'display':cmdisplay}"></div>
+     
+  <div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':cmdisplay}">
+   
+   <div class="modal-dialog" role="document">
+   
+     <div class="modal-content">
+
+       <div class="modal-header">
+        <h5 class="modal-title">Current Medication</h5>
+        <button type="button" class="close" (click)="onCloseCMHandled()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+       <form [formGroup]="medicalSummaryCMInputForm">
+       <div class="modal-body">
+          
+        <div class="form-group row">
+          <label for="Select" class="col-sm-2 col-form-label">Select</label>
+          <div class="col-sm-6">
+            <!-- <input type="text" class="form-control" id="select" formControlName="selectedVal"> -->
+            <select class="form-control" id="select" formControlName="selectedVal">
+              <option value=""  [selected]>Select</option>
+              <option *ngFor="let itemp of medicationList" value="{{itemp.id}}">{{itemp.name}}</option>  
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="since" class="col-sm-2 col-form-label">Since</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="since" formControlName="since">
+          </div>
+        </div>     
+   
+       </div>
+   
+       <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)='cmOnSubmit()'>Add</button>
+         <button type="button" class="btn btn-danger" (click)="onCloseCMHandled()" >Cancel</button>
+   
+       </div>
+      </form>
+     </div><!-- /.modal-content -->
+   
+   </div><!-- /.modal-dialog -->
+   
+  </div><!-- /.modal !-->
+
+
+  
+  <div class="backdrop" [ngStyle]="{'display':dadisplay}"></div>
+     
+  <div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':dadisplay}">
+   
+   <div class="modal-dialog" role="document">
+   
+     <div class="modal-content">
+
+       <div class="modal-header">
+        <h5 class="modal-title">Drug Allergies</h5>
+        <button type="button" class="close" (click)="onCloseDAHandled()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+       <form [formGroup]="medicalSummaryDAInputForm">
+       <div class="modal-body">
+          
+        <div class="form-group row">
+          <label for="Select" class="col-sm-2 col-form-label">Select</label>
+          <div class="col-sm-6">
+            <!-- <input type="text" class="form-control" id="select" formControlName="selectedVal"> -->
+            <select class="form-control" id="select" formControlName="selectedVal">
+              <option value=""  [selected]>Select</option>
+              <option *ngFor="let itemp of drugAllergyList" value="{{itemp.id}}">{{itemp.name}}</option>  
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="since" class="col-sm-2 col-form-label">Since</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="since" formControlName="since">
+          </div>
+        </div>     
+   
+       </div>
+   
+       <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)='daOnSubmit()'>Add</button>
+         <button type="button" class="btn btn-danger" (click)="onCloseDAHandled()" >Cancel</button>
+   
+       </div>
+      </form>
+     </div><!-- /.modal-content -->
+   
+   </div><!-- /.modal-dialog -->
+   
+  </div><!-- /.modal !-->

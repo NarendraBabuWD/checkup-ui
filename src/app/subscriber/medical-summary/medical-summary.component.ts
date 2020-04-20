@@ -17,6 +17,21 @@ import * as _ from 'underscore';
 })
 export class MedicalSummaryComponent implements OnInit {
 
+
+   created: string;
+   first_name: string;
+   last_name: string;
+   mrn: string;
+   dob: string;
+   age: string;
+   id: string;
+   gender: string;
+   smhList: any[] = [];
+   pshList: any[] = [];
+   daList: any[] = [];
+   cmList: any[] = [];
+
+
   constructor(private httpService: HttpService, private data: DataService, private formBuilder: FormBuilder, private auth: AuthService, private router: Router, private utilService: UtilService) { }
   subscriberMedicalSummaryForm: FormGroup;// ====== intailze Form Group
   submitted = false;
@@ -41,8 +56,8 @@ export class MedicalSummaryComponent implements OnInit {
   userProfileData;
 
   ngOnInit() {
-
-    if (this.auth.isSubscriber()) {//====== if Subascriber Take user_id from session.=====
+this.getMyMedicalSummary();
+   /* if (this.auth.isSubscriber()) {//====== if Subascriber Take user_id from session.=====
       this.user_id = JSON.parse(sessionStorage.getItem('userdata')).user_id;
       this.isViewOnly = true;
     } else if (this.auth.isDoctor()) {
@@ -56,7 +71,7 @@ export class MedicalSummaryComponent implements OnInit {
     if (this.isViewOnly) {//==== For Subscriber only view his medical summary ====
       this.subscriberMedicalSummaryForm.disable();
     }
-    this.profileDate();//=====
+    this.profileDate();//=====*/
   }
   // convenience getter for easy access to form fields
   get f() {
@@ -584,6 +599,33 @@ export class MedicalSummaryComponent implements OnInit {
 
   ngOnDestroy(): void {
 
+  }
+
+
+  getMyMedicalSummary(){
+    this.httpService.commonAuthPost(appConstants.apiBaseUrl + 'getMyMedicalSummary', 
+    { }
+    ).subscribe(data => {
+      console.log(data);
+
+      this.created = data.data.created;
+      this.first_name =  data.data.firstname;
+      this.last_name =  data.data.lastname;
+      this.mrn = data.data.mrn;
+      this.dob = data.data.dob;
+      this.age = data.data.age;
+      this.id = data.data.user_id;
+      this.gender = data.data.gender;
+      this.smhList = data.data.smh_data;
+      this.pshList = data.data.psh_data;
+      this.daList = data.data.da_data;
+      this.cmList = data.data.cm_data;
+      // this.utilService.toastrSuccess("Payment Updated Sucessfully", "Payment Sucessfully");
+      // this.router.navigate(['home']);
+    }, (err) => {
+      console.log(err);
+      // this.utilService.toastrError("Payment Updation Failed !.", "Payment Failed");
+    });
   }
 
 }

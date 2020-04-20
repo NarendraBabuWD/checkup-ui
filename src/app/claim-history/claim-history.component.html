@@ -21,7 +21,7 @@
                 placeholder="Select From Date"
                 class="form-control" formControlName="fromDate"
                 bsDatepicker
-                [bsConfig]="{ adaptivePosition: true }">
+                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }">
   
             </div>
           </div>
@@ -32,7 +32,7 @@
                 placeholder="Select To Date"
                 class="form-control" formControlName="toDate" 
                 bsDatepicker
-                [bsConfig]="{ adaptivePosition: true }">
+                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }">
   
             </div>
           </div>
@@ -57,13 +57,12 @@
       <tbody>
         <tr *ngFor="let item2 of dataViewList">
          
-          <td >{{item2.subscriber}}</td>
-          <td >{{item2.mrn}}</td>
-          <td >{{item2.date | date:'y-M-d'}}</td>
-          <td >{{item2.purpos}}</td>
-          <td >{{item2.charge}}</td>
-          <td >{{item2.paid}}</td>
-          <td >{{item2.released}}</td>
+          <td >{{item2.name}}</td>
+          <td >{{item2.created | date:'y-M-d'}}</td>
+          <td >{{item2.purpose}}</td>
+          <td >{{item2.amount}}</td>
+          <td >{{item2.amount}}</td>
+          <td >{{item2.status}}</td>
         </tr>
         <tr>
             <td></td>

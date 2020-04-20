@@ -2,6 +2,10 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators, FormsModule, ReactiveFormsModule, AbstractControl } from '@angular/forms';
 import { ClaimService } from '../services/claim.service';
 import { ToastContainerDirective, ToastrService } from 'ngx-toastr';
+import { HttpService } from '../services/http.service';
+import appConstants from '../config/app.constants';
+import * as moment from 'moment';
+
 
 @Component({
   selector: 'app-claim-submittion',
@@ -25,10 +29,10 @@ export class ClaimSubmittionComponent implements OnInit {
   doctorId: any = '';
   doctorName: any = '';
   selectedValue: any = '';
-  constructor(private _fb: FormBuilder,
+  constructor(private _fb: FormBuilder, private httpService: HttpService,
     private claimService: ClaimService,  private toastrService: ToastrService) { }
   
-  TableHeadings = ['Subscriber','MRN','Date','Purpose','Charge (RM)'];
+  TableHeadings = ['','Subscriber','Date','Purpose','Charge (RM)'];
   /*TableContent:any = [
     {Subscriber:'test',MRN:'525524',Date:'2019-11-1',Purpose:'4th Quarter Review',Charge:'80'}
   ];*/
@@ -44,18 +48,16 @@ export class ClaimSubmittionComponent implements OnInit {
     individualToDate: ['', [Validators.required]],
     patientmrn: ['']
 });
-this.claimService.getPatients().subscribe(disList => {
-  // console.log(disList.data);
-  this.filterPatientList = [];         
-  // let arr = Object.keys(disList).map((district) => disList[district])
-
- for (let i = 0; i < disList.data.length ; i++) {
-      this.filterPatientList.push({ label: disList.data[i].patient, value: disList.data[i].patient+' '+disList.data[i].mrn });
-  }        
-  
-});
+this.getLoginDrpatInfo();
   }
   
+  getLoginDrpatInfo(){
+    this.httpService.commonAuthPost(appConstants.apiBaseUrl + 'getSubscriberList', { }).subscribe(patList => {
+      // console.log(patList.data);
+      this.filterPatientList = patList.data;
+    });
+  }
+
   closeModalDialog(){
     this.display='none'; //set none css after close dialog
   }
@@ -65,24 +67,35 @@ this.claimService.getPatients().subscribe(disList => {
     this.batchViewList = [];
     this.batchTotal = 0;
     this.batchviewUi = true;
-    this.claimService.batchClaim( model.value ).subscribe( response => {
-         
-        console.log(response.data);   
-        this.batchViewList = response.data;   
-        for(var i in response.data) { this.batchTotal += response.data[i].charge; }
-        console.log(this.batchTotal);        
-    },
-        error => {
-          //   this.alertNotSuccess();            
-        } );
+    console.log(model.value);
+    
+    this.httpService.commonAuthPost(appConstants.apiBaseUrl + 'getTransaction', 
+      { date_from: moment(model.value.fromDate).utc().format('YYYY-MM-DD'),
+        date_to: moment(model.value.toDate).utc().format('YYYY-MM-DD'),
+        type: "1"
+    }).subscribe(response => {
+      console.log(response);
+      this.batchViewList = response.data; 
+      for(var i in this.batchViewList) { this.batchTotal += parseFloat(this.batchViewList[i].amount); }
+      });
 } 
 
 individualSubmit( model: FormGroup ) {
   this.batchViewList = [];
   this.batchTotal = 0;
   this.batchviewUi = true;
-  this.claimService.individualClaim( model.value ).subscribe( response => {
-       
+  console.log(model.value);
+  this.httpService.commonAuthPost(appConstants.apiBaseUrl + 'getTransaction', 
+      { date_from: moment(model.value.individualFromDate).utc().format('YYYY-MM-DD'),
+        date_to: moment(model.value.individualToDate).utc().format('YYYY-MM-DD'),
+        type: "2",
+        sub_id: model.value.patientmrn
+    }).subscribe(response => {
+        console.log(response);
+        this.batchViewList = response.data; 
+        for(var i in this.batchViewList) { this.batchTotal += parseFloat(this.batchViewList[i].amount); }
+      });
+  /*this.claimService.individualClaim( model.value ).subscribe( response => {
       console.log(response.data);   
       this.batchViewList = response.data;   
       for(var i in response.data) { this.batchTotal += response.data[i].charge; }
@@ -90,7 +103,7 @@ individualSubmit( model: FormGroup ) {
   },
       error => {
         //   this.alertNotSuccess();            
-      } );
+      } );*/
 } 
 
 batchViewCancel(){
@@ -108,11 +121,11 @@ individual(){
   this.batchViewForm = false;
   this.individualView.reset();
 }
-
+/*
 change(obj){
 // console.log(obj);
 
-  let updateItem = this.selectedData.find(this.findIndexToUpdate, obj.user_id);
+  let updateItem = this.selectedData.find(this.findIndexToUpdate, obj.transaction_id);
 
   let index = this.selectedData.indexOf(updateItem);
 
@@ -126,9 +139,32 @@ change(obj){
   }
 // console.log(this.selectedData);
 
-  // this.service.setList(this.selectedEmployees);
-
 }
+*/
+
+onChange(f) {
+  if (this.selectedData.indexOf(f.value) == -1) {
+    this.selectedData.push(f.value);
+  } else {
+    this.selectedData.splice(this.selectedData.indexOf(f.value), 1);
+  }
+}
+
+submitCheckedData(){
+  console.log(this.selectedData);
+  if(this.selectedData.length >= 1){
+        this.httpService.commonAuthPost(appConstants.apiBaseUrl + 'doClaimTransaction', 
+        { transactions_id: this.selectedData
+      }).subscribe(response => {
+          console.log(response);
+      });
+  } else {
+    let message = 'Please Select Atleast One Claim';
+    this.toastrService.success(message);
+  }
+  
+}
+
 
 findIndexToUpdate(obj) { 
       return obj.QID === this;
@@ -159,6 +195,7 @@ openModalDialog(){
   });
  
 }
+
 
 updateClaim(){
   console.log(this.selectedData);

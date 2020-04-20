@@ -8,12 +8,12 @@
 			<div class="card-body">
 				<form [formGroup]="loginForm" (ngSubmit)="login()">
 					<div class="form-group">
-						<label *ngIf="emailLabel" for="email">Email address:</label>
+						<label *ngIf="emailLabel" for="username">Email address:</label>
 						<input (focus)="emailLabel = true" (focusout)="emailLabel = false" type="email" class="form-control" id="email"
-						 name="email" formControlName="email" required placeholder="Email">
-						<div *ngIf="f.email.dirty && f.email.invalid" class="alert alert-danger form-group">
-							<div *ngIf="f.email.errors.required">Email is required</div>
-							<div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+						 name="username" formControlName="username" required placeholder="Email">
+						<div *ngIf="f.username.dirty && f.username.invalid" class="alert alert-danger form-group">
+							<div *ngIf="f.username.errors.required">Email is required</div>
+							<div *ngIf="f.username.errors.email">Email must be a valid email address</div>
 						</div>
 					</div>
 					<div class="form-group">
@@ -33,7 +33,50 @@
 			<div class="row card-body justify-content-center pt-5 pb-3">
 				<a class="signupLink" (click)="signup()">SignUp Here</a>
 			</div>
-
+			<div class="row card-body justify-content-center pt-5 pb-3">
+				<a class="signupLink" (click)="forgotPassword()">Forgot Password</a>
+			</div>
 		</div>
 	</div>
+</div>
+
+
+
+<div *ngIf="isModalShown" [config]="{ show: true }" bsModal #shownModal="bs-modal"
+  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-auto-name">
+<div class="modal-dialog modal-sm">
+ <div class="modal-content">
+   <div class="modal-header">
+     <h4 id="dialog-auto-name" class="modal-title pull-left"> 
+            Reset Password
+     </h4>
+     <button type="button" class="close pull-right" aria-label="Close" (click)="hideNotifyModal()">
+       <span aria-hidden="true">&times;</span>
+     </button>
+   </div>
+    
+	<form [formGroup]="forgotPasswordForm" (ngSubmit)="forgotPasswordBtn()">
+
+   <div class="modal-body">
+
+   
+    <div class="form-group row">
+      <label for="topic" class="col-sm-2 col-form-label">Email</label>
+    &nbsp; &nbsp;
+	<input type="text" name="email" formControlName="email" class="col-sm-8 form-control" placeholder="Email"  />
+	<div *ngIf="c.email.dirty && c.email.invalid" class="alert alert-danger form-group">
+		<div *ngIf="c.email.errors.required">Email is required</div>
+		<div *ngIf="c.email.errors.email">Email must be a valid email address</div>
+	</div>
+ </div>
+ 
+
+
+   </div>
+   <div class="modal-footer mx-auto">
+     <button type="submit" class="btn btn-primary">Submit</button>
+     <button type="button" class="btn btn-danger" (click)="hideNotifyModal()">Cancel</button>
+                   </div> </form>
+ </div>
+</div>
 </div>

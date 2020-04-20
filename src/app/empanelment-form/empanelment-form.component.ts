@@ -5,6 +5,9 @@ import { ToastContainerDirective, ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
 // import appConstants from '../config/app.constants';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
+import { HttpService } from '../services/http.service';
+import appConstants from '../config/app.constants'
 
 
 @Component({
@@ -14,6 +17,7 @@ import { Router } from '@angular/router';
 })
 export class EmpanelmentFormComponent implements OnInit {
 
+  specialisationList: any[] = [];
   public form: {
     first_name: string,
     last_name: string,
@@ -47,7 +51,9 @@ export class EmpanelmentFormComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, 
               private http:HttpClient, 
               private router: Router,
-    private toastrService: ToastrService, private empanelmentService: EmpanelmentService) { 
+              private toastrService: ToastrService, 
+              private empanelmentService: EmpanelmentService,
+              private httpService: HttpService) { 
 
       this.form = {
         first_name: "",
@@ -79,20 +85,91 @@ export class EmpanelmentFormComponent implements OnInit {
     }
 
   ngOnInit() {
-   
- this.empanelmentService.getClinics().subscribe(disList => {
+   this.getSpecialisationList();
+   this.getDoctorProfileData();
+   this.empanelmentService.getClinics().subscribe(disList => {
   // console.log(typeof(disList)); 
-  console.log(disList['data']);
-    this.filterClinicList = [];         
-    // let arr = Object.keys(disList).map((district) => disList[district])
-
-   for (let i = 0; i < disList['data'].length ; i++) {
-        this.filterClinicList.push({ label: disList['data'][i].clinic_type, value: disList['data'][i].clinic_type });
-    }        
-    
-});
+      // console.log(disList['data']);
+        this.filterClinicList = [];         
+        // let arr = Object.keys(disList).map((district) => disList[district])
+      for (let i = 0; i < disList['data'].length ; i++) {
+            this.filterClinicList.push({ label: disList['data'][i].clinic_type, value: disList['data'][i].clinic_type });
+        }        
+        
+    });
   }
 
+  getSpecialisationList(){
+  this.httpService.commonAuthPost(appConstants.apiBaseUrl + 'getSpecialisationList', { }).subscribe(response => {
+    console.log(response.data);
+    this.specialisationList = response.data;
+  });
+}
+
+  getDoctorProfileData(){
+    this.httpService.commonAuthPost(appConstants.apiBaseUrl + 'getMyAccount', { }).subscribe(docData => {
+      console.log(docData.data);
+      // this.patientList = patList.data;
+      this.form = {
+        first_name: docData.data.firstname,
+        last_name: docData.data.lastname,
+        gender: docData.data.gender,
+        dob: docData.data.dob,
+        national_id: docData.data.nationality,
+        year_of_registration: docData.data.reg_year,
+        mma:  '',
+        apc: docData.data.medical_reg_no,  //Datepicker
+        clinic_type: docData.data.clinic_type_desc,
+        specialization: docData.data.specialisation,
+        clinic: docData.data.provider,
+        hospital_license_no: docData.data.provider_license_no,
+        address_of_clinic_1: docData.data.address,
+        address_of_clinic_2: docData.data.address2,
+        postcode: docData.data.postcode,
+        state: docData.data.state,
+        country: docData.data.country,
+        phone_no: docData.data.phone_no,
+        mobile_no: docData.data.mobile,
+        email: docData.data.email,
+        resume: null,
+        academic: null,
+        practicingCertificate: null,
+        insurance: null
+      };
+    });
+  }
+  /*getDoctorProfileData(){
+    this.empanelmentService.getDoctorProfileData().subscribe(response => {
+      // console.log(response.data[0]);
+      this.form = {
+        first_name: response.data[0].first_name,
+        last_name: response.data[0].last_name,
+        gender: response.data[0].gender,
+        dob: response.data[0].dob,
+        national_id: response.data[0].national_id,
+        year_of_registration: response.data[0].year_of_registration,
+        mma:  '',
+        apc: response.data[0].apc_no,  //Datepicker
+        clinic_type: response.data[0].clinic_type,
+        specialization: response.data[0].specialization,
+        clinic: response.data[0].hospital,
+        hospital_license_no: '',
+        address_of_clinic_1: response.data[0].address_of_clinic_1,
+        address_of_clinic_2: response.data[0].address_2,
+        postcode: response.data[0].postcode,
+        state: response.data[0].state,
+        country: response.data[0].country,
+        phone_no: response.data[0].phone_no,
+        mobile_no: response.data[0].mobile_no,
+        email: JSON.parse(sessionStorage.getItem("userdata")).email,
+        resume: null,
+        academic: null,
+        practicingCertificate: null,
+        insurance: null
+      };
+    });
+  }*/
+  
 
 public submitEmpanelment() : void {
 
@@ -171,7 +248,6 @@ var academic = (this.form.academic && this.form.academic.length)
     .then(
       () => {
 
-        // alert( 'Empanelment Added Successully' );
         let message = 'Empanelment Added Successully';
             this.toastrService.success(message);
             this.router.navigate(['home']);

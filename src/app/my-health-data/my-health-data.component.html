@@ -186,15 +186,15 @@
   <table class="table table-striped bpDailyListTable" infiniteScroll [infiniteScrollDistance]="1"  (scrolled)="onScroll()" [scrollWindow]= "true" [infiniteScrollDisabled] = "!healthDataService.hasMoreHealthData">
     <thead>
       <th scope="col">Time</th>
-      <th scope="col">Systolic BP mmHg</th>
-      <th scope="col">Diastolic BP mmHg</th>
-      <th scope="col">BP Category</th>
+      <th scope="col">Rate (mmHg)</th>
+      <th scope="col">Result</th>
+      <!-- <th scope="col">BP Category</th> -->
     </thead>
     <tbody>
       <tr *ngFor="let healthData of healthDataService.healthData">
         <td>{{ healthData.date | slice: 11:19 }}</td>
-        <td>{{ healthData.sys }}</td>
-        <td>{{ healthData.dia }}</td>
+        <td>{{ healthData.sys | number:'1.0-0'}}/{{healthData.dia | number:'1.0-0'}}</td>
+        <!-- <td>{{ healthData.dia }}</td> -->
         <td>
           {{ findBpCategory(healthData.sys, healthData.dia) }}
         </td>
@@ -205,54 +205,21 @@
 <ng-template #bpContentOtherListTable>
   <table
     class="table table-striped bpOtherListTable"
-    *ngFor="let healthData of healthDataService.healthData"
   >
     <thead>
-      <th scope="col">Type</th>
-      <th scope="col">Systolic BP mmHg</th>
-      <th scope="col">Diastolic BP mmHg</th>
+      <th scope="col">Time</th>
+      <th scope="col">Rate (mmHg)</th>
+      <th scope="col">Result</th>
       <!-- <th scope="col">BP Category</th> -->
     </thead>
     <tbody>
-      <tr>
-        <td>Average</td>
-        <td>{{ healthData.sys | number:'1.0-0' }}</td>
-        <td>{{ healthData.dia | number:'1.0-0' }}</td>
-        <!-- <td>
-          {{ findBpCategory(healthData.sys, healthData.dia) }}
-        </td> -->
-      </tr>
-      <tr>
-        <td>Minimum</td>
-        <td>{{ healthData.min_sys | number:'1.0-0' }}</td>
-        <td>{{ healthData.min_dia | number:'1.0-0'}}</td>
-        <!-- <td>
-          {{ findBpCategory(healthData.min_sys, healthData.min_dia) }}
-        </td> -->
-      </tr>
-      <tr>
-        <td>Maximum</td>
-        <td>{{ healthData.max_sys | number:'1.0-0' }}</td>
-        <td>{{ healthData.max_dia | number:'1.0-0' }}</td>
-        <!-- <td>
-          {{ findBpCategory(healthData.max_sys, healthData.max_dia) }}
-        </td> -->
-      </tr>
-      <tr>
-        <td>Median</td>
-        <td>{{ healthData.median_sys | number:'1.0-0' }}</td>
-        <td>{{ healthData.median_dia | number:'1.0-0'}}</td>
-        <!-- <td>
-          {{ findBpCategory(healthData.median_sys, healthData.median_dia) }}
-        </td> -->
-      </tr>
-      <tr>
-        <td>Mode</td>
-        <td>{{ healthData.mode_sys | number:'1.0-0' }}</td>
-        <td>{{ healthData.mode_dia | number:'1.0-0'}}</td>
-        <!-- <td>
-          {{ findBpCategory(healthData.mode_sys, healthData.mode_dia) }}
-        </td> -->
+      <tr *ngFor="let healthData of healthDataService.healthData">
+        <td>{{ healthData.week}}</td>
+        <td>{{ healthData.avgSys | number:'1.0-0'}}/{{healthData.avgDia | number:'1.0-0'}}</td>
+        <!-- <td>{{ healthData.dia }}</td> -->
+        <td>
+          {{ findBpCategory(healthData.avgSys, healthData.avgDia) }}
+        </td>
       </tr>
     </tbody>
   </table>
@@ -265,7 +232,7 @@
   <ng-template #bpChartView>
     <chart-multi-line
       [selectedFilterOption]="selectedLayoutOption"
-       
+      [seletedCategory]="healthDataService.seletedCategory"
     ></chart-multi-line>
   </ng-template>
 </ng-template>
@@ -406,7 +373,7 @@
   <ng-template #spo2ChartView>
     <chart-multi-line
       [selectedFilterOption]="selectedLayoutOption"
-       
+      [seletedCategory]="healthDataService.seletedCategory"
     ></chart-multi-line>
   </ng-template>
 </ng-template>
@@ -500,10 +467,10 @@
   >
     <thead>
       <th scope="col">Time</th>
-      <th scope="col">Body weight(kg)</th>
+      <th scope="col">weight(kg)</th>
       <th scope="col">BMI</th>
       <th scope="col">Fat %</th>
-      <th scope="col">Muscle</th>
+      <th scope="col">Muscle %</th>
     </thead>
     <tbody>
       <tr *ngFor="let healthData of healthDataService.healthData">
@@ -518,32 +485,21 @@
 </ng-template>
 <ng-template #bodyMesurementContentOthersListTable>
   <table
-    class="table table-striped bpOtherListTable"
-    *ngFor="let healthData of healthDataService.healthData">
+    class="table table-striped bpOtherListTable">
     <thead>
-      <th scope="col">Type</th>
-      <th scope="col">Body weight(kg)</th>
+      <th scope="col">Time</th>
+      <th scope="col">weight(kg)</th>
+      <th scope="col">BMI</th>
+      <th scope="col">Fat %</th>
+      <th scope="col">Muscle %</th>
     </thead>
     <tbody>
-      <tr>
-        <td>Average</td>
-        <td>{{ healthData.body_weight }}</td>
-      </tr>
-      <tr>
-        <td>Minimum</td>
-        <td>{{ healthData.min_body_weight }}</td>
-      </tr>
-      <tr>
-        <td>Maximum</td>
-        <td>{{ healthData.max_body_weight  }}</td>
-      </tr>
-      <tr>
-        <td>Median</td>
-        <td>{{ healthData.median_body_weight }}</td>
-      </tr>
-      <tr>
-        <td>Mode</td>
-        <td>{{ healthData.mode_body_weight  }}</td>
+      <tr *ngFor="let healthData of healthDataService.healthData">
+        <td>{{ healthData.week }}</td>
+        <td>{{ healthData.avgBodyWeight }}</td>
+        <td>{{ healthData.avgBmi }}</td>
+        <td>{{ healthData.avgfat }}</td>
+        <td>{{ healthData.avgMuscle }}</td>
       </tr>
     </tbody>
   </table>
@@ -561,7 +517,7 @@
   <ng-template #bodyMesurementChartView>
     <chart-multi-line
       [selectedFilterOption]="selectedLayoutOption"
-       
+      [seletedCategory]="healthDataService.seletedCategory"
     ></chart-multi-line>
   </ng-template>
 </ng-template>
@@ -647,7 +603,7 @@
     <table class="table table-striped body-measurement" infiniteScroll [infiniteScrollDistance]="1"  (scrolled)="onScroll()" [scrollWindow]= "true" [infiniteScrollDisabled] = "!healthDataService.hasMoreHealthData">
       <thead>
         <th scope="col">Time</th>
-        <th scope="col">Heart rate(bpm)</th>
+        <th scope="col">Rate(bpm)</th>
       </thead>
       <tbody>
         <tr *ngFor="let healthData of healthDataService.healthData">
@@ -660,32 +616,15 @@
   <ng-template #heartRateContentOthersListTable>
     <table
       class="table table-striped bpOtherListTable"
-      *ngFor="let healthData of healthDataService.healthData"
     >
       <thead>
         <th scope="col">Type</th>
-        <th scope="col">Heart rate(bpm)</th>
+        <th scope="col">Rate(bpm)</th>
       </thead>
       <tbody>
-        <tr>
-          <td>Average</td>
-          <td>{{ healthData.heart_rate | number:'1.0-0' }}</td>
-        </tr>
-        <tr>
-          <td>Minimum</td>
-          <td>{{ healthData.min_heart_rate | number:'1.0-0' }}</td>
-        </tr>
-        <tr>
-          <td>Maximum</td>
-          <td>{{ healthData.max_heart_rate | number:'1.0-0' }}</td>
-        </tr>
-        <tr>
-          <td>Median</td>
-          <td>{{ healthData.median_heart_rate | number:'1.0-0' }}</td>
-        </tr>
-        <tr>
-          <td>Mode</td>
-          <td>{{ healthData.mode_heart_rate | number:'1.0-0' }}</td>
+        <tr *ngFor="let healthData of healthDataService.healthData">
+          <td>{{ healthData.day}}</td>
+          <td>{{ healthData.heart_rate | number:'1.0-0'}}</td>
         </tr>
       </tbody>
     </table>
@@ -698,7 +637,8 @@
     <div class="empty-msg">No data available</div>
   </div>
   <ng-template #heartRateChartView>
-    <chart-multi-line [selectedFilterOption]="selectedLayoutOption"  >
+    <chart-multi-line [selectedFilterOption]="selectedLayoutOption"
+          [seletedCategory]="healthDataService.seletedCategory"  >
     </chart-multi-line>
   </ng-template>
 </ng-template>
@@ -782,12 +722,15 @@
     <table class="table table-striped sleep_pattern">
       <tbody>
         <tr>
-          <td>Sleep Patten(hrs)</td>
-          <td>
+          <td>Sleep Patten</td>
+          <!-- <td>
             {{ (healthDataService.healthData[0].sleep_hours ?
                 healthDataService.healthData[0].sleep_hours
               : 0) | number:'1.0-0'
             }}
+          </td> -->
+          <td>
+            {{healthDataService.healthData[0].sleep_hours}} Hours {{healthDataService.healthData[0].sleep_minutes}} mins
           </td>
         </tr>
       </tbody>
@@ -795,62 +738,13 @@
   </ng-template>
   <ng-template #sleepPatternContentOthersListTable>
     <table
-      class="table table-striped sleep_pattern"
-      *ngFor="let healthData of healthDataService.healthData"
-    >
-      <thead>
-        <th scope="col">Type</th>
-        <th scope="col">Sleep Patten(hrs)</th>
-      </thead>
+      class="table table-striped sleep_pattern">
+     
       <tbody>
         <tr>
-          <td>Average</td>
+          <td>Sleep Patten</td>
           <td>
-            {{
-              (healthData.sleep_hours
-                ? healthData.sleep_hours 
-                : 0) | number:'1.0-0'
-            }}
-          </td>
-        </tr>
-        <tr>
-          <td>Minimum</td>
-          <td>
-            {{
-              (healthData.min_sleep_hours
-                ? healthData.sleep_hours 
-                : 0) | number:'1.0-0'
-            }}
-          </td>
-        </tr>
-        <tr>
-          <td>Maximum</td>
-          <td>
-            {{
-              (healthData.max_sleep_hours
-                ? healthData.sleep_hours 
-                : 0) | number:'1.0-0'
-            }}
-          </td>
-        </tr>
-        <tr>
-          <td>Median</td>
-          <td>
-            {{
-              (healthData.median_sleep_hours
-                ? healthData.sleep_hours 
-                : 0) | number:'1.0-0'
-            }}
-          </td>
-        </tr>
-        <tr>
-          <td>Mode</td>
-          <td>
-            {{
-              (healthData.mode_sleep_hours
-                ? healthData.sleep_hours 
-                : 0) | number:'1.0-0'
-            }}
+            {{healthDataService.healthData[0].sleep_hours}} Hours {{healthDataService.healthData[0].sleep_minutes}} mins
           </td>
         </tr>
       </tbody>
@@ -867,7 +761,7 @@
   ">
     <chart-multi-line
       [selectedFilterOption]="selectedLayoutOption"
-       
+      [seletedCategory]="healthDataService.seletedCategory"
     ></chart-multi-line>
   </div>
   <ng-template #sleepPatternChartErrorMg>
@@ -945,12 +839,16 @@
         <table class="table table-striped activity">
                 <tbody>
                   <tr>
-                    <td>Steps</td>
-                    <td>{{ (healthDataService.healthData[0].steps ? healthDataService.healthData[0].steps: 0) | number:'1.0-0'}}</td>
+                    <td>Total Steps</td>
+                    <td>{{ healthDataService.healthData[0].steps}}</td>
                   </tr>
                   <tr>
-                    <td>Calories burnt(kcal)</td>
-                    <td>{{(healthDataService.healthData[0].calories_burt ? healthDataService.healthData[0].calories_burt: 0) | number:'1.0-0'}}</td>
+                    <td>Distance Covered(km)</td>
+                    <td>{{healthDataService.healthData[0].distance}}</td>
+                  </tr>
+                  <tr>
+                    <td>Calories Burnt(kcal)</td>
+                    <td>{{healthDataService.healthData[0].calories_burt}}</td>
                   </tr>
                 </tbody>
               </table>
@@ -958,35 +856,22 @@
 
       <ng-template #activityOthersListTable>
             <table
-              class="table table-striped activity"
-              *ngFor="let healthData of healthDataService.healthData"
-            >
-              <thead>
-                <th scope="col">Type</th>
-                <th scope="col">Steps</th>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Average</td>
-                  <td>{{(healthData.steps ? healthData.steps : 0) | number:'1.0-0'}}</td>
-                </tr>
-                <tr>
-                  <td>Minimum</td>
-                  <td>{{(healthData.min_steps ? healthData.min_steps: 0) | number:'1.0-0'}}</td>
-                </tr>
-                <tr>
-                  <td>Maximum</td>
-                  <td>{{(healthData.max_steps ? healthData.max_steps: 0) | number:'1.0-0'}}</td>
-                </tr>
-                <tr>
-                  <td>Median</td>
-                  <td>{{(healthData.median_steps ? healthData.median_steps: 0) | number:'1.0-0'}}</td>
-                </tr>
-                <tr>
-                  <td>Mode</td>
-                  <td>{{(healthData.mode_steps ? healthData.mode_steps: 0) | number:'1.0-0'}}</td>
-                </tr>
-              </tbody>
+              class="table table-striped activity">
+              
+            <tbody>
+              <tr>
+                <td>Total Steps</td>
+                <td>{{ healthDataService.healthData[0].steps}}</td>
+              </tr>
+              <tr>
+                <td>Distance Covered(km)</td>
+                <td>{{healthDataService.healthData[0].distance | number : '1.2'}}</td>
+              </tr>
+              <tr>
+                <td>Calories Burnt(kcal)</td>
+                <td>{{healthDataService.healthData[0].calories_burt | number : '1.2'}}</td>
+              </tr>
+            </tbody>
             </table>
           </ng-template>
   <ng-template #activityErrorMg>
@@ -998,7 +883,7 @@
   <div *ngIf="healthDataService.healthData.length > 0 ; else activityChartErrorMg">
     <chart-multi-line
       [selectedFilterOption]="selectedLayoutOption"
-       
+      [seletedCategory]="healthDataService.seletedCategory" 
     ></chart-multi-line>
   </div>
     <ng-template #activityChartErrorMg>

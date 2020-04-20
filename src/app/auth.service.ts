@@ -12,6 +12,9 @@ export class AuthService {
   setLoginDetails(data: Object) {
     sessionStorage.setItem('userdata',JSON.stringify(data));
   }
+  setLoginToken(token: Object){
+    sessionStorage.setItem('token',JSON.stringify(token));
+  }
   getLoginDetails() {
     return sessionStorage.getItem("userdata");
   }
@@ -39,13 +42,13 @@ export class AuthService {
     return JSON.parse(sessionStorage.getItem("userdata")).firstname;
   }
   isSubscriber() {
-    return JSON.parse(sessionStorage.getItem("userdata")).category_name === appConstants.userType.SUBSCRIBER;
+    return JSON.parse(sessionStorage.getItem("userdata")).category === appConstants.userType.SUBSCRIBER;
   }
   isDoctor() {
-    return JSON.parse(sessionStorage.getItem("userdata")).category_name === appConstants.userType.DOCTOR;
+    return JSON.parse(sessionStorage.getItem("userdata")).category === appConstants.userType.DOCTOR;
   }
   isCorporate() {
-    return JSON.parse(sessionStorage.getItem("userdata")).category_name === appConstants.userType.CORP;
+    return JSON.parse(sessionStorage.getItem("userdata")).category === appConstants.userType.CORP;
   }
 
   getUserType() {

@@ -1,9 +1,21 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+// import { HttpClient, HttpHeaders } from '@angular/common/http';
 import Apps from '../config/app.constants';
 // import 'rxjs/Rx';
 // import 'rxjs/add/operator/map';
 import { Observable } from "rxjs";
+import * as moment from 'moment';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+
+const httpOptions = {
+  // headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'http://localhost:8080', 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS', 'Access-Control-Allow-Headers':'X-Requested-With' }),
+  headers: new HttpHeaders({ 
+          'Content-Type': 'application/json; application/x-www-form-urlencoded; charset=utf-8', 
+          'Access-Control-Allow-Origin': '*', 
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS', 
+          'Access-Control-Allow-Credentials':'true','Access-Control-Allow-Headers':'X-PINGOTHER,Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization','Access-Control-Expose-Headers':'xsrf-token' }),
+          params: new HttpParams({})
+};
 
 interface AddEmpanelment {
     first_name: string,
@@ -38,8 +50,8 @@ interface AddEmpanelment {
 export class EmpanelmentService {
     
     private apiUrlClinic = Apps.apiBaseUrl +'Get_Clicnic_type';    
-    private apiUrlEmpanelment = Apps.apiBaseUrl +'Empanelement_Application';
-
+    private apiUrlEmpanelment = Apps.apiBaseUrl +'updateMyAccount';
+    private apiGetProfileData = Apps.apiBaseUrl +'get_doctor_details';
 
   post(arg0: string, arg1: string) {
     throw new Error("Method not implemented.");
@@ -49,7 +61,7 @@ export class EmpanelmentService {
     'Content-Type': 'application/json; charset=utf-8 '
   });
   options = { headers: this.headers };
-  
+ 
   
   commonPost(url, body): Observable<any> {
     return this.http.post(url,
@@ -59,6 +71,15 @@ export class EmpanelmentService {
   constructor(private http:HttpClient,
      ) { }
 
+     getDoctorProfileData(): Observable<any> {
+      let requestData: any = [];
+      requestData = {};
+      requestData = {
+          user_id: JSON.parse(sessionStorage.getItem("userdata")).user_id
+      };
+      return this.http.post(this.apiGetProfileData, requestData);
+    }
+
   
   public getClinics(){
     return this.http.get(this.apiUrlClinic);
@@ -66,10 +87,11 @@ export class EmpanelmentService {
 
 
   addEmpanelment(empanelmentForm): Observable<any> { 
+
     let requestData: any = [];
     requestData = {};
     requestData = [{    
-            doctor_id:JSON.parse(sessionStorage.getItem("userdata")).user_id,   
+            doctor_id: JSON.parse(sessionStorage.getItem("userdata")).user_id,   
             first_name: empanelmentForm.first_name,
             last_name: empanelmentForm.last_name,
             national_id: empanelmentForm.national_id,
@@ -106,26 +128,31 @@ export class EmpanelmentService {
   }*/
 
   public async submitEmpanelment( empanelment: AddEmpanelment ) : Promise<void> {
+console.log(empanelment);
 
 		var formData = new FormData();
-
-    formData.append( "doctor_id", JSON.parse(sessionStorage.getItem("userdata")).user_id );
-		formData.append( "first_name", empanelment.first_name );
-		formData.append( "last_name", empanelment.last_name );
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'my-auth-token',
+        'AUTHENTICATE': sessionStorage.getItem("token"),
+      })
+    };
+    // formData.append( "doctor_id", JSON.parse(sessionStorage.getItem("userdata")).user_id );
+		formData.append( "firstname", empanelment.first_name );
+		formData.append( "lastname", empanelment.last_name );
     formData.append( "gender", empanelment.gender );    
-    formData.append( "national_id", empanelment.national_id );
-		formData.append( "date_of_birth", empanelment.dob );
-    formData.append( "medical_registration_number", empanelment.mma );
+    formData.append( "nationality", empanelment.national_id );
+		formData.append( "dob", moment(empanelment.dob).format('YYYY-MM-DD')); 
+    formData.append( "medical_reg_no", empanelment.mma );
+    formData.append( "apc_no", empanelment.apc );
+    formData.append( "reg_year", moment(empanelment.year_of_registration).format('YYYY-MM-DD') );
+		formData.append( "clinic_type", empanelment.clinic_type );
+    formData.append( "specialisation", empanelment.specialization );
     
-    formData.append( "year_of_registration", empanelment.year_of_registration );
-		formData.append( "clicnic_type", empanelment.clinic_type );
-    formData.append( "specialization", empanelment.specialization );
+    formData.append( "provider", empanelment.clinic );
+		formData.append( "provider_license_no", empanelment.hospital_license_no );
     
-    formData.append( "name_of_clinic", empanelment.clinic );
-		formData.append( "hospital_license_no", empanelment.hospital_license_no );
-    // formData.append( "year_of_registration2", empanelment.gender );
-    
-    formData.append( "address_of_clinic1", empanelment.address_of_clinic_1 );
+    formData.append( "address", empanelment.address_of_clinic_1 );
 		formData.append( "address2", empanelment.address_of_clinic_2 );
     formData.append( "postcode", empanelment.postcode );
     
@@ -133,20 +160,20 @@ export class EmpanelmentService {
 		formData.append( "country", empanelment.country );
     formData.append( "phone_no", empanelment.phone_no );
     
-    formData.append( "mobile_no", empanelment.mobile_no );
-		formData.append( "email_address", empanelment.email );
-		formData.append( "status", '0' );
+    formData.append( "mobile", empanelment.mobile_no );
+		formData.append( "email", empanelment.email );
+		formData.append( "is_empanelment", '1' );
 
-		( empanelment.resume ) && formData.append( "cvs", empanelment.resume );
-		( empanelment.academic ) && formData.append( "academic_and_medical_qualifications", empanelment.academic );
-    ( empanelment.practicingCertificate ) && formData.append( "current_annual_practising_certificate", empanelment.practicingCertificate );
-		( empanelment.insurance ) && formData.append( "current_indemnity_insurence", empanelment.insurance );
+		( empanelment.resume ) && formData.append( "cv", empanelment.resume );
+		( empanelment.academic ) && formData.append( "qualification", empanelment.academic );
+    ( empanelment.practicingCertificate ) && formData.append( "cert", empanelment.practicingCertificate );
+		( empanelment.insurance ) && formData.append( "insurance", empanelment.insurance );
     
 		var result = await this.http
 			.post<void>(
         this.apiUrlEmpanelment,
-				formData
-			
+				formData,
+        httpOptions
 			)
 			.toPromise()
 		;

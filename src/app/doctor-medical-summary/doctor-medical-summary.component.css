@@ -1,0 +1,25 @@
+.backdrop{
+ 
+    background-color:rgba(0,0,0,0.6);
+     
+    position:fixed;
+     
+    top:0;
+     
+    left:0;
+     
+    width:100%;
+     
+    height:100vh;
+     
+    }
+    
+    .modal{
+        background: rgba(0,0,0,0.6);
+    }
+
+    .btn-custom {
+        color: #fff;
+        background-color: #863695;
+        border-color: #801894;
+    }

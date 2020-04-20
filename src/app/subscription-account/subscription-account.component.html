@@ -37,7 +37,7 @@
               
             </div>
             <div class="col-md-4 mb-3">
-              <label for="validationCustomUsername">Email/User ID</label>
+              <label for="validationCustomUsername">Email</label>
               
                
                 <input type="text" class="form-control" formControlName="email_user_id" required>
@@ -47,7 +47,7 @@
           </div>
           <div class="form-row">
             <div class="col-md-4 mb-3">
-              <label for="validationCustom03">National ID</label>
+              <label for="validationCustom03">Nationality</label>
               <input type="text" class="form-control" formControlName="national_id" required>
               
             </div>
@@ -62,8 +62,16 @@
             </div>
             <div class="col-md-4 mb-3">
               <label for="validationCustom05">Gender</label>
-              <input type="text" class="form-control" formControlName="gender"required>
-              
+              <br />
+              <!-- <input type="text" class="form-control" formControlName="gender"required> -->
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="male" value="Male" formControlName="gender" class="custom-control-input">
+                <label class="custom-control-label" for="male">Male</label>
+              </div>
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="female" value="Female" formControlName="gender" class="custom-control-input">
+                <label class="custom-control-label" for="female">Female</label>
+              </div>
             </div>
           </div>
 
@@ -98,52 +106,49 @@
               <input type="text" class="form-control" formControlName="country" required>
 
             </div>
-            <div class="col-md-4 mb-3">
+            <!-- <div class="col-md-4 mb-3">
               <label for="validationCustom05">Phone No</label>
               <input type="text" class="form-control" formControlName="phone_no" required>
               
+            </div> -->
+            <div class="col-md-4 mb-3">
+              <label for="validationCustom05">Subscription Type</label>
+              <select class="custom-select" (change)="packageChanged($event.target.value)" formControlName="subscription_type" required>
+                <option selected disabled value="">Select</option>
+                <option *ngFor="let item of subTypeList" [value]="item.id">{{item.package_name}}</option>
+              </select>
             </div>
           </div>
 
 
           <div class="form-row">
-            <div class="col-md-4 mb-3">
+            <!-- <div class="col-md-4 mb-3">
               <label for="validationCustom03">Mobile No</label>
               <input type="text" class="form-control" formControlName="mobile_no" required>
               
-            </div>
-            <div class="col-md-4 mb-3">
+            </div> -->
+            <!-- <div class="col-md-4 mb-3">
               <label for="validationCustom04">Fax</label>
               <input type="text" class="form-control" formControlName="fax_no" required>
 
-            </div>
-            <div class="col-md-4 mb-3">
-              <label for="validationCustom05">Subscription Type</label>
-              <!-- <input type="text" class="form-control" required> -->
-              <select class="custom-select" formControlName="subscription_type" required>
-                <option selected disabled value="">Select</option>
-                <option *ngFor="let item of subTypeList" [value]="item.subscription_type">{{item.subscription_type}}</option>
-              </select>
-
+            </div> -->
+           
               <!-- <select name="clinic_type" id="clinic_type" class="form-control" name="clinic_type" [(ngModel)]="form.clinic_type" required>
                  
                 <option *ngFor="let item of filterClinicList" [value]="item">{{item.value}}</option>
                 </select> -->
-            </div>
+            
           </div>
 
-          <div class="form-row">
+          <!-- <div class="form-row">
             <div class="col-md-4 mb-3">
               <label for="validationCustom03">Subscription Duration</label>
-              <!-- <input type="text" class="form-control" required> -->
               <select class="custom-select" formControlName="subscription_duration" required>
                 <option selected disabled value="">Select</option>
                 <option *ngFor="let item of subDuraytionList" [value]="item.subscription_duration">{{item.subscription_duration}}</option>
               </select>
             </div>
-           
-           
-          </div>
+          </div> -->
          <div class="card-footer text-center">
           <button class="btn btn-primary" type="submit">Preview Order</button>
          </div>

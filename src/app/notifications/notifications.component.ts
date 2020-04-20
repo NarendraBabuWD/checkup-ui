@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NotifyService } from '../services/notify.service';
+import { HttpService } from '../services/http.service';
+import appConstants from '../config/app.constants'
 
 @Component({
   selector: 'app-notifications',
@@ -10,27 +12,32 @@ export class NotificationsComponent implements OnInit {
 
   notificationList: any = [];
 
-  constructor(private notifyService: NotifyService) { }
+  constructor(private notifyService: NotifyService, private httpService: HttpService) { }
 
   ngOnInit() {
     this.getNotifications();
   }
 
-  getNotifications() {
+  getNotifications(){
+  
+    this.httpService.commonAuthPost(appConstants.apiBaseUrl + 'getNotificationList', { }).subscribe(response => {
+      // console.log(response.data);
+      this.notificationList = response.data;
+    });
+    
+  }
+  /*getNotifications() {
     this.notificationList = [];
     this.notifyService.getNotifications().subscribe( response => {
         // console.log(response);
         // console.log(response.data); 
-        this.notificationList = response.data; 
-        
-        
-                   
+        this.notificationList = response.data;                
     },
         error => {
           //   this.alertNotSuccess();
             
         } );
 
-} 
+} */
 
 }

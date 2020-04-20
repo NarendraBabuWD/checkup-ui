@@ -51,7 +51,10 @@
         <div class="form-group row">
           <label for="dob" class="col-sm-2 col-form-label">Date of Birth:</label>
           <div class="col-sm-4 row">
-            <input type="text" class="form-control" name="dob" [(ngModel)]="form.dob" placeholder="Date of Birth" />
+            <!-- <input type="text" class="form-control" name="dob" [(ngModel)]="form.dob" placeholder="Date of Birth" /> -->
+            <input type="text" class="form-control" name="dob" [(ngModel)]="form.dob"
+            placeholder="Date of Birth" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }"/>
+            
             <!-- <div *ngIf="submitted && f.dob.errors" class="alert alert-danger form-group">
               <div *ngIf="f.dob.errors.required">
                 DOB is required
@@ -102,9 +105,10 @@
         <div class="form-group row">
           <label for="name" class="col-sm-2 col-form-label">Clinic Type:</label>
           <div class="col-sm-4 row">
-              <select name="clinic_type" id="clinic_type" class="form-control" name="clinic_type" [(ngModel)]="form.clinic_type" required>
-                 
-                  <option *ngFor="let item of filterClinicList" [value]="item">{{item.value}}</option>
+              <select name="clinic_type" id="clinic_type" class="form-control" [(ngModel)]="form.clinic_type" required>
+                <option value=""  [selected]>Select</option>
+                <option value="1">General Practitioner</option>
+                <option value="2">Specialist</option>
                   </select>
             <!-- <input type="text" class="form-control" [(ngModel)]="form.clinic_type" placeholder="Clinic Type" /> -->
             <!-- <div *ngIf="submitted && f.clinic_type.errors" class="alert alert-danger form-group">
@@ -118,7 +122,11 @@
         <div class="form-group row">
           <label for="name" class="col-sm-2 col-form-label">Specialization:</label>
           <div class="col-sm-4 row">
-            <input type="text" class="form-control" name="specialization" [(ngModel)]="form.specialization" placeholder="Specialization" />
+            <!-- <input type="text" class="form-control" name="specialization" [(ngModel)]="form.specialization" placeholder="Specialization" /> -->
+            <select name="specialization" id="specialization" class="form-control" [(ngModel)]="form.specialization" required>
+              <option value=""  [selected]>Select</option>
+              <option *ngFor="let item of specialisationList" [value]="item">{{item}}</option>
+              </select>
             <!-- <div *ngIf="submitted && f.specialization.errors" class="alert alert-danger form-group">
               <div *ngIf="f.specialization.errors.required">
                 Specialization is required
@@ -153,7 +161,10 @@
         <div class="form-group row">
           <label for="year_of_registration" class="col-sm-2 col-form-label">Year of Registration:</label>
           <div class="col-sm-4 row">
-            <input type="text" class="form-control" name="year_of_registration" [(ngModel)]="form.year_of_registration" placeholder="Hospital Registration year" />
+            <!-- <input type="text" class="form-control" name="year_of_registration" [(ngModel)]="form.year_of_registration" placeholder="Hospital Registration year" /> -->
+            <input type="text" class="form-control" name="year_of_registration" [(ngModel)]="form.year_of_registration" 
+            placeholder="Year of Registration" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }"/>
+            
             <!-- <div *ngIf="submitted && f.year_of_registration.errors" class="alert alert-danger form-group">
               <div *ngIf="f.year_of_registration.errors.required">
                 Year of Registration is required

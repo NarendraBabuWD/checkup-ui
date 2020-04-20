@@ -30,6 +30,7 @@ import { ResponseComponent } from './response/response.component';
 import { PaymentComponent } from './payment/payment.component';
 import { SubscriptionAccountComponent } from './subscription-account/subscription-account.component';
 import { SubscriptionOrderComponent } from './subscription-order/subscription-order.component';
+import { DoctorMedicalSummaryComponent } from './doctor-medical-summary/doctor-medical-summary.component';
 
 
 const routes: Routes = [
@@ -77,6 +78,7 @@ const routes: Routes = [
   { path: 'notifications', component: NotificationsComponent, canActivate: [AuthGuard]},
   { path: 'privacy-policy', component: PrivacyPolicyComponent, canActivate: [AuthGuard]},
   { path: 'subscription-account', component: SubscriptionAccountComponent, canActivate: [AuthGuard]},
+  { path: 'doctor-medical-summary/:id', component: DoctorMedicalSummaryComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

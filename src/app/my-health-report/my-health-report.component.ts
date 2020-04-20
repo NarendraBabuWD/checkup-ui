@@ -97,9 +97,17 @@ export class MyHealthReportComponent implements OnInit {
     // this.data.setSubscriberId(this.initialReportInputForm.value.subscriber_id);
      //this.router.navigate([appConstants.routingList.MyHealthReportListComponent]);
     // this.healthReportService.loadInitialHealthReportData(this.initialReportInputForm.value.subscriber_id);
-    var res = this.getValidSubStatus(this.initialReportInputForm.value.subscriber_id);
-  
-    if(res == 1){
+    // var res = this.getValidSubStatus(this.initialReportInputForm.value.subscriber_id);
+    // setTimeout(()=>{
+      // console.log(this.initialReportInputForm.value.subscriber_id);
+      // this.healthReportService.user_id_emitter.emit(this.initialReportInputForm.value.subscriber_id);
+      this.data.setSubscriberId(this.initialReportInputForm.value.subscriber_id);
+
+    // }, 0);
+      this.isQuarterlyReport = false;
+      this.isInitialReport = true;
+      this.isProgressReport = false;
+    /*if(res == 1){
       let message = 'No Subscriber is available under you';
        this.toastrService.success(message);
     } else if(res == 2){
@@ -117,7 +125,7 @@ export class MyHealthReportComponent implements OnInit {
     }else{
       let message = 'Something Went Wrong';
       this.toastrService.success(message);
-    }
+    }*/
    
     
    }
@@ -135,9 +143,9 @@ export class MyHealthReportComponent implements OnInit {
     this.isInitialReport = true;
     this.isProgressReport = false;
     this.isYearlyReport = false;
-    setTimeout(()=>{
+    /*setTimeout(()=>{
       this.healthReportService.user_id_emitter.emit(this.user_id);
-    }, 0);
+    }, 0);*/
   }
 
   subscriberYearlyReport(){

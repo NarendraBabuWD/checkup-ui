@@ -12,11 +12,11 @@
             <div class="card text-white bg-warning o-hidden h-100">
                 <div class="card-body align-items-center d-flex justify-content-center">
                     <div class="mr-5">
-                         <!-- <a (click)="restrictSubscriber()" class="dasbaord-name text-white text-uppercase m-b-20"> My Health
-                            Report </a>  -->
-                              <a routerLink="/payment" target="_blank" class="dasbaord-name text-white text-uppercase m-b-20"> My Health
-                                Report </a>  
-                        <!-- <span class="dasbaord-name text-white text-uppercase m-b-20"> My Health Report </span> -->
+                          <a (click)="restrictSubscriber('1')" class="dasbaord-name text-white text-uppercase m-b-20"> My Health
+                            Report </a> 
+                              <!-- <a routerLink="/payment" target="_blank" class="dasbaord-name text-white text-uppercase m-b-20"> My Health
+                                Report </a>   -->
+                        <!-- <span routerLink="/health-report" class="dasbaord-name text-white text-uppercase m-b-20"> My Health Report </span> -->
                     </div>
                     <div class="card-body-icon">
                         <img src="assets/images/icon6.png" class="float-right" />
@@ -30,8 +30,10 @@
             <div class="card text-white bg-warning o-hidden h-100">
                 <div class="card-body align-items-center d-flex justify-content-center">
                     <div class="mr-5">
-                        <a routerLink="/health-report" class="dasbaord-name text-white text-uppercase m-b-20">Health
-                            Reporting Dashboard </a>
+                        <!-- <a routerLink="/health-report" class="dasbaord-name text-white text-uppercase m-b-20">Health
+                            Reporting Dashboard </a> -->
+                            <a (click)="restrictDoctor('1')" class="dasbaord-name text-white text-uppercase m-b-20">Health
+                                Reporting Dashboard </a>
                         <!-- <span class="dasbaord-name text-white text-uppercase m-b-20"> My Health Report </span> -->
                     </div>
                     <div class="card-body-icon">
@@ -45,13 +47,20 @@
             <div class="card text-white bg-orange o-hidden h-100">
                 <div class="card-body align-items-center d-flex justify-content-center">
                     <div class="mr-6" *ngIf="auth.isDoctor()">
-                        <a (click)="medicalSummaryInputFormModel()" role="button"
+                        <!-- <a (click)="medicalSummaryInputFormModel()" role="button"
+                            class="btn dasbaord-name text-white text-uppercase m-b-20" data-toggle="modal">
+                            MEDICAL SUMMARY DASHBOARD</a> -->
+                            <a (click)="restrictDoctor('2')" role="button"
                             class="btn dasbaord-name text-white text-uppercase m-b-20" data-toggle="modal">
                             MEDICAL SUMMARY DASHBOARD</a>
                     </div>
                     <div class="mr-6" *ngIf="!auth.isDoctor()">
                         <!-- <span class="dasbaord-name text-white text-uppercase m-b-20"> My Medical Summary </span> -->
-                        <a routerLink="/subscriber/medical-summary" href="javascript:void(0);"
+                        <!-- <a routerLink="/subscriber/medical-summary"
+                            class="btn dasbaord-name text-white text-uppercase m-b-20">
+                            My Medical Summary
+                        </a> -->
+                        <a (click)="restrictSubscriber('2')"
                             class="btn dasbaord-name text-white text-uppercase m-b-20">
                             My Medical Summary
                         </a>
@@ -67,8 +76,10 @@
             <div class="card text-white bg-skyBlue o-hidden h-100">
                 <div class="card-body align-items-center d-flex justify-content-center">
                     <div class="mr-5">
-                        <a routerLink="/health-data" class="dasbaord-name text-white text-uppercase m-b-20"> My Health
-                            Data </a>
+                        <!-- <a routerLink="/health-data" class="dasbaord-name text-white text-uppercase m-b-20"> My Health
+                            Data </a> -->
+                            <a (click)="restrictSubscriber('3')" class="dasbaord-name text-white text-uppercase m-b-20"> My Health
+                                Data </a>
                     </div>
                     <div class="card-body-icon">
                         <img src="assets/images/icon1.png" class="float-right" />
@@ -98,14 +109,18 @@
                     <img src="assets/images/icon4a.png" />
                 </div>
                 <div class="text-white text-uppercase m-b-20" *ngIf="!auth.isDoctor()">
-                    <a routerLink="/subscriber-appointment" class="text-white text-uppercase m-b-20"
-                        >
+                    <!-- <a routerLink="/subscriber-appointment" class="text-white text-uppercase m-b-20">
+                        My Appointment
+                    </a> -->
+                    <a (click)="restrictSubscriber('4')" class="text-white text-uppercase m-b-20">
                         My Appointment
                     </a>
                 </div>
                 <div class="text-white text-uppercase m-b-20" *ngIf="auth.isDoctor()">
-                    <a routerLink="/doctor-appointment" class="text-white text-uppercase m-b-20"
-                        >
+                    <!-- <a routerLink="/doctor-appointment" class="text-white text-uppercase m-b-20">
+                        My Appointment
+                    </a> -->
+                    <a (click)="restrictDoctor('3')" class="text-white text-uppercase m-b-20">
                         My Appointment
                     </a>
                 </div>
@@ -120,8 +135,10 @@
                 </p> -->
 
                 <div class="text-white text-uppercase m-b-20" >
-                    <a routerLink="/subscription-account" class="text-white text-uppercase m-b-20"
-                    >
+                    <!-- <a routerLink="/subscription-account" class="text-white text-uppercase m-b-20">
+                        MY SUBSCRIPTION / ACCOUNT
+                    </a> -->
+                    <a (click)="restrictSubscriber('5')" class="text-white text-uppercase m-b-20">
                         MY SUBSCRIPTION / ACCOUNT
                     </a>
                 </div>
@@ -164,14 +181,18 @@
                 <i class="fa fa-bar-chart float-right text-size1 -white icon-size"></i>
                 <!-- <p class="text-white text-uppercase m-b-20">HEALTH INFO BITS</p> -->
                 <div class="text-white text-uppercase m-b-20" *ngIf="!auth.isDoctor()">
-                        <a routerLink="/whatsnew" class="text-white text-uppercase m-b-20"
-                            >
+                        <!-- <a routerLink="/whatsnew" class="text-white text-uppercase m-b-20">
+                            What's New
+                        </a> -->
+                        <a (click)="restrictSubscriber('6')" class="text-white text-uppercase m-b-20">
                             What's New
                         </a>
                     </div>
                     <div class="text-white text-uppercase m-b-20" *ngIf="auth.isDoctor()">
-                        <a routerLink="/announcements" class="text-white text-uppercase m-b-20"
-                            >
+                        <!-- <a routerLink="/announcements" class="text-white text-uppercase m-b-20" >
+                            Announcements
+                        </a> -->
+                        <a (click)="restrictDoctor('4')" class="text-white text-uppercase m-b-20" >
                             Announcements
                         </a>
                     </div>
@@ -185,8 +206,10 @@
                 <i class="fa fa-bar-chart float-right text-size1 -white icon-size"></i>
                 <!-- <p class="text-white text-uppercase m-b-20">HEALTH INFO BITS</p> -->
                 <div class="text-white text-uppercase m-b-20">
-                        <a routerLink="/healthInfoBits" class="text-white text-uppercase m-b-20"
-                            >
+                        <!-- <a routerLink="/healthInfoBits" class="text-white text-uppercase m-b-20">
+                            HEALTH INFO BITS
+                        </a> -->
+                        <a (click)="restrictSubscriber('7')" class="text-white text-uppercase m-b-20">
                             HEALTH INFO BITS
                         </a>
                     </div>
@@ -206,7 +229,7 @@
                     <img src="assets/images/icon4a.png" />
                 </div>
                 <div class="text-white text-uppercase m-b-20" >
-                    <a (click)="checkEmpanelment()" class="text-white text-uppercase m-b-20" href="javascript:void(0);">
+                    <a (click)="restrictDoctor('5')" class="text-white text-uppercase m-b-20">
                         CLAIM MODULE
                     </a>
                 </div>
@@ -219,7 +242,7 @@
                     <img src="assets/images/icon4a.png" />
                 </div>
                 <div class="text-white text-uppercase m-b-20" >
-                    <a routerLink="/claim-history" class="text-white text-uppercase m-b-20" href="javascript:void(0);">
+                    <a (click)="restrictDoctor('6')" class="text-white text-uppercase m-b-20">
                         CLAIM HISTORY
                     </a>
                 </div>
@@ -284,11 +307,11 @@
     </div>
   </div>
    
-  <div class="modal fade" bsModal #childModal="bs-modal" tabindex="-1" role="dialog" aria-labelledby="dialog-nested-name2">
+  <div class="modal fade backdrop" bsModal #childModal="bs-modal" tabindex="-1" role="dialog" aria-labelledby="dialog-nested-name2">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 id="dialog-nested-name2" class="modal-title pull-left">Second modal</h4>
+          <h4 id="dialog-nested-name2" class="modal-title pull-left">Doctor Pin</h4>
           <button type="button" class="close pull-right" aria-label="Close" (click)="childModal.hide()">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -296,7 +319,7 @@
         <form class="form-horizontal" [formGroup]="doctorRequest"
         (ngSubmit)="onSubmit(doctorRequest)">
         <div class="modal-body">
-         Please ask your doctor to key in PIN to proceed
+         <p>Please ask your doctor to key in PIN to proceed</p>
          <div class="form-group">
                 <input type=text class="form-control" formControlName="pin" placeholder="D O C T O R-P I N">
             </div>

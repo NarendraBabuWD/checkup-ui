@@ -23,11 +23,11 @@
         </div>
         <div class="clearfix"></div>
         <div class="form-group row">
-          <label for="first_name" class="col-sm-2 col-form-label">First Name</label>
+          <label for="firstname" class="col-sm-2 col-form-label">First Name</label>
           <div class="col-sm-4 row">
-            <input type="text" class="form-control" formControlName="first_name" placeholder="First Name" />
-            <div *ngIf="submitted && f.first_name.errors" class="alert alert-danger form-group">
-              <div *ngIf="f.first_name.errors.required">
+            <input type="text" class="form-control" formControlName="firstname" placeholder="First Name" />
+            <div *ngIf="submitted && f.firstname.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.firstname.errors.required">
                 First Name is required
               </div>
             </div>
@@ -37,9 +37,9 @@
         <div class="form-group row">
           <label for="last_name" class="col-sm-2 col-form-label">Last Name</label>
           <div class="col-sm-4 row">
-            <input type="text" class="form-control" formControlName="last_name" placeholder="Last Name" />
-            <div *ngIf="submitted && f.last_name.errors" class="alert alert-danger form-group">
-              <div *ngIf="f.last_name.errors.required">
+            <input type="text" class="form-control" formControlName="lastname" placeholder="Last Name" />
+            <div *ngIf="submitted && f.lastname.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.lastname.errors.required">
                 Last Name is required
               </div>
             </div>
@@ -49,9 +49,9 @@
         <div class="form-group row">
           <label for="email_user_id" class="col-sm-2 col-form-label">Email </label>
           <div class="col-sm-4 row">
-            <input type="email" class="form-control" formControlName="email_user_id" placeholder="Email" />
-            <div *ngIf="submitted && f.email_user_id.errors" class="alert alert-danger form-group">
-              <div *ngIf="f.email_user_id.errors.required">
+            <input type="email" class="form-control" formControlName="email" placeholder="Email" />
+            <div *ngIf="submitted && f.email.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.email.errors.required">
                 Email is required
               </div>
             </div>
@@ -106,11 +106,11 @@
           </div>
         </div> -->
         <div class="form-group row">
-          <label for="national_id" class="col-sm-2 col-form-label">Nationality</label>
+          <label for="nationality" class="col-sm-2 col-form-label">Nationality</label>
           <div class="col-sm-4 row">
-            <input type="text" class="form-control" formControlName="national_id" placeholder="Nationality" />
-            <div *ngIf="submitted && f.national_id.errors" class="alert alert-danger form-group">
-              <div *ngIf="f.national_id.errors.required">
+            <input type="text" class="form-control" formControlName="nationality" placeholder="Nationality" />
+            <div *ngIf="submitted && f.nationality.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.nationality.errors.required">
                 Nationality is required
               </div>
             </div>
@@ -130,9 +130,9 @@
         <div class="form-group row">
           <label for="address_2" class="col-sm-2 col-form-label">Address2 </label>
           <div class="col-sm-4 row">
-            <input type="text" class="form-control" formControlName="address_2" placeholder="Address2" />
-            <div *ngIf="submitted && f.address_2.errors" class="alert alert-danger form-group">
-              <div *ngIf="f.address_2.errors.required">
+            <input type="text" class="form-control" formControlName="address2" placeholder="Address2" />
+            <div *ngIf="submitted && f.address2.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.address2.errors.required">
                 Address2 is required
               </div>
             </div>
@@ -214,9 +214,9 @@
           <span class="input-group-text" id="inputGroupPrepend2">+60</span>
           <div class="col-sm-3 row">
             
-            <input type="text" class="form-control" formControlName="mobile_no" placeholder="Mobile_No" />
-            <div *ngIf="submitted && f.mobile_no.errors" class="alert alert-danger form-group">
-              <div *ngIf="f.mobile_no.errors.required">
+            <input type="text" class="form-control" formControlName="mobile" placeholder="Mobile_No" />
+            <div *ngIf="submitted && f.mobile.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.mobile.errors.required">
                 Mobile_No No is required
               </div>
             </div>
@@ -276,16 +276,19 @@
           <div class="col-sm-4">
             <select class="form-control data-control" name="race" formControlName="race">
               <option [ngValue]="null">Select Race</option>
-              <option *ngFor="let data of raceList" [value]="data">
+              <!-- <option *ngFor="let data of raceList" [value]="data">
+                {{ data }}
+              </option> -->
+              <option *ngFor="let data of raceList" [value]="">
                 {{ data }}
               </option>
             </select>
-            <div class="select-dropdown dropdown-menu dropdown-primary"></div>
-            <div *ngIf="submitted && f.race.errors" class="alert alert-danger form-group">
+            <!-- <div class="select-dropdown dropdown-menu dropdown-primary"></div> -->
+            <!-- <div *ngIf="submitted && f.race.errors" class="alert alert-danger form-group">
               <div *ngIf="f.race.errors.required">
                 Race is required
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="clearfix"></div>
@@ -294,18 +297,18 @@
             Pressure </label>
           <div class="col-sm-4">
             <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" id="bp_yes" value="Yes" formControlName="treatement_for_high_blood_pressure" class="custom-control-input">
+              <input type="radio" id="bp_yes" value="" formControlName="hbp" class="custom-control-input">
               <label class="custom-control-label" for="bp_yes">Yes</label>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" id="bp_no" value="No" formControlName="treatement_for_high_blood_pressure" class="custom-control-input">
+              <input type="radio" id="bp_no" value="" formControlName="hbp" class="custom-control-input">
               <label class="custom-control-label" for="bp_no">No</label>
             </div>
-            <div *ngIf="submitted && f.treatement_for_high_blood_pressure.errors" class="alert alert-danger form-group">
+            <!-- <div *ngIf="submitted && f.treatement_for_high_blood_pressure.errors" class="alert alert-danger form-group">
               <div *ngIf="f.treatement_for_high_blood_pressure.errors.required">
                 Ttreatement for High Blood Pressure is required
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="clearfix"></div>
@@ -313,18 +316,18 @@
           <label for="diabetes" class="col-sm-2 col-form-label">Diabetes </label>
           <div class="col-sm-4">
             <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" id="diabetes_yes" value="Yes" formControlName="diabetes" class="custom-control-input">
+              <input type="radio" id="diabetes_yes" value="" formControlName="diabetes" class="custom-control-input">
               <label class="custom-control-label" for="diabetes_yes">Yes</label>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" id="diabetes_no" value="No" formControlName="diabetes" class="custom-control-input">
+              <input type="radio" id="diabetes_no" value="" formControlName="diabetes" class="custom-control-input">
               <label class="custom-control-label" for="diabetes_no">No</label>
             </div>
-            <div *ngIf="submitted && f.diabetes.errors" class="alert alert-danger form-group">
+            <!-- <div *ngIf="submitted && f.diabetes.errors" class="alert alert-danger form-group">
               <div *ngIf="f.diabetes.errors.required">
                 Diabities is required
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="clearfix"></div>
@@ -333,18 +336,18 @@
           <div class="col-sm-4">
             <div class="custom-control custom-radio custom-control-inline">
               <input type="radio" value="Yes" formControlName="smoker" class="custom-control-input">
-              <input type="radio" id="smoker_yes" value="Yes" formControlName="smoker" class="custom-control-input">
+              <input type="radio" id="smoker_yes" value="" formControlName="smoker" class="custom-control-input">
               <label class="custom-control-label" for="smoker_yes">Yes</label>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" id="smoker_no" value="No" formControlName="smoker" class="custom-control-input">
+              <input type="radio" id="smoker_no" value="" formControlName="smoker" class="custom-control-input">
               <label class="custom-control-label" for="smoker_no">No</label>
             </div>
-            <div *ngIf="submitted && f.smoker.errors" class="alert alert-danger form-group">
+            <!-- <div *ngIf="submitted && f.smoker.errors" class="alert alert-danger form-group">
               <div *ngIf="f.smoker.errors.required">
                 Smoker is required
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
         <!-- <div class="clearfix"></div>

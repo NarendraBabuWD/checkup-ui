@@ -51,23 +51,24 @@ export class DoctorProfileComponent implements OnInit {
     this.email = JSON.parse(sessionStorage.getItem('userdata')).email;
 
     this.doctorProfileForm = this.formBuilder.group({
-      first_name: [doctorDetails.first_name, [Validators.required]],
-      last_name: [doctorDetails.last_name, [Validators.required]],
+      firstname: [doctorDetails.first_name, [Validators.required]],
+      lastname: [doctorDetails.last_name, [Validators.required]],
       gender: ["", [Validators.required]],
+      email: ["", [Validators.required]],
       dob: ["", [Validators.required]],
-      national_id: ["", [Validators.required]],
-      year_of_registration: ["", [Validators.required]],
+      nationality: ["", [Validators.required]],
+      reg_year: ["", [Validators.required]],
       clinic_type: ["", [Validators.required]],
-      specialization: ["", [Validators.required]],
-      hospital: ["", [Validators.required]],
-      // hospital_license_no: ["", [Validators.required]],
-      address_of_clinic_1: ["", [Validators.required]],
-      address_2: ["", [Validators.required]],
+      specialisation: ["", [Validators.required]],
+      provider: ["", [Validators.required]],
+      provider_license_no: ["", [Validators.required]],
+      address: ["", [Validators.required]],
+      address2: ["", [Validators.required]],
       postcode: ["", [Validators.required]],
       state: ["", [Validators.required]],
       country: ["", [Validators.required]],
-      mobile_no: ["", [Validators.required]],
-      apc_no: ["", [Validators.required]],
+      mobile: ["", [Validators.required]],
+      medical_reg_no: ["", [Validators.required]],
       mrn: null,
       user_id: ["", [Validators.required]],
     });
@@ -80,7 +81,47 @@ export class DoctorProfileComponent implements OnInit {
     return this.doctorProfileForm.controls;
   }
 
+
   profileFormReport() {
+    this.httpService.commonAuthPost(appConstants.apiBaseUrl + 'getMyAccount', { }).
+      subscribe((data) => {
+        this.profileData = data.data;
+        console.log(this.profileData);
+        
+            //pathch values from DoctorProfileForm
+            this.doctorProfileForm.patchValue({
+              user_id: this.profileData.id,
+              firstname: this.profileData.firstname,
+              lastname: this.profileData.lastname,
+              gender: this.profileData.gender,
+              email: this.profileData.email,
+              dob: this.profileData.dob,
+              nationality: this.profileData.nationality,
+              reg_year: this.profileData.reg_year,
+              clinic_type: this.profileData.clinic_type,
+              specialisation: this.profileData.clinic_type_desc,
+              medical_reg_no: this.profileData.medical_reg_no,
+               
+              provider: this.profileData.provider,
+              provider_license_no: this.profileData.provider_license_no,
+              // hospital_license_no: this.profileData.hospital_license_no,
+              address: this.profileData.address,
+              address2: this.profileData.address2,
+              postcode: this.profileData.postcode,
+              state: this.profileData.state,
+              country: this.profileData.country,
+              mobile: this.profileData.mobile,
+              // phone_no: this.profileData.phone_no,
+              // mrn: this.profileData.mrn,
+            });
+          
+        
+      });
+
+  }
+
+
+  /*profileFormReport() {
     this.httpService.commonPost(appConstants.apiBaseUrl + 'get_doctor_details', { user_id: this.user_id }).
       subscribe((data) => {
         this.profileData = data.data[0];
@@ -95,7 +136,7 @@ export class DoctorProfileComponent implements OnInit {
               gender: this.profileData.gender,
               dob: formatDate(this.profileData.dob, 'dd-MM-yyyy', 'en'),
               national_id: this.profileData.national_id,
-              year_of_registration: this.profileData.year_of_registration,
+              year_of_registration: formatDate(this.profileData.year_of_registration, 'dd-MM-yyyy', 'en'),
               clinic_type: this.profileData.clinic_type,
               specialization: this.profileData.specialization,
               hospital: this.profileData.hospital,
@@ -121,7 +162,7 @@ export class DoctorProfileComponent implements OnInit {
         }
       });
 
-  }
+  }*/
 
 
   onSubmit() {
@@ -129,25 +170,24 @@ export class DoctorProfileComponent implements OnInit {
     // console.log(this.doctorProfileForm.value);
     let profileValues = this.doctorProfileForm.value;
     profileValues["user_id"] = this.user_id;
-    // profileValues.dob = moment(profileValues.dob, "YYYY-MM-DD");
-    profileValues.dob = moment(profileValues.dob).utc().format('YYYY-MM-DD');
-    this.httpService.commonPost(appConstants.apiBaseUrl + 'update_doctor_details', profileValues).subscribe(data => {
+    profileValues["is_empanelment"] = "0";
+     profileValues.dob = moment(profileValues.dob, "DD-MM-YYYY").format('YYYY-MM-DD');     
+    //  profileValues.year_of_registration = moment(profileValues.year_of_registration, "DD-MM-YYYY").format('YYYY-MM-DD');
+     console.log(profileValues);
+    this.httpService.commonAuthPost(appConstants.apiBaseUrl + 'updateMyAccount', profileValues).subscribe(data => {
       this.utilService.toastrSuccess(data.message, "Profile Data Updated Sucessfully");
-      // this.router.navigate(['/empanelment-form']);
-    this.checkEmpanelment();
+      this.router.navigate(['home']);
+    // this.checkEmpanelment();
     }, (err) => {
       console.log(err);
       this.utilService.toastrError("Profile Data Updated Failed !.(" + err.error.message.routine + ")", "Profile Data");
     });
-    console.log(this.doctorProfileForm.value);
+    
   }
 
 
   checkEmpanelment(){
     this.inviteSubscriberService.getEmpanelementStatus().subscribe(response => {
-    
-      console.log(response);
-       console.log(response['data'].length);
       if(response['data'].length > 0){
        this.router.navigate(['home']);
       } else{

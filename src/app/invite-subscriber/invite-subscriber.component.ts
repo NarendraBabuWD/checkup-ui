@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild  } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators, FormsModule, ReactiveFormsModule, AbstractControl } from '@angular/forms';
 import { InviteSubscriberService } from '../services/inviteSuscriber.service';
-
+import { HttpService } from '../services/http.service';
+import appConstants from '../config/app.constants'
 // import { UtilService } from '../services/util.service';
 import { ToastContainerDirective, ToastrService } from 'ngx-toastr';
 
@@ -15,7 +16,7 @@ export class InviteSubscriberComponent implements OnInit {
 
   public inviteSubscriber: FormGroup;
 
-  constructor(private _fb: FormBuilder,
+  constructor(private _fb: FormBuilder, private httpService: HttpService,
     private inviteSubscriberService: InviteSubscriberService,
     private toastrService: ToastrService
     // private utilService: UtilService
@@ -23,23 +24,32 @@ export class InviteSubscriberComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    let numPattern = /^[0-9]\d{9}$/;
-
     this.inviteSubscriber = this._fb.group({
-      user_id: ['', [Validators.required, Validators.pattern(numPattern)]],
-      
+      user_id: ['', [Validators.required, Validators.email]]
   });
   }
 
-  onSubmit( model: FormGroup ) {
+  /*onSubmit( model: FormGroup ) {
     this.inviteSubscriberService.inviteSubscriber( model.value ).subscribe( response => {
         let message = 'Subscriber Invited Successfully';
         this.toastrService.success(message);                  
-    },
-        error => {
-          //   this.alertNotSuccess();
-            
-        } );
+    });
+} */
 
+onSubmit( model: FormGroup ) {
+  this.httpService.commonAuthPost(appConstants.apiBaseUrl + 'doInviteSubscriber', 
+  { 
+    method: "email", value: model.value.user_id
+  }
+  ).subscribe(response => {
+    if(response.status == true){
+      let message = 'Subscriber Invited Successfully';
+      this.toastrService.success(message);  
+    } else if(response.status == false){
+      this.toastrService.error(response.data[0]);  
+    }
+    
+  });
 } 
+
 }

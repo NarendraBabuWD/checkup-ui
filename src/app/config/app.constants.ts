@@ -7,12 +7,17 @@ const appConstants = {
         SUBSCRIBER_COMPONENT : '/subscriber',
         HOME_COMPONENT : '/home',
         SUBSCRIBER_MEDICAL_SUMMARY_COMPONENT : '/subscriber/medical-summary',
-        DOCTOR_MEDICAL_SUMMARY_COMPONENT : '/doctor/medical-summary'
+        DOCTOR_MEDICAL_SUMMARY_COMPONENT : '/doctor-medical-summary'
     } ,
-    userType: {
+    /*userType: {
         SUBSCRIBER: 'Subscriber' ,
         DOCTOR : 'Doctor',
         CORP : 'WeCheckup'
+    },*/
+     userType: {
+        SUBSCRIBER: '2' ,
+        DOCTOR : '1',
+        CORP : '9'
     },
     apiBaseUrl: environment.apiUrl,
     claimStatusList:{

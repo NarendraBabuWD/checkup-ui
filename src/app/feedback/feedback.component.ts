@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormArray, FormBuilder, Validators, FormsModule, ReactiveFormsModule, AbstractControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { InviteSubscriberService } from '../services/inviteSuscriber.service';
 import { ToastContainerDirective, ToastrService } from 'ngx-toastr';
 
@@ -45,9 +45,9 @@ export class FeedbackComponent implements OnInit {
   });
 
   this.docFeedback = this._fb.group({
-    docDate: ['', [Validators.required]],
-    docName: ['', [Validators.required]],
-    docEmail: ['', [Validators.required]],
+    docDate: [''],
+    docName: [''],
+    docEmail: [''],
     docContact: ['', [Validators.required]],
     docSubject: ['', [Validators.required]],
     docMessage: ['', [Validators.required]]    
@@ -79,7 +79,7 @@ if(JSON.parse(sessionStorage.getItem("userdata")).category_name == "Doctor")
   this.docFeedbackForm = false;
 }
   }
-
+  get f() { return this.docFeedback.controls; }
   docFeedbackSubmit( model: FormGroup ) {
     this.inviteSubscriberService.doctorFeedback( model.value ).subscribe( response => {
         let message = 'Feedback Added Successfully';

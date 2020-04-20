@@ -5,9 +5,9 @@
       <a href="#">CLAIM MODULE</a>
     </li>
   </ol><br>
-  <a routerLink="/request-patient">
+  <!-- <a routerLink="/request-patient">
     <Strong>Request Patients</Strong>
-  </a><br><br>
+  </a><br><br> -->
   <div class="row">
     <div class="d-flex bd-highlight mb-3">
 
@@ -102,10 +102,12 @@
         <div class="form-group row">
             <label for="patient" class="col-sm-2 col-form-label">Patient</label>
             <div class="col-sm-10">
-                <select class="col-sm-10 form-control" formControlName="patientmrn">
-                    <option selected>Select a Patient</option>
-                    <option *ngFor="let itemp of filterPatientList" value="{{itemp.value}}">{{itemp.value}}</option>    
-               </select>
+                <select class="form-control" formControlName="patientmrn" style="width: 23%;">
+                  <option [ngValue]="null">Select</option>
+                    <!-- <option *ngFor="let itemp of filterPatientList" value="{{itemp.value}}">{{itemp.value}}</option>     -->
+                    <option *ngFor="let item of filterPatientList" [value]="item.id">{{item.firstname}} {{item.lastname}}</option>
+
+                  </select>
   
             </div>
           </div>
@@ -127,22 +129,22 @@
     </thead>
     <tbody>
       <tr *ngFor="let item2 of batchViewList">
+        <td></td>
         <td>
-            <input class="checkbox" type="checkbox" value="{{item2.user_id}}"
-            (click)="change(item2)">
+            <input class="checkbox" type="checkbox" 
+            (change)="onChange(f)" #f [value]="item2.transaction_id">
         </td>
-        <td >{{item2.subscriber}}</td>
-        <td >{{item2.mrn}}</td>
-        <td >{{item2.date | date:'y-M-d'}}</td>
-        <td >{{item2.purpos}}</td>
-        <td >{{item2.charge}}</td>
+        <td >{{item2.name}} ({{item2.transaction_id}})</td>
+        <td >{{item2.created | date:'y-M-d'}}</td>
+        <td >{{item2.package}}</td>
+        <td >{{item2.amount}}</td>
       </tr>
       <tr>
           <td></td>
           <td></td>
           <td></td>
           <td></td>
-        <td>Total Charge Value</td>
+        <td>Total (RM)</td>
         <td>{{batchTotal}}</td>
       </tr>
     </tbody>
@@ -151,7 +153,7 @@
           <td></td>
           <td></td>
           <td></td>
-        <td><button class="btn btn-claim" (click)="openModalDialog()" type="submit">PRI VIEW INVOICE</button></td>
+        <td><button class="btn btn-claim" (click)="submitCheckedData()" type="submit">PRI VIEW INVOICE</button></td>
         <td><button class="btn btn-claim" (click)="batchViewCancel()" type="submit">Cancel</button></td>
         <td></td>
         <td></td>

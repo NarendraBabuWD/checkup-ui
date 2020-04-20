@@ -4,6 +4,9 @@ import { SubscriptionService } from '../services/subscription.service';
 import { ToastContainerDirective, ToastrService } from 'ngx-toastr';
 import { formatDate } from '@angular/common';
 import { Router } from '@angular/router';
+import { HttpService } from '../services/http.service';
+import appConstants from '../config/app.constants';
+import { UtilService } from '../services/util.service';
 
 
 @Component({
@@ -18,20 +21,21 @@ export class SubscriptionAccountComponent implements OnInit {
    subDuraytionList: any[] = [];
    billingData;
    doctorName: string;
+   doctorId: string;
    clinicName: string;
    address: string;
    telephone: string;
    subscriptionType: string;
    subscriptionDuration: string;
 
-  constructor(private _fb: FormBuilder, private toastrService: ToastrService
-    , private subscriptionService: SubscriptionService,private router: Router) { }
+  constructor(private _fb: FormBuilder, private toastrService: ToastrService, private utilService: UtilService,
+    private httpService: HttpService, private subscriptionService: SubscriptionService,private router: Router) { }
 
   ngOnInit() {
     this.getBillingInfo();
-    this.getSubscriptionType();
-    this.getSubscriptionDuration();
-
+    // this.getSubscriptionType();
+    // this.getSubscriptionDuration();
+    this.getPackageList();
     this.subscriberAccountForm = this._fb.group({
       first_name: ["", [Validators.required]],
       last_name: ["", [Validators.required]],
@@ -44,17 +48,56 @@ export class SubscriptionAccountComponent implements OnInit {
       postcode: ["", [Validators.required]],
       state: ["", [Validators.required]],
       country: ["", [Validators.required]],
-      mobile_no: ["", [Validators.required]],
-      phone_no: ["", [Validators.required]],
-      fax_no: ["", [Validators.required]],
-      subscription_type: ["", [Validators.required]],
-      subscription_duration: ["", [Validators.required]],
+      subscription_type: ["", [Validators.required]]
     });
 
   }
 
-
   getBillingInfo(){    
+     
+      this.httpService.commonAuthPost(appConstants.apiBaseUrl + 'getMyDoctorInfo',{}).subscribe((response) =>{
+        // console.log(response);
+        this.billingData = response.data;
+        sessionStorage.setItem('billingData',JSON.stringify(this.billingData));
+        this.doctorId = this.billingData.dr_id;
+        this.doctorName = this.billingData.doctor_name;
+        this.clinicName = this.billingData.doctor_clinic;
+        this.address = `${this.billingData.doctor_address},${this.billingData.doctor_address2},${this.billingData.doctor_state},${this.billingData.doctor_postcode},${this.billingData.doctor_country}`;
+        this.telephone = this.billingData.doctor_phone_no;
+
+      this.subscriberAccountForm.patchValue({
+        first_name: this.billingData.firstname,
+        last_name: this.billingData.lastname,
+        email_user_id: this.billingData.email,
+        gender: this.billingData.gender,
+        dob: this.billingData.dob,
+        national_id: this.billingData.nationality,
+        address: this.billingData.address,
+        address_2: this.billingData.address2,
+        postcode: this.billingData.postcode,
+        state: this.billingData.state,
+        country: this.billingData.country,
+        // mobile_no: this.billingData.mobile_no,
+        // phone_no: this.billingData.phone_no,
+        // fax_no: this.billingData.fax_no,
+        
+      });
+
+    });
+  }
+
+
+  getPackageList(){    
+      this.subTypeList = [];
+      this.httpService.commonAuthPost(appConstants.apiBaseUrl + 'getPackageList',{}).subscribe((response) =>{
+        // console.log(response);
+        this.subTypeList = response.data
+      
+
+    });
+  }
+
+  /*getBillingInfo(){    
     this.subscriptionService.getBillingInfo().subscribe(response => {
       // console.log(response);
       this.billingData = response.data[0];
@@ -84,19 +127,39 @@ export class SubscriptionAccountComponent implements OnInit {
       });
 
     });
+  }*/
+  packageChanged(event){
+        console.log(event);
+        console.log(this.subTypeList);
+        for(let i = 0; i <= this.subTypeList.length - 1; i++){
+              if(event === this.subTypeList[i].id){
+                console.log(this.subTypeList[i]);
+                sessionStorage.setItem('package',JSON.stringify(this.subTypeList[i]));
+              }
+        }
   }
-
 
   onSubmit(){
     let billingValues = this.subscriberAccountForm.value;
     // billingValues["user_id"] = this.user_id;
-    console.log(billingValues); 
-    sessionStorage.setItem('billingValues',JSON.stringify(billingValues));
+    /*console.log(billingValues); 
+    console.log( this.doctorId);*/
+    this.httpService.commonAuthPost(appConstants.apiBaseUrl + 'doSubmitSubscription', {dr_id: this.doctorId, package: billingValues.subscription_type}).subscribe(data => {
+      console.log(data);
+      sessionStorage.setItem('doSubmitSubscription',JSON.stringify(data.data));
+      this.utilService.toastrSuccess("Details Added Sucessfully", "Subscription Sucessfully");
+      this.router.navigate(['/subscription-order']);  
+      // this.router.navigate(['home']);
+    }, (err) => {
+      console.log(err);
+      this.utilService.toastrError("Subscription Failed !.", "Failed");
+    });
+    /*sessionStorage.setItem('billingValues',JSON.stringify(billingValues));
  
     this.subscriptionType = billingValues.subscription_type;
     this.subscriptionDuration = billingValues.subscription_duration;
 
-    this. getSubscriptionAmount(this.subscriptionType, this.subscriptionDuration);
+    this.getSubscriptionAmount(this.subscriptionType, this.subscriptionDuration);*/
     } 
 
     getSubscriptionAmount(subscriptionType,subscriptionDuration){
@@ -114,7 +177,7 @@ export class SubscriptionAccountComponent implements OnInit {
     });
   }*/
 
-  getSubscriptionType(){    
+  /*getSubscriptionType(){    
     this.subscriptionService.getSubscriptionType().subscribe(response => {
       // console.log(response);
       this.subTypeList = response.data;
@@ -126,6 +189,6 @@ export class SubscriptionAccountComponent implements OnInit {
       // console.log(response);
       this.subDuraytionList = response.data;
     });
-  }
+  }*/
 
 }

@@ -11,7 +11,7 @@ import { AuthService } from "../auth.service";
 })
 export class MyHealthDataComponent implements OnDestroy {
 
-  public selectedCategory = 'bp';
+  public selectedCategory = '';
   private selectedLayoutOption = 'day';
   private selectedToggleOption = 'list';
   private startDate = new Date();
@@ -26,7 +26,7 @@ export class MyHealthDataComponent implements OnDestroy {
     this.healthDataService = healthDataService;
     this.utilService = utilService;
     this.healthDataService.getHealthDataCategories();
-    this.findInitialDateRange();
+    // this.findInitialDateRange();
   }
   ngOnDestroy() {
     document.querySelector('body').classList.remove('bg-color-whilte');
@@ -57,6 +57,7 @@ export class MyHealthDataComponent implements OnDestroy {
 
   }
   findInitialDateRange() {
+    this.healthDataService.healthData = [];
     switch (this.selectedLayoutOption) {
       case 'day':
       this.startDate = new Date();
@@ -119,7 +120,6 @@ export class MyHealthDataComponent implements OnDestroy {
     this.healthDataService.healthData = [];
     this.endDate = event;
     if (event){
-      console.log(event); 
       this.timeout = setTimeout(() => {
         this.fetchHealthData();
         clearTimeout(this.timeout);
@@ -128,6 +128,7 @@ export class MyHealthDataComponent implements OnDestroy {
     
   }
   changeDateRangeHandler(event){
+    this.healthDataService.healthData = [];
     this.healthDataService.page = 1;
     if((moment(this.startDate).format('DD/MM/YYYY') === moment(event[0]).format('DD/MM/YYYY')) && moment(this.endDate).format('DD/MM/YYYY') === moment(event[1]).format('DD/MM/YYYY')){
       return;

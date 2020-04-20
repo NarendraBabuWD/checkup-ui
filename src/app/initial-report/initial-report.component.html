@@ -2,7 +2,6 @@
     <h2 class="text-center">INITIAL HEALTH REPORTING</h2>
     <div class="card-box" *ngIf='initialReportData.length > 0'>
         <div class="table-responsive">
-            <form [formGroup]="initialReportForm" (ngSubmit)="onSubmit()">
                 <table class="table">
                     <thead>
                         <tr class="text-center">
@@ -13,23 +12,19 @@
                         </tr>
                     </thead>
                     <tbody>
-                    <ng-template ngFor let-fgb [ngForOf]="form_group_ceate">
-                        <tr [formGroupName]="fgb">
-                            <td>{{initialReportConfigData[fgb]}} <span class="text-right">:</span></td>
-                            <td><input type="number"  [ngClass]="{'non_editable': isEditable(fgb)}" [readonly]="isEditable(fgb)" formControlName="initial" class="form-control" /></td>
-                            <td><input type="number"  [ngClass]="{'non_editable': isViewOnly}" formControlName="target" class="form-control" /></td>
-                            <!-- <td><input type="number" formControlName="performance" class="form-control" /></td> -->
+                       <tr *ngFor='let item of initialReportData'>
+                            <td>{{item.category_name}} </td>
+                            <td><input type="text" [ngClass]="{'non_editable': isViewOnly}"  class="form-control" [(ngModel)]='item.initial'/></td>
+                            <td><input type="text" [ngClass]="{'non_editable': isViewOnly}"  class="form-control" [(ngModel)]='item.target'/></td>
                         </tr>
-                    </ng-template>
                     </tbody>
                 </table>
                 <div class="row card-body justify-content-center pt-4 text-center" *ngIf='!isViewOnly'>
-                    <button type="submit" class="btn btn-custom-83559D">{{isEdit ? 'Update':'Create'}}</button>
+                    <button type="submit" (click)="onClickData()" class="btn btn-custom-83559D">Update</button>
                 </div>
-            </form>
         </div>
     </div>
     <div *ngIf='initialReportData.length === 0'>
-         <b> No Data Available for user id:  {{user_id}}  </b>
+         <b> No Data Available for this user   </b>
     </div>
 </div>

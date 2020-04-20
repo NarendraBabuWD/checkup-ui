@@ -6,15 +6,18 @@
                 <p class="pt-2 pb-2 font-weight-bold">Health Care for you, <br/>by you</p>
             </div>
             <div class="card-body">
-                <form [formGroup]="signupForm" (ngSubmit)="signup()">
+                <form [formGroup]="signupForm" (ngSubmit)="signup(signupForm)">
                     <div class="form-group">
                         <label *ngIf='categoryLabel' for="category_name">Category Type:</label>
                         <select class="form-control" name="category_name" formControlName="category_name" (focus)="categoryLabel = true"
                             (focusout)="categoryLabel = false" required>
                             <option [ngValue]="null">Select a Category</option>
-                            <option *ngFor="let category of categoryList" [ngValue]="category.value">
+                            <!-- <option *ngFor="let category of categoryList" [ngValue]="category.value">
                                 {{ category.name }}
-                            </option>
+                            </option> -->
+                            <option value="2">Subscriber </option>
+                            <option value="1">Doctor </option>
+                            <option value="9">WeCheckup </option>
                         </select>
                         <div *ngIf="f.category_name.dirty && f.category_name.invalid" class="alert alert-danger form-group">
                             <div *ngIf="f.category_name.errors.required">Select any one Category. </div>

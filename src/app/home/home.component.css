@@ -28,3 +28,7 @@ a{
     color: #fff;
     font-weight: bold;
 }
+
+.backdrop {
+    background: rgba(0,0,0,0.6);
+}

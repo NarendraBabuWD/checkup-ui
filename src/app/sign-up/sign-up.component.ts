@@ -6,6 +6,9 @@ import { Router } from '@angular/router';
 import { MustMatch } from '../helpers/must-match.validator';
 import appConstants from '../config/app.constants';
 import { ToastContainerDirective, ToastrService } from 'ngx-toastr';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+// import {Http,Headers,} from '@angular/http';
+
 
 @Component({
   selector: 'app-sign-up',
@@ -16,8 +19,17 @@ export class SignUpComponent implements OnInit {
 
   constructor(private httpService: HttpService, 
               private formBuilder: FormBuilder, 
-              private router: Router,
+              private router: Router, private http:HttpClient,
               private toastrService: ToastrService) { }
+
+              /*headers = new HttpHeaders({ 
+                'Content-Type': 'application/json; charset=utf-8; application/x-www-form-urlencoded',
+                'Accept' : 'application/json',
+                'Access-Control-Allow-Origin' : 'http://localhost',
+                'Access-Control-Allow-Credentials' : 'true'
+
+               });
+              options = { headers: this.headers };*/
   signupForm: FormGroup;
   submitted = false;
   categoryList: any;
@@ -50,17 +62,13 @@ export class SignUpComponent implements OnInit {
   }
   // convenience getter for easy access to form fields
   get f() { return this.signupForm.controls; }
+
   signup() {
-    // console.log(this.signupForm.value);
-    this.httpService.commonPost(appConstants.apiBaseUrl + 'sign_up', this.signupForm.value).subscribe((res: Response) => {
+
+    this.httpService.commonPost(appConstants.apiBaseUrl + 'doRegister', this.signupForm.value).subscribe((res: Response) => {
       console.log(res, "User Sucessfully Sign Up!.");
       console.log(res);
-     /* if (this.signupForm.value.category_name === appConstants.userType.SUBSCRIBER) {
-        this.router.navigate([appConstants.routingList.SUBSCRIBER_COMPONENT]);
-      }
-      if (this.signupForm.value.category_name === appConstants.userType.DOCTOR) {
-        this.router.navigate([appConstants.routingList.DOCTOR_COMPONENT]);
-      }*/
+      this.toastrService.warning("User Sucessfully Sign Up!.");  
       this.router.navigate(["login"]);
     }, error => {
         // console.log(error);
@@ -68,6 +76,35 @@ export class SignUpComponent implements OnInit {
         this.toastrService.warning(message);  
     })
   }
+
+
+/*
+signup() {
+  console.log(this.signupForm.value);  
+  // const myheader = new HttpHeaders().set('Access-Control-Allow-Origin', 'http://localhost:4200');
+  let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    headers.append('Accept', 'application/json');
+    headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, DELETE, PUT');
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Access-Control-Allow-Headers', "X-Requested-With, Content-Type, Origin, Authorization, Accept, Client-Security-Token, Accept-Encoding");
+    // let options = new RequestOptions({ headers: headers });
+    let options = { headers: headers };
+    console.log(options)
+    let body = "firstname="+this.signupForm.value.firstname+"&lastname="+this.signupForm.value.lastname+"&email="+this.signupForm.value.email+"&password="+this.signupForm.value.password+"&category="+this.signupForm.value.category_name;
+    console.log(body);
+    
+
+    this.http
+      .post(appConstants.apiBaseUrl + 'doRegister?'+body,
+      options)
+        .subscribe(data => {
+              console.log(data);
+        }, error => {
+            console.log(JSON.stringify(error.json()));
+        });
+}
+*/
 
   login(){
     this.router.navigate([appConstants.routingList.LOGIN_COMPONENT]);

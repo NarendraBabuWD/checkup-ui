@@ -25,9 +25,9 @@
         <div class="form-group row">
           <label for="name" class="col-sm-2 col-form-label">First Name:</label>
           <div class="col-sm-4 row">
-            <input type="text" class="form-control" formControlName="first_name" placeholder="First Name" />
-            <div *ngIf="submitted && f.first_name.errors" class="alert alert-danger form-group">
-              <div *ngIf="f.first_name.errors.required">
+            <input type="text" class="form-control" formControlName="firstname" placeholder="First Name" />
+            <div *ngIf="submitted && f.firstname.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.firstname.errors.required">
                 First Name is required
               </div>
             </div>
@@ -37,9 +37,9 @@
         <div class="form-group row">
           <label for="name" class="col-sm-2 col-form-label">Last Name:</label>
           <div class="col-sm-4 row">
-            <input type="text" class="form-control" formControlName="last_name" placeholder="Last Name" />
-            <div *ngIf="submitted && f.last_name.errors" class="alert alert-danger form-group">
-              <div *ngIf="f.last_name.errors.required">
+            <input type="text" class="form-control" formControlName="lastname" placeholder="Last Name" />
+            <div *ngIf="submitted && f.lastname.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.lastname.errors.required">
                 Last Name is required
               </div>
             </div>
@@ -49,7 +49,7 @@
         <div class="form-group row">
           <label for="name" class="col-sm-2 col-form-label">Email:</label>
           <div class="col-sm-4 row">
-            <input type="text" class="form-control" placeholder="{{email}}" readonly/>
+            <input type="text" class="form-control" formControlName="email" placeholder="Email" readonly/>
            
           </div>
         </div>
@@ -77,7 +77,8 @@
         <div class="form-group row">
           <label for="dob" class="col-sm-2 col-form-label">Date of Birth:</label>
           <div class="col-sm-4 row">
-            <input type="text" class="form-control" formControlName="dob" placeholder="Date of Birth" />
+            <input type="text" class="form-control" formControlName="dob" placeholder="Date of Birth" 
+            bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }"/>
             <div *ngIf="submitted && f.dob.errors" class="alert alert-danger form-group">
               <div *ngIf="f.dob.errors.required">
                 DOB is required
@@ -105,20 +106,22 @@
         <div class="form-group row">
           <label for="nationality" class="col-sm-2 col-form-label">Nationality</label>
           <div class="col-sm-4 row">
-            <input type="text" class="form-control" formControlName="national_id" placeholder="Nationality" />
-            <div *ngIf="submitted && f.national_id.errors" class="alert alert-danger form-group">
-              <div *ngIf="f.national_id.errors.required">
+            <input type="text" class="form-control" formControlName="nationality" placeholder="Nationality" />
+            <div *ngIf="submitted && f.nationality.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.nationality.errors.required">
                 Nationality
               </div>
             </div>
           </div>
         </div>
         <div class="form-group row">
-          <label for="year_of_registration" class="col-sm-2 col-form-label">Year of Registration</label>
+          <label for="reg_year" class="col-sm-2 col-form-label">Year of Registration</label>
           <div class="col-sm-4 row">
-            <input type="text" class="form-control" formControlName="year_of_registration" placeholder="Year of Registration" />
-            <div *ngIf="submitted && f.year_of_registration.errors" class="alert alert-danger form-group">
-              <div *ngIf="f.year_of_registration.errors.required">
+            <input type="text" class="form-control" formControlName="reg_year" 
+            placeholder="Year of Registration"  />
+            
+            <div *ngIf="submitted && f.reg_year.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.reg_year.errors.required">
                 Year of Registration is required
               </div>
             </div>
@@ -126,11 +129,11 @@
         </div>
         <div class="clearfix"></div>
         <div class="form-group row">
-          <label for="apc_no" class="col-sm-2 col-form-label">APC No.</label>
+          <label for="medical_reg_no" class="col-sm-2 col-form-label">APC No.</label>
           <div class="col-sm-4 row">
-            <input type="tel" class="form-control" formControlName="apc_no" placeholder="APC No." maxlength="15" />
-            <div *ngIf="submitted && f.apc_no.errors" class="alert alert-danger form-group">
-              <div *ngIf="f.apc_no.errors.required">
+            <input type="tel" class="form-control" formControlName="medical_reg_no" placeholder="APC No."  />
+            <div *ngIf="submitted && f.medical_reg_no.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.medical_reg_no.errors.required">
                 APC No. No is required
               </div>
             </div>
@@ -140,7 +143,13 @@
         <div class="form-group row">
           <label for="name" class="col-sm-2 col-form-label">Clinic Type</label>
           <div class="col-sm-4 row">
-            <input type="text" class="form-control" formControlName="clinic_type" placeholder="Clinic Type" />
+            <!-- <input type="text" class="form-control" formControlName="clinic_type" placeholder="Clinic Type" /> -->
+            <select name="clinic_type" id="clinic_type" class="form-control" name="clinic_type" formControlName="clinic_type" required>
+              <option [ngValue]="null">Select</option>
+              <option value="1">General Practitioner</option>
+              <option value="2">Specialist</option>
+
+              </select>
             <div *ngIf="submitted && f.clinic_type.errors" class="alert alert-danger form-group">
               <div *ngIf="f.clinic_type.errors.required">
                 Clinic Type is required
@@ -151,9 +160,9 @@
         <div class="form-group row">
           <label for="name" class="col-sm-2 col-form-label">Specialization</label>
           <div class="col-sm-4 row">
-            <input type="text" class="form-control" formControlName="specialization" placeholder="Specialization" />
-            <div *ngIf="submitted && f.specialization.errors" class="alert alert-danger form-group">
-              <div *ngIf="f.specialization.errors.required">
+            <input type="text" class="form-control" formControlName="specialisation" placeholder="Specialization" />
+            <div *ngIf="submitted && f.specialisation.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.specialisation.errors.required">
                 Specialization is required
               </div>
             </div>
@@ -162,14 +171,27 @@
         <div class="form-group row">
           <label for="name" class="col-sm-2 col-form-label">Hospital</label>
           <div class="col-sm-4 row">
-            <input type="text" class="form-control" formControlName="hospital" placeholder="Hospital" />
-            <div *ngIf="submitted && f.hospital.errors" class="alert alert-danger form-group">
-              <div *ngIf="f.hospital.errors.required">
+            <input type="text" class="form-control" formControlName="provider" placeholder="Hospital" />
+            <div *ngIf="submitted && f.provider.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.provider.errors.required">
                 Hospital is required
               </div>
             </div>
           </div>
         </div>
+
+        <div class="form-group row">
+          <label for="name" class="col-sm-2 col-form-label">Hospital License No</label>
+          <div class="col-sm-4 row">
+            <input type="text" class="form-control" formControlName="provider_license_no" placeholder="Hospital" />
+            <div *ngIf="submitted && f.provider_license_no.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.provider_license_no.errors.required">
+                Hospital License No. is required
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- <div class="form-group row">
           <label for="name" class="col-sm-2 col-form-label">Hospital License No</label>
           <div class="col-sm-4 row">
@@ -184,9 +206,9 @@
         <div class="form-group row">
           <label for="name" class="col-sm-2 col-form-label">Address Of Clinic</label>
           <div class="col-sm-4 row">
-            <input type="text" class="form-control" formControlName="address_of_clinic_1" placeholder="Address Of Clinic" />
-            <div *ngIf="submitted && f.address_of_clinic_1.errors" class="alert alert-danger form-group">
-              <div *ngIf="f.address_of_clinic_1.errors.required">
+            <input type="text" class="form-control" formControlName="address" placeholder="Address Of Clinic" />
+            <div *ngIf="submitted && f.address.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.address.errors.required">
                 Address Of Clinic is required
               </div>
             </div>
@@ -195,9 +217,9 @@
         <div class="form-group row">
           <label for="name" class="col-sm-2 col-form-label">Address2</label>
           <div class="col-sm-4 row">
-            <input type="text" class="form-control" formControlName="address_2" placeholder="Address2" />
-            <div *ngIf="submitted && f.address_2.errors" class="alert alert-danger form-group">
-              <div *ngIf="f.address_2.errors.required">
+            <input type="text" class="form-control" formControlName="address2" placeholder="Address2" />
+            <div *ngIf="submitted && f.address2.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.address2.errors.required">
                 Address2 is required
               </div>
             </div>
@@ -206,8 +228,8 @@
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Pincode</label>
           <div class="col-sm-4 row">
-            <input type="tel" class="form-control" formControlName="postcode" placeholder="Pincode" required pattern="^[0-9]{6}$"
-              title="Enter Valid Pin Code">
+            <input type="tel" class="form-control" formControlName="postcode" placeholder="Pincode" pattern="^[0-9]{6}$" />
+              
             <div *ngIf="submitted && f.postcode.errors" class="alert alert-danger form-group">
               <div *ngIf="f.postcode.errors.required">
                 Pincode is required
@@ -245,9 +267,9 @@
         <div class="form-group row">
           <label for="mobile_no" class="col-sm-2 col-form-label">Mobile No.</label>
           <div class="col-sm-4 row">
-            <input type="text" class="form-control" formControlName="mobile_no" placeholder="Mobile" />
-            <div *ngIf="submitted && f.mobile_no.errors" class="alert alert-danger form-group">
-              <div *ngIf="f.mobile_no.errors.required">
+            <input type="text" class="form-control" formControlName="mobile" placeholder="Mobile" />
+            <div *ngIf="submitted && f.mobile.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.mobile.errors.required">
                 Mobile No is required
               </div>
             </div>

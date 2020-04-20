@@ -43,28 +43,28 @@ export class SubscriberProfileComponent implements OnInit {
     const subscriberDetails = JSON.parse(sessionStorage.getItem('userdata'));
 
     this.subscriberProfileForm = this.formBuilder.group({
-      first_name: [subscriberDetails.first_name, [Validators.required]],
-      last_name: [subscriberDetails.last_name, [Validators.required]],
-      email_user_id: ["", [Validators.required]],
+      firstname: [subscriberDetails.first_name, [Validators.required]],
+      lastname: [subscriberDetails.last_name, [Validators.required]],
+      email: ["", [Validators.required]],
       dob: ["", [Validators.required]],
-      national_id: ["", [Validators.required]],
+      nationality: ["", [Validators.required]],
       gender: ["", [Validators.required]],
       address: ["", [Validators.required]],
-      address_2: ["", [Validators.required]],
+      address2: ["", [Validators.required]],
       postcode: ["", [Validators.required]],
       state: ["", [Validators.required]],
       country: ["", [Validators.required]],
-      mobile_no: ["", [Validators.required]],
+      mobile: ["", [Validators.required]],
       phone_no: ["", [Validators.required]],
-      fax_no: ["", [Validators.required]],
+      // fax_no: ["", [Validators.required]],
       user_id: ["", [Validators.required]],
       height: ["", [Validators.required]],
-      mrn: ["", [Validators.required]],
+      // mrn: ["", [Validators.required]],
       race: ["", [Validators.required]],
-      treatement_for_high_blood_pressure: ["", [Validators.required]],
+      hbp: ["", [Validators.required]],
       diabetes: ["", [Validators.required]],
       smoker: ["", [Validators.required]],
-      doctor_id: ["", [Validators.required]]
+      // doctor_id: ["", [Validators.required]]
     });
 
     this.profileFormReport();
@@ -76,6 +76,39 @@ export class SubscriberProfileComponent implements OnInit {
   }
 
   profileFormReport(){
+    this.httpService.commonAuthPost(appConstants.apiBaseUrl + 'getMyAccount',{}).subscribe((res) =>{
+      // console.log(res.data);
+     this.subscriberProfileForm.patchValue({
+            user_id: res.data.id,
+            firstname: res.data.firstname,
+            lastname: res.data.lastname,
+            email: res.data.email,
+            gender: res.data.gender,
+            // dob: formatDate(this.profileData.dob, 'dd-MM-yyyy', 'en'),
+            dob: res.data.dob,
+            nationality: res.data.nationality,
+            address:  res.data.address,
+            address2:  res.data.address2,
+            postcode:  res.data.postcode,
+            state:  res.data.state,
+            country:  res.data.country,
+            mobile: res.data.mobile,
+            phone_no:  res.data.phone_no,
+            // fax_no: this.profileData.fax_no,
+            // user_id: this.profileData.user_id ? this.profileData.user_id : this.user_id,
+            height:  res.data.height,
+            // mrn: this.profileData.mrn,
+            // race: this.profileData.race,
+            hbp:  res.data.treatement_for_high_blood_pressure,
+            diabetes:  res.data.diabetes,
+            smoker:  res.data.smoker,
+            doctor_id:  res.data.doctor_id
+          });
+        
+
+    })
+  }
+  /*profileFormReport(){
     this.httpService.commonPost(appConstants.apiBaseUrl + 'get_subscriber_details', { user_id: this.user_id }).
     subscribe((data) => {
       this.profileData = data.data[0];
@@ -119,7 +152,7 @@ export class SubscriberProfileComponent implements OnInit {
       }
     });
     
-  }
+  }*/
 
   onSubmit(){
     this.submitted = true;
@@ -128,9 +161,10 @@ export class SubscriberProfileComponent implements OnInit {
     profileValues.dob= moment(profileValues.dob, "DD-MM-YYYY").format("YYYY-MM-DD");
     
     profileValues.mobile_no = "+60 "+profileValues.mobile_no;
-    // console.log(profileValues);
-    this.httpService.commonPost(appConstants.apiBaseUrl + 'update_subscriber_details', profileValues).subscribe(data => {
+    console.log(profileValues);
+   this.httpService.commonAuthPost(appConstants.apiBaseUrl + 'updateMyAccount', profileValues).subscribe(data => {
         this.utilService.toastrSuccess("Details Updated Sucessfully", "Profile Data Updated Sucessfully");
+        this.router.navigate(['home']);
       }, (err) => {
         console.log(err);
         this.utilService.toastrError("Profile Data Updated Failed !.("+err.error.message.routine+")", "Progress Report");

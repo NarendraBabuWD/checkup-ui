@@ -84,7 +84,7 @@
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Date</label>
           <div class="col-sm-4 row">
-            <input type="numeber" class="form-control" formControlName="docDate" placeholder="{{todayDate}}" readonly />
+            <input type="numeber" class="form-control" formControlName="docDate" name="docDate" placeholder="{{todayDate}}" readonly />
            
           </div>
         </div>
@@ -92,7 +92,7 @@
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Name</label>
           <div class="col-sm-4 row">
-            <input type="numeber" class="form-control" formControlName="docName"  placeholder="{{nameValue}}" readonly/>
+            <input type="numeber" class="form-control" formControlName="docName" name="docName" placeholder="{{nameValue}}" readonly/>
            
           </div>
         </div>
@@ -100,23 +100,27 @@
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Email</label>
           <div class="col-sm-4 row">
-            <input type="numeber" class="form-control" formControlName="docEmail"  placeholder="{{emailValue}}" readonly/>
+            <input type="numeber" class="form-control" formControlName="docEmail" name="docEmail" placeholder="{{emailValue}}" readonly/>
            
           </div>
+          
         </div>
 
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Contact</label>
           <div class="col-sm-4 row">
-            <input type="numeber" class="form-control" formControlName="docContact"  placeholder="Contact" />
+            <input type="numeber" class="form-control" formControlName="docContact" name="docContact" placeholder="Contact" />
            
+          </div>
+          <div *ngIf="f.docContact.dirty && f.docContact.invalid" class="alert alert-danger form-group">
+            <div *ngIf="f.docContact.errors.required">Contact is required</div>
           </div>
         </div>
 
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Subject</label>
           <div class="col-sm-4 row">
-                    <select class="form-control" formControlName="docSubject">
+                    <select class="form-control" formControlName="docSubject" name="docSubject">
                       <option selected>Select</option>
                       <option value="Application">Application</option>
                       <option value="Device">Device</option>
@@ -130,7 +134,7 @@
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Message</label>
           <div class="col-sm-4 row">
-            <textarea type="numeber" class="form-control" formControlName="docMessage"  placeholder="Message..." ></textarea>
+            <textarea type="numeber" class="form-control" formControlName="docMessage" name="docMessage" placeholder="Message..." ></textarea>
            
           </div>
         </div>
@@ -138,7 +142,7 @@
       
         <div class="card-footer">
           <div class="row justify-content-center">
-            <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+            <button type="submit" [disabled]="!docFeedback.valid" class="btn btn-primary btn-sm">Submit</button>
             <button type="reset" class="btn btn-danger ml-3 btn-sm">Reset</button>
          </div>
         </div>

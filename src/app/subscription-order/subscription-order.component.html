@@ -50,8 +50,8 @@
   <span class='col-md-8'>
   <h4>Description</h4>
   <p>Subscription type<span> : </span>{{subscription_type}}</p>
-  <p>Subscription duration<span> : </span>{{subscription_duration}}</p>
-  <p>Subscription period<span> : </span>23/09/2019 till 22/09/2020</p>
+  <p>Subscription duration<span> : </span>{{subscription_duration}} Days</p>
+  <p>Subscription period<span> : </span>{{billingDate}} till {{billingEndDate}}</p>
   </span>
   <span class='col-md-4'>
   <h4>Amount</h4>
@@ -90,7 +90,7 @@
   <span class="col-sm-4">
   <div class="float-right">
   <button type="button" class="btn btn-outline-info" (click)="goToSubscription()">CHANGE ORDER</button>&nbsp;
-  <button type="button" class="btn btn-outline-success" (click)="childModal.show()">SUBMIT</button>
+  <button type="button" class="btn btn-outline-success" (click)="updatePaymentInfo()">SUBMIT</button>
   </div>
   </span>
   </div>

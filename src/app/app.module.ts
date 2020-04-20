@@ -34,7 +34,7 @@ import { DialogComponent } from './components/dialog/dialog.component';
 import { EmpanelmentFormComponent } from './empanelment-form/empanelment-form.component';
 import { ClaimSubmittionComponent } from './claim-submittion/claim-submittion.component';
 import { ClaimHistoryComponent } from './claim-history/claim-history.component';
-import { ModalModule } from 'ngx-bootstrap/modal';
+// import { ModalModule } from 'ngx-bootstrap/modal';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { BsDatepickerModule } from 'ngx-bootstrap';
 import { SubscriberProfileComponent } from './subscriber/subscriber-profile/subscriber-profile.component';
@@ -42,14 +42,14 @@ import { DoctorProfileComponent } from './doctor/doctor-profile/doctor-profile.c
 import { SpinnerComponent } from './spinner/spinner.component';
 import { LoaderInterceptor } from './services/loader.interceptors';
 import { InviteSubscriberComponent } from './invite-subscriber/invite-subscriber.component';
-// import { MessagingService } from "./messaging.service";
+import { MessagingService } from "./messaging.service";
 import { AngularFireModule } from "angularfire2";
 // for AngularFireDatabase
-// import { AngularFireDatabaseModule } from "angularfire2/database";
-// import { AngularFireDatabase } from "angularfire2/database";
+import { AngularFireDatabaseModule } from "angularfire2/database";
+import { AngularFireDatabase } from "angularfire2/database";
 // for AngularFireAuth
-// import { AngularFireAuthModule } from "angularfire2/auth";
-// import { AngularFireAuth } from "angularfire2/auth";
+import { AngularFireAuthModule } from "angularfire2/auth";
+import { AngularFireAuth } from "angularfire2/auth";
 import { RequestPatientsComponent  } from './request-patients/request-patients.component';
 import { HelpSupportComponent } from './help-support/help-support.component';
 import { SettingsComponent } from './settings/settings.component';
@@ -68,23 +68,37 @@ import { ResponseComponent } from './response/response.component';
 import { PaymentComponent } from './payment/payment.component';
 import { SubscriptionAccountComponent } from './subscription-account/subscription-account.component';
 import { SubscriptionOrderComponent } from './subscription-order/subscription-order.component';
+import { ModalModule, BsModalRef  } from 'ngx-bootstrap/modal';
+import { DoctorMedicalSummaryComponent } from './doctor-medical-summary/doctor-medical-summary.component';
+import { HighchartsChartComponent } from 'highcharts-angular';
 
 
-/*
-export const firebaseConfig = {
-  apiKey: "AIzaSyAeumHIydAC7jjGCBRVYwklZ-yp1eAQQng",
-  authDomain: "ourchkup.firebaseapp.com",
-  databaseURL: "https://ourchkup.firebaseio.com",
-  projectId: "ourchkup",
-  storageBucket: "ourchkup.appspot.com",
-  messagingSenderId: "7316415984",
-  appId: "1:7316415984:web:d309d3074c7376ada16935",
-  measurementId: "G-3XWCZ7YNNK"
+/*export const firebaseConfig = {
+  apiKey: "AIzaSyAC6cyjiy6I56Y2dGHQ0O9VQjHbLcN_eBc",
+    authDomain: "fir-3fb15.firebaseapp.com",
+    databaseURL: "https://fir-3fb15.firebaseio.com",
+    projectId: "fir-3fb15",
+    storageBucket: "fir-3fb15.appspot.com",
+    messagingSenderId: "992093263761",
+    appId: "1:992093263761:web:a33d867db447405244ac30",
+    measurementId: "G-8RY7GQ6FDT"
 };*/
 
+export const firebaseConfig = {
+  apiKey: "AIzaSyDSHZfAvf_C582hMtzYcSZayBpJAmH1iFw",
+  authDomain: "ourcheckup-cdace.firebaseapp.com",
+  databaseURL: "https://ourcheckup-cdace.firebaseio.com",
+  projectId: "ourcheckup-cdace",
+  storageBucket: "ourcheckup-cdace.appspot.com",
+  messagingSenderId: "128200139453",
+  appId: "1:128200139453:web:a61ad859ecaf68a4368dd4",
+  measurementId: "G-6EL90HRYV4"
+  };
+  
 @NgModule({
   declarations: [
     AppComponent,
+    HighchartsChartComponent,
     LoginComponent,
     SignUpComponent,
     DoctorComponent,
@@ -123,7 +137,8 @@ export const firebaseConfig = {
     ResponseComponent,
     PaymentComponent,
     SubscriptionAccountComponent,
-    SubscriptionOrderComponent
+    SubscriptionOrderComponent,
+    DoctorMedicalSummaryComponent
   ],
   imports: [
     BrowserModule,
@@ -137,15 +152,16 @@ export const firebaseConfig = {
     AppRoutingModule,
     ModalModule.forRoot(),
     InfiniteScrollModule,
-    // AngularFireModule.initializeApp(firebaseConfig),
-    // AngularFireDatabaseModule,
-    // AngularFireAuthModule,
+    ModalModule.forRoot(),
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
     BootstrapModalModule,
     PdfViewerModule
   ],
 // exports:[DialogComponent],
   entryComponents:[DialogComponent],
-  providers: [ AuthGuard, AuthService,  HttpService, DataService, UtilService, MyHealthDataService, MyHealthReportService, {provide: LocationStrategy, useClass: HashLocationStrategy},{ provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }],
+  providers: [ MessagingService, AuthGuard, BsModalRef, AuthService,  HttpService, DataService, UtilService, MyHealthDataService, MyHealthReportService, {provide: LocationStrategy, useClass: HashLocationStrategy},{ provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }],
 
   bootstrap: [AppComponent]
 })
