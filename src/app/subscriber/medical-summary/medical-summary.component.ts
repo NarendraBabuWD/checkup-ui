@@ -26,6 +26,10 @@ export class MedicalSummaryComponent implements OnInit {
    age: string;
    id: string;
    gender: string;
+   race: string;
+   treatmentForHBP;
+   diabetes;
+   smoker;
    smhList: any[] = [];
    pshList: any[] = [];
    daList: any[] = [];
@@ -620,6 +624,11 @@ this.getMyMedicalSummary();
       this.pshList = data.data.psh_data;
       this.daList = data.data.da_data;
       this.cmList = data.data.cm_data;
+
+      this.race = data.data.race;
+      this.treatmentForHBP = (data.data.hbp ? (data.data.hbp ? data.data.hbp == "1" : "Yes" ) : "No" );
+      this.diabetes = (data.data.diabetes ? (data.data.diabetes ? data.data.diabetes == "1" : "Yes" ) : "No" );
+      this.smoker = (data.data.smoker ? (data.data.smoker ? data.data.smoker == "1" : "Yes" ) : "No" );
       // this.utilService.toastrSuccess("Payment Updated Sucessfully", "Payment Sucessfully");
       // this.router.navigate(['home']);
     }, (err) => {

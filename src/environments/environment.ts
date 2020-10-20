@@ -6,7 +6,12 @@ export const environment = {
   production: false,
   // apiUrl: 'http://209.105.231.143:900/'
   // apiUrl: 'http://47.254.192.166:900/'
-  apiUrl: 'https://api.ourcheckup.com/api/'
+
+  // apiUrl: 'https://api.ourcheckup.com/api/'  // Production
+  // apiUrl: 'http://47.254.236.85/api/'    
+  apiUrl: 'https://staging.ourcheckup.com/api/'   // Staging
+
+  // apiUrl: 'http://47.254.236.85/api/'
   // apiUrl: 'http://47.254.232.90/api/'
   // apiUrl: 'http://localhost/ourcheckup-api-master/'
 };

@@ -9,8 +9,8 @@
     <div class="container">
       <div class="card">
       <div class="card-body">
-        <h5 class="card-title">Inviting Dr's Information</h5>
-        <p class="card-text">Dr's Name  &nbsp; &nbsp; &nbsp; &nbsp; : <span>{{doctorName}}</span></p> 
+        <h5 class="card-title">Inviting Doctor's Information</h5>
+        <p class="card-text">Doctor's Name  &nbsp; &nbsp; &nbsp; &nbsp; : <span>{{doctorName}}</span></p> 
         <p class="card-text">Name of Clinic/<br />
                               Medical Center : <span>{{clinicName}}</span></p>
 
@@ -27,12 +27,12 @@
         <form [formGroup]="subscriberAccountForm" (ngSubmit)="onSubmit()">
           <div class="form-row">
             <div class="col-md-4 mb-3">
-              <label for="validationCustom01">First name</label>
+              <label for="validationCustom01">First Name</label>
               <input type="text" class="form-control" formControlName="first_name" required>
              
             </div>
             <div class="col-md-4 mb-3">
-              <label for="validationCustom02">Last name</label>
+              <label for="validationCustom02">Last Name</label>
               <input type="text" class="form-control" formControlName="last_name" required>
               
             </div>
@@ -65,11 +65,11 @@
               <br />
               <!-- <input type="text" class="form-control" formControlName="gender"required> -->
               <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" id="male" value="Male" formControlName="gender" class="custom-control-input">
+                <input type="radio" id="male" value="1" formControlName="gender" class="custom-control-input">
                 <label class="custom-control-label" for="male">Male</label>
               </div>
               <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" id="female" value="Female" formControlName="gender" class="custom-control-input">
+                <input type="radio" id="female" value="2" formControlName="gender" class="custom-control-input">
                 <label class="custom-control-label" for="female">Female</label>
               </div>
             </div>
@@ -83,7 +83,7 @@
               
             </div>
             <div class="col-md-4 mb-3">
-              <label for="validationCustom04">Address2</label>
+              <label for="validationCustom04"> Address 2 (Optional)</label>
               <input type="text" class="form-control" formControlName="address_2" required>
 
             </div>

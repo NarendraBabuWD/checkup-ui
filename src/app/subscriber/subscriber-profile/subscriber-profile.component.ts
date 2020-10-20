@@ -78,12 +78,22 @@ export class SubscriberProfileComponent implements OnInit {
   profileFormReport(){
     this.httpService.commonAuthPost(appConstants.apiBaseUrl + 'getMyAccount',{}).subscribe((res) =>{
       // console.log(res.data);
+
+      let genderValue = '';
+      if(res.data.gender == "Male"){
+        genderValue = "1";
+      } else if(res.data.gender == "Female"){
+        genderValue = "2";
+      } else{
+        genderValue = "";
+      }
+
      this.subscriberProfileForm.patchValue({
             user_id: res.data.id,
             firstname: res.data.firstname,
             lastname: res.data.lastname,
             email: res.data.email,
-            gender: res.data.gender,
+            gender: genderValue,
             // dob: formatDate(this.profileData.dob, 'dd-MM-yyyy', 'en'),
             dob: res.data.dob,
             nationality: res.data.nationality,

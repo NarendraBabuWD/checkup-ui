@@ -2,7 +2,7 @@
   <ol class="breadcrumb"><li class="breadcrumb-item"> 
     <h4>Appointment</h4>
   </li></ol>
-  <div class="row">
+  <!-- <div class="row">
          <div class="col-md-4">
 <button type="button" (click)="openModal()" class="ml-3 btn btn-primary btn-sm"><i class="fa fa-plus"></i> New Request</button>
 
@@ -11,22 +11,28 @@
          <div class="col-md-6">
 
           </div>
-  </div>
-  <table    class="table table-bordered" id="example">
+  </div> -->
+  <table  class="table table-bordered" id="example">
     <thead>
       <tr>
         <th>Slots</th>
         <th>Status</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody *ngIf='appList.length > 0'>
       <tr *ngFor="let item2 of appList" (click)="onRowSelect(item2)">
                   
-          <td >{{item2.date | date:'d-M-y'}} {{item2.time}}</td>
-          <td >{{item2.status}}</td>
+          <td >{{item2.date}} {{item2.time}}</td>
+          <td class="{{item2.statusName}}">{{item2.statusName}}</td>
          </tr>
       
-      </tbody></table></div>
+      </tbody>
+      <tbody  *ngIf='appList.length === 0'>
+          
+        <tr class="text-center text-danger">* No Data Available</tr>
+      
+    </tbody>
+    </table></div>
 
 
 
@@ -99,7 +105,7 @@
           <div class="form-group row">
               <label class="col-sm-4 col-form-label">Date</label>
               <div class="col-sm-6">
-                   {{date | date:'d-M-y'}}
+                   {{date }}
               </div>
             </div>
             <div class="form-group row">
@@ -115,15 +121,18 @@
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-sm-4 col-form-label">For Quarter</label>
+              <label class="col-sm-4 col-form-label">For </label>
               <div class="col-sm-6">
-                   {{for}}
+                Quarter {{for}}
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-sm-4 col-form-label">Clinic Address</label>
+              <label class="col-sm-4 col-form-label"> Address</label>
               <div class="col-sm-6">
-                   {{address}}
+                   {{address}}<br>
+                   {{postcode}}  <br>
+                   {{state}} <br>
+                   {{country}} 
               </div>
             </div>
             <div class="form-group row">
@@ -135,11 +144,12 @@
         
     
             </div>
-      <div class="modal-footer">
-      <button type="submit" class="btn btn-primary btn-sm" (click)="reschedule()">Reschedule</button>
-      <button type="button" class="btn btn-danger btn-sm" (click)="cancelStatus()">Cancel</button>
-
-</div>
+         <div class="modal-footer">
+            <button *ngIf="confirmAppBtn" type="button" class="btn btn-success btn-sm" (click)="confirmAppointment()">Confirm</button>
+            <button *ngIf="rescheduleAppBtn" type="button" class="btn btn-primary btn-sm" (click)="reschedule()">Reschedule</button>
+            <button *ngIf="cancelAppBtn" type="button" class="btn btn-danger btn-sm" (click)="cancelStatus()">Cancel</button>
+            <button type="button" class="btn btn-secondary btn-sm" (click)="apptDetailsCloseModal()">Close</button>
+        </div>
     </div>
   </div>
 </div>

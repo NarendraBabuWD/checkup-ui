@@ -67,12 +67,18 @@
         <div class="form-group row">
           <label for="gender" class="col-sm-2 col-form-label">Gender:</label>
           <div class="col-sm-4 row">
-            <input type="text" class="form-control" name="gender" [(ngModel)]="form.gender" placeholder="Gender" />
-            <!-- <div *ngIf="submitted && f.dob.errors" class="alert alert-danger form-group">
-              <div *ngIf="f.dob.errors.required">
-                DOB is required
+            <!-- <input type="text" class="form-control" name="gender" [(ngModel)]="form.gender" placeholder="Gender" /> -->
+            
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="male" value="1" [(ngModel)]="form.gender" [ngModelOptions]="{standalone: true}" class="custom-control-input">
+                <label class="custom-control-label" for="male">Male</label>
               </div>
-            </div> -->
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="female" value="2" [(ngModel)]="form.gender" [ngModelOptions]="{standalone: true}" class="custom-control-input">
+                <label class="custom-control-label" for="female">Female</label>
+              </div>
+              
+           
           </div>
         </div>
         
@@ -105,7 +111,8 @@
         <div class="form-group row">
           <label for="name" class="col-sm-2 col-form-label">Clinic Type:</label>
           <div class="col-sm-4 row">
-              <select name="clinic_type" id="clinic_type" class="form-control" [(ngModel)]="form.clinic_type" required>
+              <select name="clinic_type" id="clinic_type" class="form-control" [(ngModel)]="form.clinic_type" 
+              (change)="changeClinicType($event.target.value)" required>
                 <option value=""  [selected]>Select</option>
                 <option value="1">General Practitioner</option>
                 <option value="2">Specialist</option>
@@ -136,7 +143,7 @@
         </div>
 
         <div class="form-group row">
-          <label for="name" class="col-sm-2 col-form-label">Name of Clinic/Hospital:</label>
+          <label for="name" class="col-sm-2 col-form-label">Name of Clinic / Hospital:</label>
           <div class="col-sm-4 row">
             <input type="text" class="form-control" name="clinic" [(ngModel)]="form.clinic" placeholder="Name of  Clinic / Hospital" />
             <!-- <div *ngIf="submitted && f.hospital.errors" class="alert alert-danger form-group">
@@ -150,7 +157,7 @@
         <div class="form-group row">
           <label for="name" class="col-sm-2 col-form-label">Hospital License No:</label>
           <div class="col-sm-4 row">
-            <input type="text" class="form-control" name="hospital_license_no" [(ngModel)]="form.hospital_license_no" placeholder="Clinic / Hospital License No" />
+            <input type="text" class="form-control" name="hospital_license_no" [(ngModel)]="form.hospital_license_no" placeholder="Hospital License No" />
             <!-- <div *ngIf="submitted && f.hospital.errors" class="alert alert-danger form-group">
               <div *ngIf="f.hospital.errors.required">
                 Hospital is required
@@ -163,7 +170,7 @@
           <div class="col-sm-4 row">
             <!-- <input type="text" class="form-control" name="year_of_registration" [(ngModel)]="form.year_of_registration" placeholder="Hospital Registration year" /> -->
             <input type="text" class="form-control" name="year_of_registration" [(ngModel)]="form.year_of_registration" 
-            placeholder="Year of Registration" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }"/>
+            placeholder="Year of Registration" />
             
             <!-- <div *ngIf="submitted && f.year_of_registration.errors" class="alert alert-danger form-group">
               <div *ngIf="f.year_of_registration.errors.required">
@@ -176,7 +183,7 @@
         <div class="form-group row">
           <label for="name" class="col-sm-2 col-form-label">Address Of Clinic:</label>
           <div class="col-sm-4 row">
-            <input type="text" class="form-control" name="address_of_clinic_1" [(ngModel)]="form.address_of_clinic_1" placeholder="Address Of Clinic 1" />
+            <input type="text" class="form-control" name="address_of_clinic_1" [(ngModel)]="form.address_of_clinic_1" placeholder="Address Of Clinic" />
             <!-- <div *ngIf="submitted && f.address_of_clinic_1.errors" class="alert alert-danger form-group">
               <div *ngIf="f.address_of_clinic_1.errors.required">
                 Address Of Clinic is required
@@ -185,9 +192,9 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="name" class="col-sm-2 col-form-label">Address:</label>
+          <label for="name" class="col-sm-2 col-form-label">Address 2 (Optional):</label>
           <div class="col-sm-4 row">
-            <input type="text" class="form-control" name="address_of_clinic_2" [(ngModel)]="form.address_of_clinic_2" placeholder="Address2" />
+            <input type="text" class="form-control" name="address_of_clinic_2" [(ngModel)]="form.address_of_clinic_2" placeholder="Address 2" />
             <!-- <div *ngIf="submitted && f.address_2.errors" class="alert alert-danger form-group">
               <div *ngIf="f.address_2.errors.required">
                 Address2 is required
@@ -196,7 +203,7 @@
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-sm-2 col-form-label">Postal code:</label>
+          <label class="col-sm-2 col-form-label">Postcode:</label>
           <div class="col-sm-4 row">
             <input type="tel" class="form-control" name="postcode" [(ngModel)]="form.postcode" placeholder="Postcode" required pattern="^[0-9]{6}$"
               title="Enter Valid Pin Code">
@@ -260,9 +267,9 @@
         
         <div class="clearfix"></div>
         <div class="form-group row">
-          <label for="email_id" class="col-sm-2 col-form-label">Email Id:</label>
+          <label for="email_id" class="col-sm-2 col-form-label">Email</label>
           <div class="col-sm-4 row">
-            <input type="email" class="form-control" name="email" [(ngModel)]="form.email" placeholder="Email ID" />
+            <input type="email" class="form-control" name="email" [(ngModel)]="form.email" placeholder="Email" readonly/>
             <!-- <div *ngIf="submitted && f.mobile_no.errors" class="alert alert-danger form-group">
               <div *ngIf="f.mobile_no.errors.required">
                 Mobile_No No is required
@@ -272,21 +279,21 @@
         </div>
 
         <div class="row">
-          <span class='col-md-6'>CV's</span>
-          <span><label ><input #resumeRef name="resume" type="file" (change)="( form.resume = resumeRef.files)" ></label></span> 
+          <span class='col-md-6'>CV</span>   
+          <span><label ><input #resumeRef name="resume" type="file" accept=".pdf,.jpg,.png" (change)="( form.resume = resumeRef.files);onFileChangeCvs($event)" ></label></span> 
        
         </div>
         <div class="row">
           <span class='col-md-6'>Academic and Medical Qualification</span>
-          <span><label ><input #academicRef name="academic" type="file" (change)="( form.academic = academicRef.files)" ></label></span>
+          <span><label ><input #academicRef name="academic" type="file" accept=".pdf,.jpg,.png" (change)="( form.academic = academicRef.files);onFileChangeAcademicRef($event)" ></label></span>
         </div>
         <div class="row">
           <span class='col-md-6'>Current Annual Practicing Certificate</span>
-          <span><label ><input #practicingCertificateRef name="practicingCertificate" (change)="( form.practicingCertificate = practicingCertificateRef.files)" type="file" (change)="( form.academic = academicRef.files)"></label></span>
+          <span><label ><input #practicingCertificateRef name="practicingCertificate" accept=".pdf,.jpg,.png" (change)="( form.practicingCertificate = practicingCertificateRef.files);onFileChangePracticingCertificateRef($event)" type="file" (change)="( form.academic = academicRef.files)"></label></span>
         </div>
         <div class="row">
           <span class='col-md-6'>Current Idemnity Insurance</span>
-          <span><label ><input #insuranceRef name="insurance" (change)="( form.insurance = insuranceRef.files)" type="file"></label></span>
+          <span><label ><input #insuranceRef name="insurance" accept=".pdf,.jpg,.png" (change)="( form.insurance = insuranceRef.files);onFileChangeInsuranceRef($event)" type="file"></label></span>
         </div>
         <div class="form-group">
           <div class="row card-body justify-content-center">

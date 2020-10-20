@@ -2,7 +2,7 @@
   <div class="container-fluid">
   <ol class="breadcrumb">
     <li class="breadcrumb-item">
-      <a href="#">CLAIM MODULE</a>
+      <a href="#">CLAIMS</a>
     </li>
   </ol><br>
   <!-- <a routerLink="/request-patient">
@@ -68,8 +68,8 @@
   <br>
   <div class="row">
     <div class="d-flex bd-highlight mb-3 mx-auto">
-      <div class=" bd-highlight"> <button class="genbtn">Generate</button></div>
-      <div class=" bd-highlight"> <button class="genbtn">Cancel</button></div>
+      <div class=" bd-highlight"> <button type="submit" class="genbtn">Generate</button></div>
+      <!-- <div class=" bd-highlight"> <button class="genbtn">Cancel</button></div> -->
     </div>
   </div>
   </form>
@@ -100,12 +100,12 @@
           </div>
         </div>
         <div class="form-group row">
-            <label for="patient" class="col-sm-2 col-form-label">Patient</label>
+            <label for="patient" class="col-sm-2 col-form-label">Subscriber</label>
             <div class="col-sm-10">
                 <select class="form-control" formControlName="patientmrn" style="width: 23%;">
                   <option [ngValue]="null">Select</option>
                     <!-- <option *ngFor="let itemp of filterPatientList" value="{{itemp.value}}">{{itemp.value}}</option>     -->
-                    <option *ngFor="let item of filterPatientList" [value]="item.id">{{item.firstname}} {{item.lastname}}</option>
+                    <option *ngFor="let item of filterPatientList" [value]="item.id">{{item.firstname}} {{item.lastname}} ({{item.id}})</option>
 
                   </select>
   
@@ -114,8 +114,8 @@
   <br>
   <div class="row">
     <div class="d-flex bd-highlight mb-3 mx-auto">
-      <div class=" bd-highlight"> <button class="genbtn">Generate</button></div>
-      <div class=" bd-highlight"> <button class="genbtn">Cancel</button></div>
+      <div class=" bd-highlight"> <button type="submit" class="genbtn">Generate</button></div>
+      <!-- <div class=" bd-highlight"> <button class="genbtn">Cancel</button></div> -->
     </div>
   </div>
   </form>
@@ -131,10 +131,14 @@
       <tr *ngFor="let item2 of batchViewList">
         <td></td>
         <td>
-            <input class="checkbox" type="checkbox" 
-            (change)="onChange(f)" #f [value]="item2.transaction_id">
+            <!-- <input class="checkbox" type="checkbox" 
+            (change)="onChange(f)" #f [value]="item2.transaction_id"> -->
+
+            <input type="checkbox" [(ngModel)]="item2.isChecked" (change)="changeSelection()">
+
+
         </td>
-        <td >{{item2.name}} ({{item2.transaction_id}})</td>
+        <td >{{item2.name}} ({{item2.mrn}})</td>
         <td >{{item2.created | date:'y-M-d'}}</td>
         <td >{{item2.package}}</td>
         <td >{{item2.amount}}</td>
@@ -145,7 +149,7 @@
           <td></td>
           <td></td>
         <td>Total (RM)</td>
-        <td>{{batchTotal}}</td>
+        <td>{{batchTotal}}.00</td>
       </tr>
     </tbody>
     <tfoot>
@@ -153,8 +157,8 @@
           <td></td>
           <td></td>
           <td></td>
-        <td><button class="btn btn-claim" (click)="submitCheckedData()" type="submit">PRI VIEW INVOICE</button></td>
-        <td><button class="btn btn-claim" (click)="batchViewCancel()" type="submit">Cancel</button></td>
+        <td><button class="btn btn-claim" (click)="submitCheckedData()" type="submit">Submit</button></td>
+        <!-- <td><button class="btn btn-claim" (click)="batchViewCancel()" type="submit">Cancel</button></td> -->
         <td></td>
         <td></td>
       </tr>
@@ -220,10 +224,10 @@
                <td></td>
                <td></td>
                <td>Total Charge Value</td>
-               <td>{{checkedTotal}}</td>
+               <td>{{checkedTotal}}00</td>
              </tr>
              <tr>
-               <td><button class="btn btn-claim" (click)="closeModalDialog()" type="submit">Cancel</button></td>
+               <!-- <td><button class="btn btn-claim" (click)="closeModalDialog()" type="submit">Cancel</button></td> -->
                <td><button class="btn btn-claim" (click)="updateClaim()" type="button">Submit</button></td>
              </tr>
            </tbody>

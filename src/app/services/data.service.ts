@@ -8,11 +8,15 @@ export class DataService {
   private quartelyReport = new BehaviorSubject({});
   private yearlyReport = new BehaviorSubject({});
   private profileData = new BehaviorSubject({});
+  private triMonthlyData = new BehaviorSubject({});
+  private yearlyData = new BehaviorSubject({});
+
   getSubscriberId = this.subscriber_id.asObservable(); 
   getQuartelyReport = this.quartelyReport.asObservable();
   getYearlyReport = this.yearlyReport .asObservable();
   getProfileData = this.profileData.asObservable();
-
+  getTriMonthlyData = this.triMonthlyData.asObservable();
+  getYearlyData = this.yearlyData.asObservable();
   
 
   constructor() { }
@@ -31,6 +35,14 @@ export class DataService {
 
   setProfileData(message: Object) {
     this.profileData.next(message)
+  }
+
+  setTriMonthlyData(message: Object) {
+    this.triMonthlyData.next(message)
+  }
+
+  setYearlyData(message: Object) {
+    this.yearlyData.next(message)
   }
 
 }

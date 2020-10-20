@@ -1,11 +1,11 @@
 <div class="container-fluid">
     <ol class="breadcrumb"><li class="breadcrumb-item"> 
-      <h4>Appointment</h4>
+      <h4>Appointments</h4>
     </li></ol>
     <div class="row">
            <div class="col-md-4">
-<span>Doctor Id: {{doctorId}}</span>
-<button type="button" (click)="openModal()" class="ml-3 btn btn-primary btn-sm"><i class="fa fa-plus"></i></button>
+<!-- <span>Create:</span> -->
+<button type="button" (click)="openModal()" class="ml-3 btn btn-primary btn-sm"><i class="fa fa-plus"></i> Create</button>
 
            </div>
            
@@ -13,22 +13,33 @@
 
             </div>
     </div>
-    <table    class="table table-bordered" id="example">
+    <br>
+    <table class="table table-bordered" id="example">
       <thead>
         <tr>
-          <th>patient Info</th>
-          <th>Slots</th>
+          <th>Subscriber</th>
+          <th>Time</th>
           <th>Status</th>
         </tr>
       </thead>
-      <tbody>
-        <tr *ngFor="let item2 of dataList" class="{{item2.appointement_status}}">
+      <tbody *ngIf='dataList.length > 0'>
+        <!-- <tr *ngFor="let item2 of dataList" class="{{item2.appointement_status}}">
             <td > {{item2.firstname}} {{item2.lastname}} ({{item2.user_id == null ? '-' : item2.user_id}})</td>            
             <td >{{item2.appointement_date | date:'d-M-y'}} {{item2.appointement_time}}</td>
             <td >{{item2.appointement_status == "Requested" ? 'Confirmed' : item2.appointement_status }}</td>
+           </tr> -->
+           <tr *ngFor="let item2 of dataList" (click)="onRowSelect(item2)">
+            <td > {{item2.subscriber_name}} ({{item2.sub_id}})</td>            
+            <td >{{item2.date}} {{item2.time}}</td>
+            <td class="{{item2.statusName}}">{{item2.statusName}}</td>
            </tr>
-        
-        </tbody></table></div>
+        </tbody>
+        <tbody class="text-center text-danger" *ngIf='dataList.length === 0'>
+          
+              * No Data Available
+            
+          </tbody>
+      </table></div>
   
 
 
@@ -36,7 +47,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 id="dialog-nested-name2" class="modal-title pull-left">Appointment</h4>
+          <h4 id="dialog-nested-name2" class="modal-title pull-left">Create Appointment</h4>
           <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -48,7 +59,7 @@
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Select Date</label>
                 <div class="col-sm-6">
-                    <input type="text"
+                    <input type="text" [minDate]="minDate"
                     placeholder="Select Date"
                     class="form-control" formControlName="date"
                     bsDatepicker
@@ -59,20 +70,94 @@
               <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Select Time</label>
                 <div class="col-sm-6">
-                  <input placeholder="Select Time" formControlName="time"
-                  class="form-control" atp-time-picker />
+                  <!-- <input placeholder="Select Time" formControlName="time"
+                  class="form-control" atp-time-picker /> -->
+                  <timepicker formControlName="time"></timepicker>
 
                 </div>
               </div>
           
-      
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Subscriber</label>
+                <div class="col-sm-6">
+                  <select class="form-control" formControlName="subscriber" >
+                    <option [ngValue]="null">Select</option>
+                      <option *ngFor="let item of patientList" [value]="item.id">{{item.firstname}} {{item.lastname}} ({{item.id}})</option>
+  
+                    </select>
+                </div>
+              </div>
               </div>
         <div class="modal-footer">
-        <button type="submit"  class="btn btn-primary btn-sm" >Submit</button>
+        <button type="submit"  class="btn btn-primary btn-sm" [disabled]="!doctorApp.valid">Submit</button>
         <button type="button" class="btn btn-danger btn-sm" (click)="closeModal()">Cancel</button>
 
 </div></form>
       </div>
     </div>
   </div>
+  
+  
+  <!-- ON ROW SELECT MODAL START -->
+  
+<div class="modal" id="apptDetails" [style.display]="apptDetails ? 'block' : 'none'" style="background: rgba(0, 0, 0, 0.5);">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-nested-name2" class="modal-title pull-left">Appointment Details</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="closeOnRowModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
    
+      <div class="modal-body">
+       
+          <div class="form-group row">
+              <label class="col-sm-4 col-form-label">Date</label>
+              <div class="col-sm-6">
+                   {{date}}
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-4 col-form-label">Time</label>
+              <div class="col-sm-6">
+                   {{time}}
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-4 col-form-label">Subscriber</label>
+              <div class="col-sm-6">
+                   {{subName}}
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-4 col-form-label">For</label>
+              <div class="col-sm-6">
+                Quarter {{for}}
+              </div>
+            </div>
+            <!-- <div class="form-group row">
+              <label class="col-sm-4 col-form-label">Clinic Address</label>
+              <div class="col-sm-6">
+                   {{address}}
+              </div>
+            </div> -->
+            <div class="form-group row">
+              <label class="col-sm-4 col-form-label">Status</label>
+              <div class="col-sm-6">
+                   {{status}}
+              </div>
+            </div>
+        
+    
+            </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-danger btn-sm" (click)="deleteAppt()">Delete</button>
+
+</div>
+    </div>
+  </div>
+</div>
+ 
+
+  <!-- ON ROW SELECT MODAL END -->

@@ -20,7 +20,6 @@
     "@angular/platform-browser-dynamic": "~8.2.12",
     "@angular/router": "~8.2.12",
     "@types/moment": "^2.13.0",
-    "amazing-time-picker": "^1.8.0",
     "angularfire2": "^5.2.1",
     "bootstrap": "^4.3.1",
     "core-js": "^2.5.4",
@@ -41,6 +40,7 @@
     "open-iconic": "^1.1.1",
     "rxjs": "~6.5.3",
     "rxjs-compat": "^6.5.3",
+    "sweetalert2": "^9.14.0",
     "tslib": "^1.9.0",
     "underscore": "^1.9.1",
     "zone.js": "~0.9.1"

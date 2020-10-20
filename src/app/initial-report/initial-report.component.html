@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <h2 class="text-center">INITIAL HEALTH REPORTING</h2>
+    <h2 class="text-center">INITIAL HEALTH REPORT</h2>
     <div class="card-box" *ngIf='initialReportData.length > 0'>
         <div class="table-responsive">
                 <table class="table">
@@ -14,8 +14,8 @@
                     <tbody>
                        <tr *ngFor='let item of initialReportData'>
                             <td>{{item.category_name}} </td>
-                            <td><input type="text" [ngClass]="{'non_editable': isViewOnly}"  class="form-control" [(ngModel)]='item.initial'/></td>
-                            <td><input type="text" [ngClass]="{'non_editable': isViewOnly}"  class="form-control" [(ngModel)]='item.target'/></td>
+                            <td><input type="text" [ngClass]="{'non_editable': isViewOnly}"  [disabled]="isEditable" class="form-control" [(ngModel)]='item.initial'/></td>
+                            <td><input type="text" [ngClass]="{'non_editable': isViewOnly}"  [disabled]="isEditable" class="form-control" [(ngModel)]='item.target'/></td>
                         </tr>
                     </tbody>
                 </table>
@@ -25,6 +25,37 @@
         </div>
     </div>
     <div *ngIf='initialReportData.length === 0'>
-         <b> No Data Available for this user   </b>
+         <b> No Data Available   </b>
     </div>
 </div>
+
+
+  <!-- ALERT MODAL START -->
+  
+  <div class="modal" id="alerttDetails" [style.display]="alerttDetails ? 'block' : 'none'" style="background: rgba(0, 0, 0, 0.5);">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 id="dialog-nested-name2" class="modal-title pull-left">Alert</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="closeAlertModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+     
+        <div class="modal-body">
+         
+            <h6>Are you sure you want to update your initial report? Your report start date will be changed to today and cannot be undone</h6>
+         
+      
+              </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-sm" (click)="addUpdateInitialReport()"><i class="fa fa-check-circle"></i> Yes</button>
+        <button type="button" class="btn btn-danger btn-sm" (click)="closeAlertModal()"> <i class="fa fa-times-circle"></i> No</button>
+  </div>
+      </div>
+    </div>
+  </div>
+   
+  
+    <!-- ALERT MODAL END -->
+  

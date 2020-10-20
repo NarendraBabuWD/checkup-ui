@@ -19,7 +19,7 @@ export class MyHealthDataService {
   private utilService: UtilService;
   private healthDataDashboardConfig = {};
   public page = 1;
-  public hasMoreHealthData = true;
+  public hasMoreHealthData = false;
   public defaultWeeks = [
     'Sunday',
     'Monday',
@@ -182,7 +182,7 @@ export class MyHealthDataService {
         
           } else{
             this.healthData = res.data;
-            this.hasMoreHealthData = true;
+            this.hasMoreHealthData = false;
           }
         } else {
           this.hasMoreHealthData = false;
@@ -197,7 +197,7 @@ export class MyHealthDataService {
      date_from: moment(startDate).format('YYYY-MM-DD'),
       date_to: moment(endDate).format('YYYY-MM-DD'),
       // date_from: '2020-03-01',
-      // date_to: '2020-03-31',
+      // date_to: '2020-03-07',
       category: this.seletedCategory
       };
       this.httpService.commonAuthPost(appConstants.apiBaseUrl + 'getDeviceData', params).subscribe((res) => {
@@ -263,7 +263,7 @@ export class MyHealthDataService {
         
           }else{
             this.healthData = res.data;
-            this.hasMoreHealthData = true;
+            this.hasMoreHealthData = false;
           }
         } else {
           this.hasMoreHealthData = false;
@@ -294,13 +294,31 @@ export class MyHealthDataService {
 
   getHeartRateHealthData(startDate, endDate, filterType, toggleOption) {
     this.seletedCategory = 'Heart Rate';
-    const params = {
+    let params = {};
+   /* const params = {
       date_from: moment(startDate).format('YYYY-MM-DD'),
        date_to: moment(endDate).format('YYYY-MM-DD'),
-      //  date_from: '2020-03-01',
-      //  date_to: '2020-03-31',
+      //  date_from: '2020-03-08',
+      //  date_to: '2020-03-14',
        category: this.seletedCategory
-       };
+       };*/
+       if(filterType == 'day'){
+         params = {
+           date_from: moment(startDate).format('YYYY-MM-DD'),
+           date_to: moment(endDate).format('YYYY-MM-DD'),
+          //  date_from: '2020-05-27',
+          //  date_to: '2020-05-27',
+           category: "Hourly Heart Rate"
+           };
+       } else {
+         params = {
+          date_from: moment(startDate).format('YYYY-MM-DD'),
+           date_to: moment(endDate).format('YYYY-MM-DD'),
+          //  date_from: '2020-03-08',
+          //  date_to: '2020-03-14',
+           category: this.seletedCategory
+           };
+       }
       this.httpService.commonAuthPost(appConstants.apiBaseUrl + 'getDeviceData', params).subscribe((res) => {
         if(res.data.length > 0){
           var dayArray = [];
@@ -345,7 +363,7 @@ export class MyHealthDataService {
        
           } else{
             this.healthData = res.data;
-            this.hasMoreHealthData = true;
+            this.hasMoreHealthData = false;
           }
         } else {
           this.hasMoreHealthData = false;
@@ -383,7 +401,7 @@ export class MyHealthDataService {
         // this.healthData = this.healthData.concat(res.data);
         this.healthData = res.data;
         
-        this.hasMoreHealthData = true;
+        this.hasMoreHealthData = false;
       } else {
         this.hasMoreHealthData = false;
       }
@@ -414,7 +432,7 @@ export class MyHealthDataService {
             });
         } else{
           this.healthData = res.data;
-          this.hasMoreHealthData = true;
+          this.hasMoreHealthData = false;
         }
       } else {
         this.hasMoreHealthData = false;
@@ -451,7 +469,7 @@ export class MyHealthDataService {
             });
         } else{
           this.healthData = res.data;
-          this.hasMoreHealthData = true;
+          this.hasMoreHealthData = false;
         }
         
       } else {

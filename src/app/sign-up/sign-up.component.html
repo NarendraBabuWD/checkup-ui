@@ -1,26 +1,28 @@
-<div class="container pt-5">
+<div class="container">
     <div class="col-md-4 mx-auto">
         <div class="card rounded-0">
             <div class="text-center">
-                <img class="logo-icon" src="assets/images/CheckupAsia.png">
-                <p class="pt-2 pb-2 font-weight-bold">Health Care for you, <br/>by you</p>
+                <!-- <img class="logo-icon" src="assets/images/CheckupAsia.png"> -->
+                <img class="logo-icon" src="assets/images/ourcheckup_logo.jpg">
+                <!-- <p class="pt-2 pb-2 font-weight-bold">Health Care for you, <br/>by you</p> -->
+                <p class="pt-2 pb-2 font-weight-bold">Heart Care By You</p>
             </div>
             <div class="card-body">
                 <form [formGroup]="signupForm" (ngSubmit)="signup(signupForm)">
                     <div class="form-group">
-                        <label *ngIf='categoryLabel' for="category_name">Category Type:</label>
-                        <select class="form-control" name="category_name" formControlName="category_name" (focus)="categoryLabel = true"
+                        <label *ngIf='categoryLabel' for="category">Category Type:</label>
+                        <select class="form-control" name="category" formControlName="category" (focus)="categoryLabel = true"
                             (focusout)="categoryLabel = false" required>
-                            <option [ngValue]="null">Select a Category</option>
+                            <option value="">Select a Category</option>
                             <!-- <option *ngFor="let category of categoryList" [ngValue]="category.value">
                                 {{ category.name }}
                             </option> -->
                             <option value="2">Subscriber </option>
                             <option value="1">Doctor </option>
-                            <option value="9">WeCheckup </option>
+                            <!-- <option value="9">WeCheckup </option> -->
                         </select>
-                        <div *ngIf="f.category_name.dirty && f.category_name.invalid" class="alert alert-danger form-group">
-                            <div *ngIf="f.category_name.errors.required">Select any one Category. </div>
+                        <div *ngIf="f.category.dirty && f.category.invalid" class="alert alert-danger form-group">
+                            <div *ngIf="f.category.errors.required">Select any one Category. </div>
                         </div>
                     </div>
 
@@ -65,7 +67,7 @@
                     </div>
                     <div class="form-group">
                         <label *ngIf="cpassLabel" for="pwd">Confirm Password</label>
-                        <input (focus)="cpassLabel = true" (focusout)="cpassLabel = false" placeholder=" Reenter Password"
+                        <input (focus)="cpassLabel = true" (focusout)="cpassLabel = false" placeholder=" Confirm Password"
                             type="password" formControlName="confirmPassword" class="form-control" />
                         <div *ngIf="f.confirmPassword.dirty && f.confirmPassword.invalid" class="alert alert-danger form-group">
                             <div *ngIf="f.confirmPassword.errors.required">Confirm Password is required</div>
@@ -81,7 +83,7 @@
                     </div>
                 </form>
             </div>
-            <div class="row card-body justify-content-center pt-5 pb-3">
+            <div class="row card-body justify-content-center">
                 <a class="signupLink" (click)="login()">Login</a>
             </div>
         </div>

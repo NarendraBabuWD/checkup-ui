@@ -196,7 +196,7 @@
         <td>{{ healthData.sys | number:'1.0-0'}}/{{healthData.dia | number:'1.0-0'}}</td>
         <!-- <td>{{ healthData.dia }}</td> -->
         <td>
-          {{ findBpCategory(healthData.sys, healthData.dia) }}
+          {{ bPValues(healthData.sys, healthData.dia) }}
         </td>
       </tr>
     </tbody>
@@ -218,7 +218,7 @@
         <td>{{ healthData.avgSys | number:'1.0-0'}}/{{healthData.avgDia | number:'1.0-0'}}</td>
         <!-- <td>{{ healthData.dia }}</td> -->
         <td>
-          {{ findBpCategory(healthData.avgSys, healthData.avgDia) }}
+          {{ bPValues(healthData.avgSys, healthData.avgDia) }}
         </td>
       </tr>
     </tbody>
@@ -600,15 +600,17 @@
     </div>
   </ng-template>
   <ng-template #heartRateContentDailyListTable>
-    <table class="table table-striped body-measurement" infiniteScroll [infiniteScrollDistance]="1"  (scrolled)="onScroll()" [scrollWindow]= "true" [infiniteScrollDisabled] = "!healthDataService.hasMoreHealthData">
+    <table class="table table-striped" infiniteScroll [infiniteScrollDistance]="1"  (scrolled)="onScroll()" [scrollWindow]= "true" [infiniteScrollDisabled] = "!healthDataService.hasMoreHealthData">
       <thead>
         <th scope="col">Time</th>
         <th scope="col">Rate(bpm)</th>
+        <th scope="col">Result</th>
       </thead>
       <tbody>
         <tr *ngFor="let healthData of healthDataService.healthData">
           <td>{{ healthData.date | slice: 11:19 }}</td>
           <td>{{ healthData.heart_rate | number:'1.0-0'}}</td>
+          <td>{{ heartRateValues(healthData.heart_rate) }}</td>
         </tr>
       </tbody>
     </table>
@@ -618,13 +620,15 @@
       class="table table-striped bpOtherListTable"
     >
       <thead>
-        <th scope="col">Type</th>
+        <th scope="col">Time</th>
         <th scope="col">Rate(bpm)</th>
+        <th scope="col">Result</th>
       </thead>
       <tbody>
         <tr *ngFor="let healthData of healthDataService.healthData">
           <td>{{ healthData.day}}</td>
           <td>{{ healthData.heart_rate | number:'1.0-0'}}</td>
+          <td>{{ heartRateValues(healthData.heart_rate) }}</td>
         </tr>
       </tbody>
     </table>

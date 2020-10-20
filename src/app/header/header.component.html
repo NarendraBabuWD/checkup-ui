@@ -1,6 +1,6 @@
 
 <nav class="navbar navbar-expand navbar-dark bg-dark static-top navbar-custom static-top" *ngIf="auth.isLoggednIn()">
-<a class="navbar-brand mr-1" routerLink="/home">CHECKUP ASIA</a>
+<a class="navbar-brand mr-1" routerLink="/home">OurCheckup</a>
 <button type="button" id="sidebarToggle" class="btn btn-link btn-sm text-white order-1 order-sm-0" (click) = "sidebarToggle();">
  <i class="fa fa-fw fa-bars"></i>
 </button>
@@ -14,7 +14,7 @@
    <a class="dropdown nav-link dropbtn" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
      aria-expanded="false">
      
-     <img src="assets/images/admin.png" alt="Profile image" class="avatar avatar-rounded">
+     <img src="assets/images/admin.png" alt="Profile image" class="avatar avatar-rounded"> &nbsp;
    <span>{{this.username}}</span></a>
 
    <a title="Logout" class="dropdown nav-link dropbtn" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"

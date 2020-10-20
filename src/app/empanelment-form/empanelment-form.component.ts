@@ -1,4 +1,4 @@
-import { Component, OnInit  } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef  } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators, FormsModule, ReactiveFormsModule, AbstractControl } from '@angular/forms';
 import { EmpanelmentService } from '../services/empanelment.service';
 import { ToastContainerDirective, ToastrService } from 'ngx-toastr';
@@ -16,6 +16,12 @@ import appConstants from '../config/app.constants'
   styleUrls: ['./empanelment-form.component.css']
 })
 export class EmpanelmentFormComponent implements OnInit {
+
+  @ViewChild('resumeRef', {static: false}) resumeRef:ElementRef;
+  @ViewChild('academicRef', {static: false}) academicRef:ElementRef;
+  @ViewChild('practicingCertificateRef', {static: false}) practicingCertificateRef:ElementRef;
+  @ViewChild('insuranceRef', {static: false}) insuranceRef:ElementRef;
+
 
   specialisationList: any[] = [];
   public form: {
@@ -99,6 +105,85 @@ export class EmpanelmentFormComponent implements OnInit {
     });
   }
 
+
+  changeClinicType(event){
+    console.log(event);    
+    if(event == 1){
+      // document.getElementById("specialization").disabled = true;
+      document.getElementById("specialization").setAttribute('disabled', 'disabled');
+      this.form.specialization = '';
+    } else {
+        document.getElementById("specialization").removeAttribute('disabled');
+    }
+}
+
+  onFileChangeCvs(sender){
+    var validExts = new Array(".pdf", ".jpg", ".png");
+    console.log(sender);
+    
+    var fileExt = sender.target.value;
+    fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
+    if (validExts.indexOf(fileExt) < 0) {
+      alert("Invalid file selected, valid files are of " +
+               validExts.toString() + " types.");
+               this.resumeRef.nativeElement.value = null;
+      
+      return false;
+    }
+    else 
+    
+    return true;
+
+  }
+
+  onFileChangeAcademicRef(sender){
+    var validExts = new Array(".pdf", ".jpg", ".png");
+    console.log(sender);
+    
+    var fileExt = sender.target.value;
+    fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
+    if (validExts.indexOf(fileExt) < 0) {
+      alert("Invalid file selected, valid files are of " +
+               validExts.toString() + " types.");
+               this.academicRef.nativeElement.value = null;
+      return false;
+    }
+    else 
+    return true;
+  }
+
+  onFileChangePracticingCertificateRef(sender){
+    var validExts = new Array(".pdf", ".jpg", ".png");
+    console.log(sender);
+    
+    var fileExt = sender.target.value;
+    fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
+    if (validExts.indexOf(fileExt) < 0) {
+      alert("Invalid file selected, valid files are of " +
+               validExts.toString() + " types.");
+               this.practicingCertificateRef.nativeElement.value = null;
+      return false;
+    }
+    else 
+    return true;
+  }
+
+  onFileChangeInsuranceRef(sender){
+    var validExts = new Array(".pdf", ".jpg", ".png");
+    console.log(sender);
+    
+    var fileExt = sender.target.value;
+    fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
+    if (validExts.indexOf(fileExt) < 0) {
+      alert("Invalid file selected, valid files are of " +
+               validExts.toString() + " types.");
+               this.insuranceRef.nativeElement.value = null;
+      return false;
+    }
+    else 
+    return true;
+  }
+
   getSpecialisationList(){
   this.httpService.commonAuthPost(appConstants.apiBaseUrl + 'getSpecialisationList', { }).subscribe(response => {
     console.log(response.data);
@@ -110,16 +195,25 @@ export class EmpanelmentFormComponent implements OnInit {
     this.httpService.commonAuthPost(appConstants.apiBaseUrl + 'getMyAccount', { }).subscribe(docData => {
       console.log(docData.data);
       // this.patientList = patList.data;
+
+      if(docData.data.clinic_type_desc == "Specialist"){
+        // document.getElementById("specialization").setAttribute('disabled', 'disabled');
+        document.getElementById("specialization").removeAttribute('disabled');
+    } else {
+        document.getElementById("specialization").setAttribute('disabled', 'disabled');
+    }
+       
+    
       this.form = {
         first_name: docData.data.firstname,
         last_name: docData.data.lastname,
-        gender: docData.data.gender,
+        gender: docData.data.gender == "Male" ? '1' : '2',
         dob: docData.data.dob,
         national_id: docData.data.nationality,
         year_of_registration: docData.data.reg_year,
         mma:  '',
         apc: docData.data.medical_reg_no,  //Datepicker
-        clinic_type: docData.data.clinic_type_desc,
+        clinic_type: docData.data.clinic_type,
         specialization: docData.data.specialisation,
         clinic: docData.data.provider,
         hospital_license_no: docData.data.provider_license_no,
@@ -218,6 +312,59 @@ var academic = (this.form.academic && this.form.academic.length)
   ? this.form.insurance[0]
   : null;
 
+
+  
+   console.log(mobile_no);
+   /*else if(specialization == '' || specialization == 'Specialist'){
+    this.myAlert('Specialization:');
+  } */
+      if(first_name == ''){
+        this.myAlert('First Name');
+      } else if(last_name == ''){
+        this.myAlert('Last Name');
+      } else if(gender == ''){
+        this.myAlert('Gender');
+      } else if(dob == ''){
+        this.myAlert('Date of birth');
+      } else if(national_id == ''){
+        this.myAlert('Nationality');
+      } else if(mma == ''){
+        this.myAlert('MMA No');
+      }  else if(apc == ''){
+        this.myAlert('APC No');
+      }  else if(clinic_type == ''){
+        this.myAlert('Clinic Type');
+      }  else if(clinic == ''){
+        this.myAlert('Name of Clinic');
+      }  else if(hospital_license_no == ''){
+        this.myAlert('Hospital License No');
+      }else if(year_of_registration == ''){
+        this.myAlert('Year of Registration');
+      }
+      else if(address_of_clinic_1 == ''){
+        this.myAlert('Address Of Clinic');
+      } else if(postcode == ''){
+        this.myAlert('Postal code');
+      }else if(state == ''){
+        this.myAlert('State');
+      } else if(country == ''){
+        this.myAlert('Country');
+      } else if(phone_no == ''){
+        this.myAlert('Phone No');
+      } else if(mobile_no == ''){
+        this.myAlert('Mobile No');
+      } else if(email == ''){
+        this.myAlert('Email');
+      } else if(resume == null){
+        this.myAlert('CV');
+      } else if(academic == null){
+        this.myAlert('Academic and Medical Qualification');
+      } else if(practicingCertificate == null){
+        this.myAlert('Current Annual Practicing Certificate');
+      } else if(insurance == null){
+        this.myAlert('Current Idemnity Insurance');
+      } else {
+        
   this.empanelmentService
     .submitEmpanelment({
       first_name: first_name,
@@ -255,15 +402,17 @@ var academic = (this.form.academic && this.form.academic.length)
       ( error ) => {
 
         alert( "Something went wrong with the form-submission." );
-        console.warn( "Error submitting job application." );
+        console.warn( "Error submitting empanelment." );
         console.error( error );
 
-      }
-    )
-  ;
+      });
+    }
 
 }
 
-
+myAlert(message){
+  let msg = 'Please provide '+ message;
+  this.toastrService.error(msg);
+}
 
 }

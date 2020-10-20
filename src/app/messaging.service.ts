@@ -50,7 +50,7 @@ export class MessagingService {
         return this.messaging.getToken()
       })
       .then(token => {
-        console.log(token)
+        // console.log(token);
         sessionStorage.setItem('fcm_token', token);
         this.updateToken(token);
         this.updateFcmTokn(token);

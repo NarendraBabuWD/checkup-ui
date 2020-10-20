@@ -14,6 +14,7 @@ import { sha256 } from 'js-sha256';
 import { ToastContainerDirective, ToastrService } from 'ngx-toastr';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { DialogComponent, DialogService } from "ng2-bootstrap-modal";
+import swal from 'sweetalert2';
 
 
 @Component({
@@ -28,12 +29,17 @@ export class HomeComponent implements OnInit {
     empStatus;
     isModalShown = false;
     showModal: boolean;
-    pincheck = false;
+    pincheck: Boolean = false;
+    pincheckBtn: Boolean = false;
     showSubModal: boolean;
+    showHealthModal: boolean;
     patientList: any[] = [];
     profileFlag: Boolean = false;
     empanelmentFlag: Boolean = false; 
     subscriptionFlag: Boolean = false; 
+    drInfoFlag: Boolean = false; 
+
+    transactionId;
   constructor(private httpService: HttpService, dialogService: DialogService,
               private data: DataService, private utilService: UtilService,
               private inviteSubscriberService: InviteSubscriberService, 
@@ -44,11 +50,15 @@ export class HomeComponent implements OnInit {
               private toastrService: ToastrService) { 
                 
               }
+
+  healthDataInputForm: FormGroup;
   medicalSummaryInputForm: FormGroup;
   subscriberProfileRes;
+
   ngOnInit() {
+    sessionStorage.removeItem('healthDataBySub');
     this.showSubModal = false;
-  
+    this.showHealthModal = false;
     this.getMyAccount();
     this.getLoginDrpatInfo();
     this.msgService.getPermission();
@@ -59,27 +69,30 @@ export class HomeComponent implements OnInit {
     this.medicalSummaryInputForm = this.formBuilder.group({
       subscriber_id: ['', [Validators.required]]
     });
+
+    this.healthDataInputForm = this.formBuilder.group({
+      subscriberId: ['', [Validators.required]]
+    });
+
     this.doctorRequest = this.formBuilder.group({
       pin: ['', [Validators.required]]
   });
     if(JSON.parse(sessionStorage.getItem("userdata")).category == 1)
   {
     this.getMyEmpanelment();
+    // this.restrictDoctor('0');
     } else if(JSON.parse(sessionStorage.getItem("userdata")).category == 2){
-        console.log("SUB");
         this.getMyCurrentSubscription();
-        // this.getClaimStatus();
+        this.getClaimStatus();
     }
-   /* setTimeout (() => {
-      // console.log("Hello from setTimeout");
-      this.updateFcmTokn();
-    }, 1500)*/
+  
     
   }
   
 
   // convenience getter for easy access to form fields
   get f() { return this.medicalSummaryInputForm.controls; }
+  get g() { return this.healthDataInputForm.controls; }
 
   getValidSubStatus(subscriber_id){
     if(this.patientList.length > 0){
@@ -113,9 +126,17 @@ export class HomeComponent implements OnInit {
     
   }
 
+
+  submitHealthData(){
+    console.log(this.healthDataInputForm.value);
+    sessionStorage.setItem('healthDataBySub', this.healthDataInputForm.value.subscriberId);
+    this.router.navigate(['/health-report']);   // Remove in pahse2
+    // this.router.navigate(['/initial-report']);
+  }
+
 getLoginDrpatInfo(){
   this.httpService.commonAuthPost(appConstants.apiBaseUrl + 'getSubscriberList', { }).subscribe(patList => {
-    // console.log(patList.data);
+  
     this.patientList = patList.data;
   });
 }
@@ -123,8 +144,10 @@ getLoginDrpatInfo(){
 getMyAccount(){
   this.httpService.commonAuthPost(appConstants.apiBaseUrl + 'getMyAccount', { }).subscribe(response => {
     // console.log(response);
-    if(response.data.dob != "" && response.data.address != ""){
+    if(response.data.dob != null  && response.data.dob != "null" && response.data.dob != ""){
          this.profileFlag = true;
+    } else {
+      this.profileFlag = false;
     }
   });
 }
@@ -132,7 +155,23 @@ getMyAccount(){
 getMyEmpanelment(){
    this.httpService.commonAuthPost(appConstants.apiBaseUrl + 'getMyEmpanelment', { }).subscribe(empStatus => {
     //  console.log(empStatus.data.empanelment_status);
-     this.empStatus = empStatus.data.empanelment_status;
+    if(empStatus.status == false){
+      this.empStatus = false;
+      this.goToEmpPage();
+    } else{
+      this.empStatus = empStatus.data.empanelment_status;
+
+      if(this.empStatus == 'Reject'){
+        let message = 'Your Empanelment Request was rejected. Please proceed to contact us for further details';
+        // this.toastrService.success(message);
+        this.empAlert(message);
+       } else if(this.empStatus == 'Pending'){
+        let message = 'Your Empanelment Request is currently being Reviewed';
+        // this.toastrService.success(message);
+        this.empAlert(message);
+
+    }
+    }
    });
  }
 
@@ -147,11 +186,25 @@ getMyEmpanelment(){
    getMyCurrentSubscription(){
     this.httpService.commonAuthPost(appConstants.apiBaseUrl + 'getMyCurrentSubscription', { }).subscribe(response => {
       // console.log(response);
-      // this.empStatus = empStatus.data.empanelment_status;
-      if(_.isEmpty(response.data)){
-        this.subscriptionFlag = true;
+      if(_.isEmpty(response.data) || response.data == "No Subscription found."){
+        // this.subscriptionFlag = true;
+        this.getMyDoctorInfo();
       } else {
         this.subscriptionFlag = false;
+        this.drInfoFlag = false;
+      }
+    });
+  }
+
+  getMyDoctorInfo(){
+    this.httpService.commonAuthPost(appConstants.apiBaseUrl + 'getMyDoctorInfo', { }).subscribe(response => {
+      console.log(response);
+     if(response.data['dr_id'] == undefined){
+        // this.subscriptionFlag = true;
+        this.drInfoFlag = true;
+      } else {
+        this.drInfoFlag = false;
+        this.subscriptionFlag = true;
       }
     });
   }
@@ -162,7 +215,6 @@ if(JSON.parse(sessionStorage.getItem("userdata")).doctor_id == ''){
   this.utilService.toastrInfo("Please Wait For Doctor's Invitation", "Subscriber");
 } else if(JSON.parse(sessionStorage.getItem("userdata")).doctor_id != ''){
   this.getSubscriberDetails().subscribe((response) => {
-    // console.log(response);
     if(response.data.length < 0){
       this.utilService.toastrInfo("Please Fill Profile Page", "Subscriber");
  } else {
@@ -234,14 +286,23 @@ subModalClose(){
   this.showSubModal = false; 
 }
 
+showHealthDataModel()
+{
+  this.showHealthModal = true; // Show-Hide Modal Check
+}
+healthDataModalClose(){
+  this.showHealthModal = false; 
+}
+
 onSubmit( model: FormGroup ) {
-  // this.inviteSubscriberService.doctorAgree( model.value ).subscribe( response => {
     this.httpService.commonAuthPost(appConstants.apiBaseUrl + 'doApprovalAction', {
-          transaction_id: "",
-          status: ""
+          transaction_id: this.transactionId,
+          status: "1"
      }).subscribe(response => {
       let message = 'Doctor Requested Successfully';
-      this.toastrService.success(message);                  
+      this.toastrService.success(message);    
+      this.hide();          
+      this.subModalClose();    
   },
       error => {
         //   this.alertNotSuccess();
@@ -252,11 +313,13 @@ onSubmit( model: FormGroup ) {
 
 doctorDisAgree() {
   this.httpService.commonAuthPost(appConstants.apiBaseUrl + 'doApprovalAction', {
-    transaction_id: "",
-    status: ""
+    transaction_id: this.transactionId,
+    status: "2"
    }).subscribe(status => {
     let message = 'Doctor Requested Disagreed';
-      this.toastrService.success(message);                  
+      this.toastrService.success(message);      
+      this.hide();          
+      this.subModalClose();             
   },
       error => {
         //   this.alertNotSuccess();
@@ -266,14 +329,14 @@ doctorDisAgree() {
 } 
 
 getClaimStatus() {
+  this.transactionId = '';
   this.httpService.commonAuthPost(appConstants.apiBaseUrl + 'getWaitingApprovalList', { }).subscribe(status => {
-     console.log(status);  
-     /*if(status['data'].length > 0){
+    //  console.log(status);  
+     if(status['data'].length > 0){
       this.show();
       this.isModalShown = false;
-     } */ 
-      this.show();
-      this.isModalShown = false;              
+      this.transactionId = status['data'][0].transaction_id; 
+     }       
   },
       error => {
         //   this.alertNotSuccess();
@@ -283,18 +346,42 @@ getClaimStatus() {
 } 
 
 
+onKeyUpPinCheck(event){
+  if(this.transactionId == event.target.value){
+      this.pincheck = false;
+      this.pincheckBtn = false;
+  } else if(event.target.value == ''){
+        this.pincheck = false;
+        this.pincheckBtn = false;
+  } else {
+        this.pincheck = true;
+        this.pincheckBtn = true;
+  }
+
+}
+
 restrictDoctor(tile){
+  console.log(this.profileFlag);
     if(this.profileFlag == true){
-           if(this.empStatus == 'Rejected'){
-            let message = 'Your Empanelment is Rejected';
+           if(this.empStatus == false){
+            let message = "You don't have Empanelment";
             this.toastrService.success(message);
+            this.router.navigate(['empanelment-form']);
+           } else if(this.empStatus == 'Reject'){
+            // let message = 'Your Empanelment is Rejected';
+            // this.toastrService.success(message);
+            let message = 'Your Empanelment Request was rejected. Please proceed to contact us for further details';
+            this.empAlert(message);
            } else if(this.empStatus == 'Pending'){
-            let message = 'Your Empanelment is in Pending';
-            this.toastrService.success(message);
+            // let message = 'Your Empanelment is in Pending';
+            // this.toastrService.success(message);
+            let message = 'Your Empanelment Request is currently being Reviewed';
+            this.empAlert(message);
            } else {
             switch (tile) {
               case '1':
-                 this.router.navigate(['health-report']);
+                //  this.router.navigate(['health-report']);
+                this.showHealthDataModel();
               break;
               case '2':      
                  this.medicalSummaryInputFormModel();
@@ -326,13 +413,17 @@ restrictSubscriber(tile){
   // console.log(this.profileFlag);
   // console.log(this.subscriptionFlag);
     if(this.profileFlag == true){
-           if(this.subscriptionFlag == true){
-            let message = 'Your Subscription is Pending';
+           if(this.drInfoFlag == true){
+            // let message = 'Your Subscription is Pending';
+            let message = "Please wait for Doctor's Invitation";
             this.toastrService.success(message);
-           } else {
+           } else if(this.subscriptionFlag == true){
+                  this.goToSubscriptionAccountPage();
+           }else {
             switch (tile) {
               case '1':
-                 this.router.navigate(['health-report']);
+                 this.router.navigate(['health-report']);  // Remove in pahse2
+                // this.router.navigate(['/initial-report']);
               break;
               case '2':      
                  this.router.navigate(['subscriber/medical-summary']);
@@ -358,5 +449,31 @@ restrictSubscriber(tile){
     } else {
       this.router.navigate(['subscriber/profile']);
     }
+}
+
+
+goToEmpPage(){
+  swal.fire(
+    'Please submit an empanelment form before proceeding'
+  ).then(() => {
+    this.router.navigate(["empanelment-form"]);
+  });
+}
+
+empAlert(message){
+  swal.fire(
+    message
+  )
+}
+
+
+goToSubscriptionAccountPage(){
+  swal.fire(
+    'Success',
+    'Your Subscription is Pending',
+    'success'
+  ).then(() => {
+    this.router.navigate(["subscription-account"]);
+  });
 }
 }

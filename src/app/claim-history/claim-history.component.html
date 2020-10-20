@@ -41,7 +41,7 @@
     <div class="row">
       <div class="d-flex bd-highlight mb-3 mx-auto">
         <div class=" bd-highlight"> <button class="genbtn">Generate</button></div>
-        <div class=" bd-highlight"> <button class="genbtn">Cancel</button></div>
+        <!-- <div class=" bd-highlight"> <button class="genbtn">Cancel</button></div> -->
       </div>
     </div>
     </form>
@@ -60,18 +60,19 @@
           <td >{{item2.name}}</td>
           <td >{{item2.created | date:'y-M-d'}}</td>
           <td >{{item2.purpose}}</td>
-          <td >{{item2.amount}}</td>
-          <td >{{item2.amount}}</td>
           <td >{{item2.status}}</td>
+          <td >{{item2.amount}}</td>
+          <td >{{item2.amount}}</td>
+         
         </tr>
         <tr>
             <td></td>
             <td></td>
             <td></td>
           <td>Total</td>
-          <td>{{total}}</td>
-          <td>{{totalPaid}}</td>
-          <td></td>
+          <td>{{total}}.00</td>
+          <td>{{totalPaid}}.00</td>
+          
         </tr>
       </tbody>
       <tfoot>
@@ -79,8 +80,9 @@
             <td></td>
             <td></td>
             <td></td>
-          <td><button class="btn btn-claim" (click)="print()" type="submit">Print</button></td>
-          <td><button class="btn btn-claim" (click)="cancel()" type="submit">Cancel</button></td>
+          <!-- <td><button class="btn btn-claim" (click)="print()" type="submit">Print</button></td>
+          <td><button class="btn btn-claim" (click)="cancel()" type="submit">Cancel</button></td> -->
+          <td></td>
           <td></td>
           <td></td>
         </tr>

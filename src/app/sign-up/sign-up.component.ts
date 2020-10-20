@@ -8,7 +8,7 @@ import appConstants from '../config/app.constants';
 import { ToastContainerDirective, ToastrService } from 'ngx-toastr';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 // import {Http,Headers,} from '@angular/http';
-
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-sign-up',
@@ -54,11 +54,11 @@ export class SignUpComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['', Validators.required],
-      category_name: ['',  Validators.required]
+      category: ['',  Validators.required]
     }, {
         validator: MustMatch('password', 'confirmPassword')
       });
-      this.signupForm.controls['category_name'].setValue(this.category_name, {onlySelf: true});
+      // this.signupForm.controls['category_name'].setValue(this.category_name, {onlySelf: true});
   }
   // convenience getter for easy access to form fields
   get f() { return this.signupForm.controls; }
@@ -68,8 +68,15 @@ export class SignUpComponent implements OnInit {
     this.httpService.commonPost(appConstants.apiBaseUrl + 'doRegister', this.signupForm.value).subscribe((res: Response) => {
       console.log(res, "User Sucessfully Sign Up!.");
       console.log(res);
-      this.toastrService.warning("User Sucessfully Sign Up!.");  
-      this.router.navigate(["login"]);
+      // this.toastrService.warning("User Sucessfully Sign Up!.");  
+      swal.fire(
+        'Success',
+        'Please proceed to verify your email before login',
+        'success'
+      ).then(() => {
+        this.router.navigate(["login"]);
+      });
+      
     }, error => {
         // console.log(error);
         let message = 'User Already Exists';

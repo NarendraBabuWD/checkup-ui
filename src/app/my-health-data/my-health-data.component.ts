@@ -163,6 +163,9 @@ export class MyHealthDataComponent implements OnDestroy {
   findBpCategory(sys, dia) {
     sys = parseInt(sys, 10);
     dia = parseInt(dia, 10);
+    console.log(sys);
+    console.log(dia);
+    
     if (sys < 120 && dia < 80) {
       return 'Normal';
     }
@@ -179,6 +182,25 @@ export class MyHealthDataComponent implements OnDestroy {
       return 'High Blood Pressure(Hypertension) stage2';
     }
   }
+
+  bPValues(sys, dia){
+           if(sys > 140 || sys < 90){
+             return "Abnormal"
+           } else if(dia >= 90 || dia < 60) {
+             return "Abnormal"
+           } else {
+            return "Normal"
+          }
+  }
+
+  heartRateValues(value){
+    console.log(value);
+    if(value >= 95 || value <= 56){
+      return "Abnormal"
+    } else {
+      return "Normal"
+    }
+}
 
   getDisplayLayouts() {
     const DISPLAY_FILTER_LAYOUT = 'display_filter_layout';

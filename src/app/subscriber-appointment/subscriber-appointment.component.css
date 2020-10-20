@@ -7,3 +7,21 @@
 .modal-footer{
     padding: 5px !important;
 }
+
+.Reject {
+    color: #5A6268;
+}
+
+.Confirm {
+    color: #218838;
+}
+
+.Pending {
+    color: #138496;
+}
+
+.Cancel {
+    color: #C82333;
+}
+
+tr{ cursor: pointer; }

@@ -13,7 +13,7 @@
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">ID</label>
           <div class="col-sm-4 row">
-            <input type="numeber" class="form-control" formControlName="user_id" maxlength="15" placeholder="User_Id" disabled />
+            <input type="numeber" class="form-control" formControlName="user_id" maxlength="15" placeholder="User Id" disabled />
             <div *ngIf="submitted && f.user_id.errors" class="alert alert-danger form-group">
               <div *ngIf="f.user_id.errors.required">
                 User_Id is required
@@ -59,11 +59,11 @@
           <label for="gender" class="col-sm-2 col-form-label">Sex:</label>
           <div class="col-sm-4">
             <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" id="male" value="Male" formControlName="gender" class="custom-control-input">
+              <input type="radio" id="male" value="1" formControlName="gender" class="custom-control-input">
               <label class="custom-control-label" for="male">Male</label>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" id="female" value="Female" formControlName="gender" class="custom-control-input">
+              <input type="radio" id="female" value="2" formControlName="gender" class="custom-control-input">
               <label class="custom-control-label" for="female">Female</label>
             </div>
             <div *ngIf="submitted && f.gender.errors" class="alert alert-danger form-group">
@@ -144,7 +144,7 @@
           <label for="name" class="col-sm-2 col-form-label">Clinic Type</label>
           <div class="col-sm-4 row">
             <!-- <input type="text" class="form-control" formControlName="clinic_type" placeholder="Clinic Type" /> -->
-            <select name="clinic_type" id="clinic_type" class="form-control" name="clinic_type" formControlName="clinic_type" required>
+            <select id="clinic_type" (change)="changeClinicType($event.target.value)" class="form-control" name="clinic_type" formControlName="clinic_type" required>
               <option [ngValue]="null">Select</option>
               <option value="1">General Practitioner</option>
               <option value="2">Specialist</option>
@@ -160,7 +160,17 @@
         <div class="form-group row">
           <label for="name" class="col-sm-2 col-form-label">Specialization</label>
           <div class="col-sm-4 row">
-            <input type="text" class="form-control" formControlName="specialisation" placeholder="Specialization" />
+            <!-- <input type="text" class="form-control" formControlName="specialisation" placeholder="Specialization" /> -->
+            <select id="specialisation" class="form-control" name="specialisation" formControlName="specialisation" required>
+              <option selected value="">Select</option>
+              <option value="Cardiology"> Cardiology</option>
+              <option value="Cardiothoracic Surgery">Cardiothoracic Surgery</option>
+              <option value="Endocrinology"> Endocrinology</option>
+              <option value="ENT">ENT</option>
+              <option value="Gastroentrology"> Gastroentrology</option>
+              <option value="General Surgery">General Surgery</option>
+              <option value="Nephrology">Nephrology</option>
+              </select>
             <div *ngIf="submitted && f.specialisation.errors" class="alert alert-danger form-group">
               <div *ngIf="f.specialisation.errors.required">
                 Specialization is required
@@ -183,7 +193,7 @@
         <div class="form-group row">
           <label for="name" class="col-sm-2 col-form-label">Hospital License No</label>
           <div class="col-sm-4 row">
-            <input type="text" class="form-control" formControlName="provider_license_no" placeholder="Hospital" />
+            <input type="text" class="form-control" formControlName="provider_license_no" placeholder="Hospital License No" />
             <div *ngIf="submitted && f.provider_license_no.errors" class="alert alert-danger form-group">
               <div *ngIf="f.provider_license_no.errors.required">
                 Hospital License No. is required
@@ -215,20 +225,20 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="name" class="col-sm-2 col-form-label">Address2</label>
+          <label for="name" class="col-sm-2 col-form-label">Address 2 (Optional)</label>
           <div class="col-sm-4 row">
-            <input type="text" class="form-control" formControlName="address2" placeholder="Address2" />
-            <div *ngIf="submitted && f.address2.errors" class="alert alert-danger form-group">
+            <input type="text" class="form-control" formControlName="address2" placeholder="Address 2" />
+            <!-- <div *ngIf="submitted && f.address2.errors" class="alert alert-danger form-group">
               <div *ngIf="f.address2.errors.required">
                 Address2 is required
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-sm-2 col-form-label">Pincode</label>
+          <label class="col-sm-2 col-form-label">Postcode</label>
           <div class="col-sm-4 row">
-            <input type="tel" class="form-control" formControlName="postcode" placeholder="Pincode" pattern="^[0-9]{6}$" />
+            <input type="tel" class="form-control" formControlName="postcode" placeholder="Postcode" pattern="^[0-9]{6}$" />
               
             <div *ngIf="submitted && f.postcode.errors" class="alert alert-danger form-group">
               <div *ngIf="f.postcode.errors.required">
@@ -265,9 +275,9 @@
         
         <div class="clearfix"></div>
         <div class="form-group row">
-          <label for="mobile_no" class="col-sm-2 col-form-label">Mobile No.</label>
+          <label for="mobile_no" class="col-sm-2 col-form-label">Mobile No</label>
           <div class="col-sm-4 row">
-            <input type="text" class="form-control" formControlName="mobile" placeholder="Mobile" />
+            <input type="text" class="form-control" formControlName="mobile" placeholder="Mobile No" />
             <div *ngIf="submitted && f.mobile.errors" class="alert alert-danger form-group">
               <div *ngIf="f.mobile.errors.required">
                 Mobile No is required

@@ -22,7 +22,7 @@ export class DoctorMedicalSummaryComponent implements OnInit {
   selectedDASince: string;
   selectedCA: string;
   selectedCASince: string;
-
+  raceList: string[] = ["Chinese", "Indian", "Malay"];
   created: string;
   first_name: string;
   last_name: string;
@@ -52,8 +52,16 @@ export class DoctorMedicalSummaryComponent implements OnInit {
    medicalSummaryPastInputForm: FormGroup;
    medicalSummaryCMInputForm: FormGroup;
    medicalSummaryDAInputForm: FormGroup;
+   treatmentFor: FormGroup;
 
   ngOnInit() {
+
+    this.treatmentFor = this.formBuilder.group({
+      race: ['', [Validators.required]],
+      hbp: ['', [Validators.required]],
+      diabetes: ['', [Validators.required]],
+      smoker: ['', [Validators.required]]
+    });
 
     this.medicalSummarySigInputForm = this.formBuilder.group({
       selectedSigVal: ['', [Validators.required]],
@@ -135,6 +143,10 @@ onCloseDAHandled(){
       this.pshList = subData.data.psh_data;
       this.daList = subData.data.da_data;
       this.cmList = subData.data.cm_data;
+      this.treatmentFor.controls['race'].patchValue(subData.data.race);
+      this.treatmentFor.controls['hbp'].patchValue(subData.data.hbp);
+      this.treatmentFor.controls['diabetes'].patchValue(subData.data.diabetes);
+      this.treatmentFor.controls['smoker'].patchValue(subData.data.smoker);
     });
   }
 
@@ -183,6 +195,11 @@ onCloseDAHandled(){
        this.onCloseSigHandled();
   }
 
+  removeSmhList(itemName){
+    
+    this.smhList = this.smhList.filter((item) => item.name !== itemName);
+    
+  }
   pastOnSubmit(){
    
     let selectedPastName = this.pastSurgicalList.find(s => s.id == this.medicalSummaryPastInputForm.value.selectedVal);
@@ -191,6 +208,11 @@ onCloseDAHandled(){
        this.selectedPast = selectedPastName.desc;
        this.selectedPastSince = "Since "+this.medicalSummaryPastInputForm.value.since;
        this.onClosePastHandled();
+  }
+
+  removePshList(itemName){
+
+    this.pshList = this.pshList.filter((item) => item.name !== itemName);
   }
 
   cmOnSubmit(){
@@ -204,6 +226,10 @@ onCloseDAHandled(){
 
   }
 
+  removeCmList(itemName){
+    this.cmList = this.cmList.filter((item) => item.name !== itemName);
+  }
+
   daOnSubmit(){
     
     let selectedPCMName = this.drugAllergyList.find(s => s.id == this.medicalSummaryDAInputForm.value.selectedVal);
@@ -212,10 +238,13 @@ onCloseDAHandled(){
        this.selectedDA = selectedPCMName.name;
        this.selectedDASince = "Since "+this.medicalSummaryDAInputForm.value.since;
        this.onCloseDAHandled();
-   
-    
+  
   }
 
+  removeDaList(itemName){
+
+    this.daList = this.daList.filter((item) => item.name !== itemName);
+  }
   
 
   mainSubmit(){
@@ -291,13 +320,17 @@ this.httpService.commonAuthPost(appConstants.apiBaseUrl + 'updateMedicalSummary'
     cm_item: cm_item,
     cm_since: cm_since,
     da_item: da_item,
-    da_since: da_since
+    da_since: da_since,
+    race: this.treatmentFor.controls['race'].value,
+    hbp: this.treatmentFor.controls['hbp'].value,
+    diabetes: this.treatmentFor.controls['diabetes'].value,
+    smoker: this.treatmentFor.controls['smoker'].value
 }).subscribe(data => {
   this.utilService.toastrSuccess("Medical Summary Updated Sucessfully", "Data Updated Sucessfully");
   this.router.navigate(['home']);
 }, (err) => {
   console.log(err);
-  this.utilService.toastrError("Medical Summary Updated Failed !.("+err.error.message.routine+")", "Progress Report");
+  this.utilService.toastrError("Medical Summary Updated Failed !.("+err.error.message.routine+")", "Not Updated Sucessfully");
 });
 }
 

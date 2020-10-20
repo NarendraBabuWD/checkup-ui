@@ -58,18 +58,21 @@ message;
 
   
   login(){
-    this.httpService.commonPost(appConstants.apiBaseUrl + 'doLogin',this.loginForm.value).subscribe((res:Response) =>{
+    this.httpService.commonPost(appConstants.apiBaseUrl + 'doLogin',this.loginForm.value).subscribe((res) =>{
       console.log(res, "User Sucessfully Logged in!.");
       this.lognRes = res;
-      this.authService.setLoginDetails(this.lognRes.data);
-      this.authService.setLoginToken(this.lognRes.authenticate);
-        console.log(this.lognRes.data.category);
+      
         if(this.lognRes.data.category === appConstants.userType.SUBSCRIBER || this.lognRes.data.category === appConstants.userType.DOCTOR){
+          this.authService.setLoginDetails(this.lognRes.data);
+          this.authService.setLoginToken(this.lognRes.authenticate);
+            console.log(this.lognRes.data.category);
           this.router.navigate([appConstants.routingList.HOME_COMPONENT]);
-        } else {
+        } else if(this.lognRes.status == false) {
+            this.toastrService.error(this.lognRes.data[0]);
+        }else {
           // this.router.navigate(['/health-data']);
             this.toastrService.error("User Not Exists !.");
-            this.router.navigate(["login"]);
+            // this.router.navigate(["login"]);
         }
 
     })

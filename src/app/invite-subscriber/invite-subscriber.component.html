@@ -5,7 +5,7 @@
       <h4>Invite Subscriber</h4>
     </li>
   </ol>
-  <div class="formBox">
+  <div class="formBox" *ngIf="doctorSide">
     <div class="container">
       <!-- <form [formGroup]="inviteSubscriber" (ngSubmit)="onSubmit()"> -->
         <form  class="form-horizontal" [formGroup]="inviteSubscriber"
@@ -14,12 +14,47 @@
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Email</label>
           <div class="col-sm-4 row">
-            <input type="text" class="form-control" formControlName="user_id"  placeholder="Email" />
-            <div *ngIf="submitted && f.user_id.errors" class="alert alert-danger form-group">
+            <input type="email" class="form-control" formControlName="user_id"  placeholder="Email" />
+            <!-- <div *ngIf="submitted && f.user_id.errors" class="alert alert-danger form-group">
               <div *ngIf="f.user_id.errors.required">
                 Email is required
               </div>
               <div *ngIf="f.user_id.errors.email">Email must be a valid email address</div>
+            </div> -->
+
+            <div *ngIf="f.user_id.dirty && f.user_id.invalid" class="alert alert-danger form-group">
+							<div *ngIf="f.user_id.errors.required">Email is required</div>
+							<div *ngIf="f.user_id.errors.email">Email must be a valid email address</div>
+            </div>
+            
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <div class="row card-body justify-content-center">
+            <button type="submit" [disabled]="!inviteSubscriber.valid" class="btn btn-custom-83559D">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+  </div>
+
+  <div class="formBox" *ngIf="!doctorSide">
+    <div class="container">
+      <!-- <form [formGroup]="inviteSubscriber" (ngSubmit)="onSubmit()"> -->
+        <form  class="form-horizontal" [formGroup]="inviteSubscriberSubSide"
+        (ngSubmit)="onSubmitSubSide(inviteSubscriberSubSide)" >
+        <div class="clearfix"></div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Subscriber's Email</label>
+          <div class="col-sm-4 row">
+            <input type="text" class="form-control" formControlName="sub_email"  name="sub_email" placeholder="Email" />
+            <div *ngIf="submitted && f.sub_email.errors" class="alert alert-danger form-group">
+              <div *ngIf="f.sub_email.errors.required">
+                Email is required
+              </div>
+              <div *ngIf="f.sub_email.errors.email">Email must be a valid email address</div>
             </div>
           </div>
         </div>
@@ -33,4 +68,5 @@
     </div>
 
   </div>
+
 </div>

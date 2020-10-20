@@ -15,7 +15,8 @@ export class InviteSubscriberComponent implements OnInit {
   // @ViewChild(ToastContainerDirective) toastContainer: ToastContainerDirective;
 
   public inviteSubscriber: FormGroup;
-
+  public inviteSubscriberSubSide: FormGroup;
+  public doctorSide: Boolean = false;
   constructor(private _fb: FormBuilder, private httpService: HttpService,
     private inviteSubscriberService: InviteSubscriberService,
     private toastrService: ToastrService
@@ -24,10 +25,21 @@ export class InviteSubscriberComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if(JSON.parse(sessionStorage.getItem("userdata")).category == 1)
+    {
+      this.doctorSide = true;
+      } else if(JSON.parse(sessionStorage.getItem("userdata")).category == 2){
+        this.doctorSide = false;
+      }
     this.inviteSubscriber = this._fb.group({
       user_id: ['', [Validators.required, Validators.email]]
   });
+  this.inviteSubscriberSubSide = this._fb.group({
+    sub_email: ['', [Validators.required, Validators.email]]
+});
   }
+
+  get f() { return this.inviteSubscriber.controls; }
 
   /*onSubmit( model: FormGroup ) {
     this.inviteSubscriberService.inviteSubscriber( model.value ).subscribe( response => {
@@ -47,6 +59,25 @@ onSubmit( model: FormGroup ) {
       this.toastrService.success(message);  
     } else if(response.status == false){
       this.toastrService.error(response.data[0]);  
+    }
+    
+  });
+} 
+
+
+onSubmitSubSide( model: FormGroup ) {
+  this.httpService.commonAuthPost(appConstants.apiBaseUrl + 'doAddCouple', 
+  { 
+    email: model.value.sub_email
+  }
+  ).subscribe(response => {
+    if(response.status == true){
+      let message = 'Subscriber Invited Successfully';
+      this.toastrService.success(message);  
+      this.inviteSubscriberSubSide.reset();
+    } else if(response.status == false){
+      this.toastrService.error(response.data);  
+      
     }
     
   });

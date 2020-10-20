@@ -55,7 +55,7 @@ import { HelpSupportComponent } from './help-support/help-support.component';
 import { SettingsComponent } from './settings/settings.component';
 import { DoctorAppointmentComponent } from './doctor-appointment/doctor-appointment.component';
 import { SubscriberAppointmentComponent } from './subscriber-appointment/subscriber-appointment.component';
-import { AmazingTimePickerModule } from 'amazing-time-picker'; // this line you need
+// import { AmazingTimePickerModule } from 'amazing-time-picker'; // this line you need
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { AnnouncementsComponent } from './announcements/announcements.component';
@@ -69,8 +69,13 @@ import { PaymentComponent } from './payment/payment.component';
 import { SubscriptionAccountComponent } from './subscription-account/subscription-account.component';
 import { SubscriptionOrderComponent } from './subscription-order/subscription-order.component';
 import { ModalModule, BsModalRef  } from 'ngx-bootstrap/modal';
+import { TimepickerModule } from 'ngx-bootstrap';
+
 import { DoctorMedicalSummaryComponent } from './doctor-medical-summary/doctor-medical-summary.component';
 import { HighchartsChartComponent } from 'highcharts-angular';
+import { TrimonthlyReportComponent } from './trimonthly-report/trimonthly-report.component';
+import { GenerateComponent } from './generate/generate.component';
+import { UpcomingReportComponent } from './upcoming-report/upcoming-report.component';
 
 
 /*export const firebaseConfig = {
@@ -138,7 +143,10 @@ export const firebaseConfig = {
     PaymentComponent,
     SubscriptionAccountComponent,
     SubscriptionOrderComponent,
-    DoctorMedicalSummaryComponent
+    DoctorMedicalSummaryComponent,
+    TrimonthlyReportComponent,
+    GenerateComponent,
+    UpcomingReportComponent
   ],
   imports: [
     BrowserModule,
@@ -147,8 +155,9 @@ export const firebaseConfig = {
     HttpClientModule,
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(), // ToastrModule added
-    AmazingTimePickerModule,
+    // AmazingTimePickerModule,
     BsDatepickerModule.forRoot(),
+    TimepickerModule.forRoot(),
     AppRoutingModule,
     ModalModule.forRoot(),
     InfiniteScrollModule,

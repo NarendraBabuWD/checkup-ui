@@ -31,6 +31,10 @@ import { PaymentComponent } from './payment/payment.component';
 import { SubscriptionAccountComponent } from './subscription-account/subscription-account.component';
 import { SubscriptionOrderComponent } from './subscription-order/subscription-order.component';
 import { DoctorMedicalSummaryComponent } from './doctor-medical-summary/doctor-medical-summary.component';
+import { TrimonthlyReportComponent } from './trimonthly-report/trimonthly-report.component';
+import { YearlyReportComponent } from './yearly-report/yearly-report.component';
+import { GenerateComponent } from './generate/generate.component';
+import { UpcomingReportComponent } from './upcoming-report/upcoming-report.component';
 
 
 const routes: Routes = [
@@ -40,6 +44,10 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'health-data', pathMatch: 'full', component: MyHealthDataComponent, canActivate: [AuthGuard] },
   { path: 'initial-report', component: InitialReportComponent, canActivate: [AuthGuard] },
+  { path: 'trimonthly-report', component: TrimonthlyReportComponent, canActivate: [AuthGuard] },
+  { path: 'yearly-report', component: YearlyReportComponent, canActivate: [AuthGuard] },
+  { path: 'generate-report', component: GenerateComponent, canActivate: [AuthGuard] },
+  { path: 'upcoming-report', component: UpcomingReportComponent, canActivate: [AuthGuard] },
   { path: 'health-report', component: MyHealthReportComponent, canActivate: [AuthGuard] },
   { path: 'empanelment-form', component: EmpanelmentFormComponent, canActivate: [AuthGuard] },
   { path: 'claim-submission', component: ClaimSubmittionComponent, canActivate: [AuthGuard] },

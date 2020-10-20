@@ -2,8 +2,10 @@
 	<div class="col-md-4 mx-auto">
 		<div class="card rounded-0">
 			<div class="text-center">
-				<img class="logo-icon" src="assets/images/CheckupAsia.png">
-				<p class="pt-2 pb-2 font-weight-bold">Health Care for you, <br/>by you</p>
+				<!-- <img class="logo-icon" src="assets/images/CheckupAsia.png"> -->
+				<img class="logo-icon" src="assets/images/ourcheckup_logo.jpg">
+				<!-- <p class="pt-2 pb-2 font-weight-bold">Health Care for you, <br/>by you</p> -->
+				<p class="pt-2 pb-2 font-weight-bold">Heart Care By You</p>
 			</div>
 			<div class="card-body">
 				<form [formGroup]="loginForm" (ngSubmit)="login()">
@@ -25,15 +27,15 @@
 						</div>
 					</div>
 					<!-- <a href="#">Forgot Password</a> -->
-					<div class="row card-body justify-content-center pt-4">
+					<div class="row card-body justify-content-center ">
 						<button type="submit" class="btn btn-custom-83559D" [disabled]="!loginForm.valid">Login</button>
 					</div>
 				</form>
 			</div>
-			<div class="row card-body justify-content-center pt-5 pb-3">
-				<a class="signupLink" (click)="signup()">SignUp Here</a>
+			<div class="row card-body justify-content-center ">
+				<a class="signupLink" (click)="signup()">Sign Up</a>
 			</div>
-			<div class="row card-body justify-content-center pt-5 pb-3">
+			<div class="row card-body justify-content-center ">
 				<a class="signupLink" (click)="forgotPassword()">Forgot Password</a>
 			</div>
 		</div>

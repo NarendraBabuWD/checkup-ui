@@ -18,7 +18,7 @@ export class ClaimHistoryComponent implements OnInit {
   totalPaid: any = '';
   constructor(private _fb: FormBuilder, private httpService: HttpService,
     private claimService: ClaimService,) { }
-    TableHeadings = ['Subscriber','Date','Purpose','Charge (RM)','Paid (RM)','Release'];
+    TableHeadings = ['Subscriber','Date','Purpose','Released', 'Charged (RM)','Paid (RM)'];
   ngOnInit() {
     this.historyView = this._fb.group({
       fromDate: ['', [Validators.required]],

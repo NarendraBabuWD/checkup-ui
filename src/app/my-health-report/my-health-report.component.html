@@ -1,15 +1,14 @@
 <div class="container-fluid">
   <ol class="breadcrumb">
     <li class="breadcrumb-item">
-      <a href="#">MY HEALTH REPORT</a>
+      <a >MY HEALTH REPORT</a>
     </li>
   </ol>
-  <div class="col-md-12 mx-auto pt-3 pd-lr-0">
-    <!-- <p class="text-center"><strong> HEALTH REPORT</strong></p> -->
+  <!-- <div class="col-md-12 mx-auto pt-3 pd-lr-0">
+    
     <div class="card rounded-0">
 
       <div class="btn-group btn-group-justified" role="group" aria-label="Report">
-        <!-- <button type="button" class="btn btn-secondary">INITIAL REPORT</button> -->
         <button type="button" *ngIf="auth.isDoctor()" class="btn btn-secondary" data-toggle="modal" data-target="#myModal">INITIAL
           REPORT</button>
         <button type="button" *ngIf="auth.isSubscriber()" class="btn btn-secondary" (click)="subscriberInitialReport()">INITIAL REPORT</button>
@@ -17,13 +16,66 @@
           REPORT</button>
 
           <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#yearlyReportModel">YEARLY REPORT</button>
-          <!-- <button type="button" *ngIf="auth.isSubscriber()" class="btn btn-secondary" (click)="subscriberYearlyReport()">YEARLY REPORT</button> -->
 
         <button type="button" *ngIf="auth.isDoctor()" class="btn btn-secondary" data-toggle="modal" data-target="#progressReportModel">PROGRESS REPORT</button>
         <button type="button" *ngIf="auth.isSubscriber()" class="btn btn-secondary" (click)="subscriberProgressReport()">PROGRESS REPORT</button>
       </div>
     </div>
+  </div> -->
+
+
+  <div class="card">
+    <h5 class="card-header">
+      Three Month Reports
+    </h5>
+    <div class="card-body">
+
+
+  <div class="row" *ngIf='respData.length > 0'>
+    <div class="card border-dark mb-3 col-md-3" *ngFor="let item of respData">
+      
+          <div class="card-body" (click)="goToTriMonthlyReport(item)">
+            <h6 class="card-header" style="font-size: 15px !important;">Tri-Monthly Report {{item.quarter}}</h6>
+            
+            <p class="card-text"><small class="text-muted">Generated on <br>{{item.generated_date}}</small></p>
+          </div>
+     
+    </div>
+</div>
+<div *ngIf='respData.length === 0'>
+  <b> No Data Available for this user   </b>
+</div>
+</div></div>
+
+
+<div class="card" *ngIf='yearlyData.length > 0'>
+  <h5 class="card-header">
+    Yearly Reports
+  </h5>
+  <div class="card-body">
+
+
+<div class="row">
+  <div class="card border-dark mb-3 col-md-3" *ngFor="let item of yearlyData; index as i">
+    
+        <div class="card-body" (click)="goToYearlyReport(item)">
+          <h6 class="card-header" style="font-size: 15px !important;">Yearly Report {{i+1}}</h6>
+          
+          <p class="card-text"><small class="text-muted">Generated on <br>{{item.generated_date | date: 'dd/MM/yyyy'}}</small></p>
+        </div>
+   
   </div>
+</div>
+
+</div></div>
+
+<div class="card-footer text-center">
+  <button *ngIf="isUpcomingBtn" type="button" [disabled]="upComBtnDisabled" (click)="upcomingBtn()" class="btn btn-custom-83559D">Upcoming</button>
+  <button *ngIf="isGenerateBtn" type="button" [disabled]="genBtnDisabled" routerLink="/generate-report" class="btn btn-custom-83559D ml-5">Generate</button>
+
+</div>
+
+
   <div class="card-box" *ngIf="isInitialReport">
     <app-initial-report></app-initial-report>
   </div>

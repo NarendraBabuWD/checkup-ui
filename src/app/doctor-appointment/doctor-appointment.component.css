@@ -1,19 +1,20 @@
-/*.Reschedule {
-    background-color: #5A6268;
+.Reject {
+    color: #5A6268;
 }
 
-.Requested {
-    background-color: #218838;
+.Confirm {
+    color: #218838;
 }
 
-.New {
-    background-color: #138496;
+.Pending {
+    color: #138496;
 }
 
 .Cancel {
-    background-color: #C82333;
-}*/
+    color: #C82333;
+}
 
+tr{ cursor: pointer; }
 
 .modal {
     z-index: 999 !important;

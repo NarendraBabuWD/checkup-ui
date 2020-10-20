@@ -14,7 +14,7 @@
   <div class="row">
   <span class='col-md-8'>
   
-  <img class="img-responsive col-sm-3" height="100" src="assets/images/icon12.png">
+  <img class="img-responsive col-sm-3" style="height: 100px !important" src="assets/images/icon12.png">
   
   </span>
   <span class='col-md-4'>
@@ -25,6 +25,56 @@
     <p>Age<span> : </span>{{age}}</p>
     <p>ID No<span> : </span>{{id}}</p>
     <p>Gender<span> : </span>{{gender}}</p>
+    <form [formGroup]="treatmentFor">
+      <div class="form-group row">
+        <label for="race" class="col-sm-6 col-form-label">Race </label>
+        <div class="col-sm-6">
+          
+          <select class="form-control" name="race" formControlName="race" required>
+            <option value="">Select</option>
+            <option value="Chinese">Chinese</option>
+            <option value="Indian">Indian</option>
+            <option value="Malay">Malay</option>
+            </select>
+        </div>
+      </div>
+    
+      <div class="form-group row">
+        <label for="hbp" class="col-sm-6 col-form-label">Treatement for High BP</label>
+        <div class="col-sm-6">
+          <select class="form-control" name="hbp" formControlName="hbp" required>
+            <option value="">Select</option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+            </select>
+         
+        </div>
+      </div>
+     
+      <div class="form-group row">
+        <label for="diabetes" class="col-sm-6 col-form-label">Diabetes </label>
+        <div class="col-sm-6">
+          <select class="form-control" name="diabetes" formControlName="diabetes" required>
+            <option value="">Select</option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+            </select>
+         
+        </div>
+      </div>
+      
+      <div class="form-group row">
+        <label for="smoker" class="col-sm-6 col-form-label">Smoker </label>
+        <div class="col-sm-6">
+          <select class="form-control" name="smoker" formControlName="smoker" required>
+            <option value="">Select</option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+            </select>
+         
+        </div>
+      </div> 
+    </form>
   </span>
   </div>
   </div>
@@ -44,17 +94,18 @@
           <td>{{item.name}}</td>
           <td></td>
           <td>Since {{item.since}}</td>
+          <td><button type="button" class="btn btn-sm btn-danger" (click)="removeSmhList(item.name)"><i class="fa fa-minus"></i></button></td>
         </tr>
        
       </tbody>
-      <tbody>
+      <!-- <tbody>
         <tr >
           <th scope="row"></th>
           <td>{{selectedSignificant}}</td>
           <td></td>
           <td> {{selectedSignificantSince}}</td>
         </tr>
-      </tbody>
+      </tbody> -->
     </table>
   </div>
   <div class="col-md-2"><button type="button" class="btn btn-info" (click)="openSigModal()">Add</button></div>
@@ -64,7 +115,7 @@
   <div class="card-body">
     <div class="row">
       <div class="col-md-8">
-        <h4>Past Surical History</h4>
+        <h4>Past Surgical History</h4>
   
       <table class="table table-borderless">
         <thead>
@@ -76,13 +127,14 @@
             <td>{{item.name}}</td>
             <td></td>
             <td>Since {{item.since}}</td>
+            <td><button type="button" class="btn btn-sm btn-danger" (click)="removePshList(item.name)"><i class="fa fa-minus"></i></button></td>
           </tr>
-          <tr >
+          <!-- <tr >
             <th scope="row"></th>
             <td>{{selectedPast}}</td>
             <td></td>
             <td> {{selectedPastSince}}</td>
-          </tr>
+          </tr> -->
         </tbody>
       </table>
     </div>
@@ -107,13 +159,14 @@
             <td>{{item.name}}</td>
             <td></td>
             <td>Since {{item.since}}</td>
+            <td><button type="button" class="btn btn-sm btn-danger" (click)="removeCmList(item.name)"><i class="fa fa-minus"></i></button></td>
           </tr>
-          <tr >
+          <!-- <tr >
             <th scope="row"></th>
             <td>{{selectedCA}}</td>
             <td></td>
             <td> {{selectedCASince}}</td>
-          </tr>
+          </tr> -->
         </tbody>
       </table>
     </div>
@@ -138,13 +191,14 @@
               <td>{{item.name}}</td>
               <td></td>
               <td>Since {{item.since}}</td>
+              <td><button type="button" class="btn btn-sm btn-danger" (click)="removeDaList(item.name)"><i class="fa fa-minus"></i></button></td>
             </tr>
-            <tr >
+            <!-- <tr >
               <th scope="row"></th>
               <td>{{selectedDA}}</td>
               <td></td>
               <td> {{selectedDASince}}</td>
-            </tr>
+            </tr> -->
           </tbody>
         </table>
       </div>
@@ -153,7 +207,7 @@
       </div>
       </div>
       <div class="card-footer text-center">
-        <button type="button" class="btn btn-custom" (click)="mainSubmit()">Submit</button>
+        <button type="button" [disabled]="!treatmentFor.valid" class="btn btn-custom" (click)="mainSubmit()">Submit</button>
       </div>
   </div>
   </div>

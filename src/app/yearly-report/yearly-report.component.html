@@ -1,65 +1,73 @@
 <div class="container-fluid">
-  <h2 class="text-center">YEARLY REPORT</h2>
-  <div class="card-box" *ngIf='finalArr.length > 0'>
-      <div class="table-responsive">
-              <!-- <table class="table">
-                  <thead>
-                      <tr class="text-center">
-                          <th>Vital Name</th>
-                          <th>Quater 1</th>
-                          <th>Quater 2</th>
-                          <th>Quater 3</th>
-                          <th >Quater 4</th>
-                          <th >Performance</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                     
-                    </tbody>
-              </table> -->
-              
-              <table class="table">
-                <col>
-                <colgroup span="2"> </colgroup>
-                <colgroup span="2"></colgroup>
-                <tr>
-                  <td rowspan="2"><b>Vital Name</b></td>
-                  <th colspan="2" scope="colgroup">Quarter 1</th>
-                  <th colspan="2" scope="colgroup">Quarter 2</th>
-                  <th colspan="2" scope="colgroup">Quarter 3</th>
-                  <th colspan="2" scope="colgroup">Quarter 4</th>
+  <button type="button" routerLink="/health-report" class="btn btn-dark"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button>
 
-                </tr>
+<h2 class="text-center">Yearly Report </h2>
+<div class="card-box" >
+    <div class="table-responsive">
+             <table class="table">
+                <thead>
+                        <th>Date</th>
+                        <th>Values</th>
+                        <th>Performance</th>
+                </thead>
+                <tbody *ngFor="let item of yearlyReportData">
+
+                    <tr style="background: #dee2e6;">
+                      <td style="text-align: center; vertical-align: middle; "><b>{{item.name}}</b></td>
+                    </tr>
+                   
+                    <tr *ngFor='let value of item.values'>
+                        <td>{{value.date}} </td>
+                        <td> 
+                          <div>
+                              <div>Initial &nbsp;  &nbsp; &nbsp; &nbsp;:  {{value.initial}}</div>
+                              <div>Target  &nbsp;  &nbsp; &nbsp; :  {{value.target}}</div>
+                              <div>Achieved  &nbsp;:  {{value.achieved}}</div>
+                          </div>
+                           
+                            <!-- <div class="c2">
+                              <div>Effective on this date:
+                               <input type="text" />
+                          </div>
+                          <div>Territory:
+                              <input type="text" />
+                          </div>
+                      </div> -->
+                          </td>
+                        <!-- <td class="text-success">{{value.performance}}</td> -->
+                        <td [ngStyle]="{'color': ( value.performance <= '0.00%' || value.performance == 'Not Achieved') ? 'red' : 'green'}">{{value.performance}}</td>
+
+                    </tr>
+                </tbody>
+                 <tfoot>
+                  <tr *ngFor='let itemCvd of yearlyCvd'>
+                      <td></td>
+                    <td><b>CVD Risk Percentage (10 Year) {{itemCvd.quarter}}: &nbsp; &nbsp;{{itemCvd.value.risk_10}} %</b></td>
+                    <td></td>
+                  </tr>
+                </tfoot> 
+
+
+            </table> 
+
+            <!-- <table class="table">
+              <thead>
+                <th>ID</th>
+                <th>Name</th>
+        </thead>
+              <tbody *ngFor="let item of result">
                 <tr>
-                  <th scope="col" colspan="2">Jan-Mar</th>
-                  <th scope="col" colspan="2">Apr-Jun</th>
-                  <th scope="col" colspan="2">Jul-Sep</th>
-                  <th scope="col" colspan="2">Oct-Dec</th>
+                  <td style="text-align: center; vertical-align: middle; background: #dee2e6;" colspan="3"><b>{{item.name}}</b></td>
                 </tr>
-                <tr *ngFor="let item of finalArr">
-                  <th scope="row">{{item.vital}}</th>
-                  <td>{{item.quarter1 ? (item.quarter1 != null ? item.quarter1 : '0.0') : '-'}}</td>
-                  <td>{{item.quarter1 ? (item.quarter1 != null ? (item.quarter1 > 0 ? 'Target Reached' : 'Target Outside' ): '0.0') : '-'}}</td>
-                  <td>{{item.quarter2 ? (item.quarter2 != null ? item.quarter2 : '0.0') : '-'}}</td>
-                  <td>{{item.quarter2 ? (item.quarter2 != null ? (item.quarter2 > 0 ? 'Target Reached' : 'Target Outside' ): '0.0') : '-'}}</td>
-                  <td>{{item.quarter3 ? (item.quarter3 != null ? item.quarter3 : '0.0') : '-'}}</td>
-                  <td>{{item.quarter3 ? (item.quarter3 != null ? (item.quarter3 > 0 ? 'Target Reached' : 'Target Outside' ): '0.0') : '-'}}</td>
-                  <td>{{item.quarter4 ? (item.quarter4 != null ? item.quarter4 : '0.0') : '-'}}</td>
-                  <td>{{item.quarter4 ? (item.quarter4 != null ? (item.quarte4 > 0 ? 'Target Reached' : 'Target Outside' ): '0.0') : '-'}}</td>
+                <tr *ngFor="let value of item.values">
+                  <td>{{value.id}}</td>
+                  <td>{{value.name}}</td>
                 </tr>
-                <!-- <tr>
-                  <th scope="row">Board Games</th>
-                  <td>10,000</td>
-                  <td>5,000</td>
-                  <td>12,000</td>
-                  <td>9,000</td>
-                </tr> -->
-              </table>
-              
-          
-      </div>
-  </div>
-  <div *ngIf='finalArr.length === 0'>
-      <b> No Data Available for user id: {{user_id}} </b>
-  </div>
+              </tbody>
+           </table> -->
+
+           
+    </div>
+</div>
+
 </div>
